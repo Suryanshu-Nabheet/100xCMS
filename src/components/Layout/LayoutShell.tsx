@@ -1,7 +1,7 @@
 "use client"
 import { useState, type ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useAuth } from '../../contexts/AuthContext'
+import { useAuth } from '../Auth/contexts/AuthContext'
 
 
 // Icons
@@ -78,7 +78,7 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-  { id: 'dashboard', label: 'Dashboard', icon: <IconHome className="h-5 w-5" />, roles: ['student','instructor','admin'] },
+  { id: 'dashboard', label: 'Home Page', icon: <IconHome className="h-5 w-5" />, roles: ['student','instructor','admin'] },
   { id: 'my-courses', label: 'My Courses', icon: <IconBookOpen className="h-5 w-5" />, roles: ['student','instructor','admin'] },
   { id: 'browse', label: 'Browse Courses', icon: <IconBook className="h-5 w-5" />, roles: ['student','instructor','admin'] },
   { id: 'profile', label: 'Profile', icon: <IconUser className="h-5 w-5" />, roles: ['student','instructor','admin'] },
@@ -123,7 +123,7 @@ export default function LayoutShell({ activeItem, onItemClick, children }: Layou
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-blue-950 overflow-hidden">
+    <div className="min-h-screen bg-black overflow-hidden">
       {/* Unified chrome background (single L-shaped bar) */}
       <div 
         className="fixed inset-0 z-0 pointer-events-none backdrop-blur-xl" 

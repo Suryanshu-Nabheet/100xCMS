@@ -17,10 +17,8 @@
   }
   
   body {
-    background: linear-gradient(135deg, #000000 0%, #0a0a0a 15%, #1a1a2e 35%, #16213e 55%, #0f3460 75%, #1e3a8a 90%, #000000 100%);
+    background: #000000;
     background-attachment: fixed;
-    background-size: 400% 400%;
-    animation: gradientShift 25s ease infinite;
     font-feature-settings: "rlig" 1, "calt" 1;
     min-height: 100vh;
     color: white;

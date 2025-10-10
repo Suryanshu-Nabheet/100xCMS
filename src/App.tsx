@@ -1,14 +1,14 @@
 import { useState } from 'react'
-import { useAuth, AuthProvider } from './contexts/AuthContext'
-import { AppProvider } from './contexts/AppContext'
+import { useAuth, AuthProvider } from './components/Auth/contexts/AuthContext'
+import { AppProvider } from './components/App/contexts/AppContext'
 import LayoutShell from './components/Layout/LayoutShell'
-import { LoginForm } from './components/Auth/LoginForm'
-import { SignupForm } from './components/Auth/SignupForm'
-import { StudentDashboard } from './components/Dashboard/StudentDashboard'
-import { CourseCatalog } from './components/Courses/CourseCatalog'
-import { MyCourses } from './components/Courses/MyCourses'
-import { CourseDetail } from './components/Courses/CourseDetail'
-import { ProfileView } from './components/Profile/ProfileView'
+import { LoginForm } from './components/Auth/components/LoginForm'
+import { SignupForm } from './components/Auth/components/SignupForm'
+import { HomePage } from './components/Home/HomePage'
+import { CourseCatalog } from './components/Courses/BrowseCourses/components/CourseCatalog'
+import { MyCourses } from './components/Courses/MyCourses/components/MyCourses'
+import { CourseDetail } from './components/Courses/BrowseCourses/CourseDetail'
+import { ProfileView } from './components/Profile/components/ProfileView'
 
 function AppContent() {
   const { user, loading } = useAuth()
@@ -26,7 +26,7 @@ function AppContent() {
   const renderContent = () => {
     switch (activeView) {
       case 'dashboard':
-        return <StudentDashboard onNavigate={handleNavigation} />
+        return <HomePage onNavigate={handleNavigation} />
       case 'my-courses':
         return <MyCourses onNavigate={handleNavigation} />
       case 'browse':
@@ -60,7 +60,7 @@ function AppContent() {
           </div>
         )
       default:
-        return <StudentDashboard onNavigate={handleNavigation} />
+        return <HomePage onNavigate={handleNavigation} />
     }
   }
 
