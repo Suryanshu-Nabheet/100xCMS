@@ -1,6 +1,6 @@
-# ClassX Platform
-
 <div align="center">
+
+# ClassX Platform
 
 **A Next-Generation Educational Technology Platform**
 
@@ -15,7 +15,6 @@
 </div>
 
 ---
-
 ## 🎯 Overview
 
 ClassX is a comprehensive educational technology platform designed to revolutionize how students learn programming and technical skills. Built with modern web technologies and a focus on user experience, ClassX provides an immersive learning environment that combines interactive content, AI-powered assistance, and community-driven learning.
