@@ -1,5 +1,5 @@
 'use client';
-import { useState } from "react";
+import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { SignIn, SignUp } from '../Auth';
 import { motion } from 'framer-motion';
@@ -38,10 +38,40 @@ const heroItems = [
   {
     imageUrl: "https://t3.ftcdn.net/jpg/05/76/74/60/360_F_576746048_xb0A6qns2CD9MxO6vxUCtKVFEntTwuVg.jpg",
   },
+  {
+    imageUrl: "https://t4.ftcdn.net/jpg/04/63/37/51/240_F_463375173_vBKRkUbVoCuS9lpUmhdfCc13pprPr148.jpg",
+  },
+  {
+    imageUrl: "https://t3.ftcdn.net/jpg/03/48/39/74/360_F_348397404_wXuf22GUPNAh67htBZZnaDSx3Bj92yep.webp",
+  },
+  {
+    imageUrl: "https://t4.ftcdn.net/jpg/03/52/58/99/360_F_352589922_wrQkznnjAYjCX0OOhryzYgzsWAOZboBN.webp",
+  },
+  {
+    imageUrl: "https://t4.ftcdn.net/jpg/03/72/69/25/360_F_372692509_UzLYB03rpChTTDhrT3EStFEq4j8CIeqd.webp",
+  },
+  {
+    imageUrl: "https://t4.ftcdn.net/jpg/03/98/40/81/360_F_398408157_McCktDBclnNQ1VPPTO03kQF9eZRG80SL.jpg",
+  },
+  {
+    imageUrl: "https://t4.ftcdn.net/jpg/03/15/11/23/360_F_315112337_WpBJPvZbFWIGL2mJIGL00AoIPvYIAfJW.webp",
+  },
+  {
+    imageUrl: "https://t4.ftcdn.net/jpg/03/08/69/75/360_F_308697506_9dsBYHXm9FwuW0qcEqimAEXUvzTwfzwe.webp",
+  },
+  {
+    imageUrl: "https://t3.ftcdn.net/jpg/02/85/92/64/360_F_285926473_L4IqNJhss4ym9WOYUQYN0TCecpFDFerR.webp",
+  },
+  {
+    imageUrl: "https://t3.ftcdn.net/jpg/09/39/36/60/360_F_939366028_KbGbRltHnATTbBhPXJUKAyWl9MP9gVYb.jpg",
+  },
+  {
+    imageUrl: "https://t3.ftcdn.net/jpg/05/76/74/60/360_F_576746048_xb0A6qns2CD9MxO6vxUCtKVFEntTwuVg.jpg",
+  },
 ];
 
 // Navigation Component
-function Navigation() {
+const Navigation = React.memo(() => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
@@ -139,20 +169,21 @@ function Navigation() {
       />
     </nav>
   );
-}
+});
 
 // Infinite Moving Cards Component
-function InfiniteMovingCards({ items }: { items: typeof heroItems }) {
+const InfiniteMovingCards = React.memo(({ items }: { items: typeof heroItems }) => {
   const duplicatedItems = [...items, ...items];
 
   return (
-    <div className="slider-container relative">
-      {/* Left shadow gradient */}
-      <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none"></div>
-      {/* Right shadow gradient */}
-      <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none"></div>
+    <div className="slider-container relative group">
       
-      <div className="flex animate-slide-left">
+      <div 
+        className="flex image-slider"
+        style={{
+          animation: 'slide-left-slow 60s linear infinite'
+        }}
+      >
         {duplicatedItems.map((item, index) => (
           <div
             key={index}
@@ -170,7 +201,7 @@ function InfiniteMovingCards({ items }: { items: typeof heroItems }) {
       </div>
     </div>
   );
-}
+});
 
 // Tech Skills Component
 const techSkills = [
@@ -196,10 +227,9 @@ const techSkills = [
   { name: "Next.js", icon: SiNextdotjs, color: "text-white" },
 ];
 
-const tripleSkills = [...techSkills, ...techSkills, ...techSkills];
+const tripleSkills = [...techSkills, ...techSkills, ...techSkills, ...techSkills];
 
-function TechSkills() {
-
+const TechSkills = React.memo(() => {
   return (
     <section className="py-8 md:py-10 bg-black overflow-hidden relative">
       {/* Dark blue aesthetic spots */}
@@ -222,13 +252,14 @@ function TechSkills() {
 
         <div className="space-y-6">
           {/* First row - Left to Right */}
-          <div className="slider-container relative">
-            {/* Left shadow gradient */}
-            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-black via-black/80 to-transparent z-20 pointer-events-none"></div>
-            {/* Right shadow gradient */}
-            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-black via-black/80 to-transparent z-20 pointer-events-none"></div>
+          <div className="slider-container relative group">
             
-            <div className="flex animate-slide-left">
+            <div 
+              className="flex skills-slider"
+              style={{
+                animation: 'slide-left-slow 60s linear infinite'
+              }}
+            >
               {tripleSkills.map((skill, index) => (
                 <div
                   key={`left-${index}`}
@@ -244,13 +275,14 @@ function TechSkills() {
           </div>
 
           {/* Second row - Right to Left */}
-          <div className="slider-container relative">
-            {/* Left shadow gradient */}
-            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-black via-black/80 to-transparent z-20 pointer-events-none"></div>
-            {/* Right shadow gradient */}
-            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-black via-black/80 to-transparent z-20 pointer-events-none"></div>
+          <div className="slider-container relative group">
             
-            <div className="flex animate-slide-right">
+            <div 
+              className="flex skills-slider"
+              style={{
+                animation: 'slide-right-slow 60s linear infinite'
+              }}
+            >
               {tripleSkills.map((skill, index) => (
                 <div
                   key={`right-${index}`}
@@ -266,13 +298,14 @@ function TechSkills() {
           </div>
 
           {/* Third row - Left to Right */}
-          <div className="slider-container relative">
-            {/* Left shadow gradient */}
-            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-black via-black/80 to-transparent z-20 pointer-events-none"></div>
-            {/* Right shadow gradient */}
-            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-black via-black/80 to-transparent z-20 pointer-events-none"></div>
+          <div className="slider-container relative group">
             
-            <div className="flex animate-slide-left">
+            <div 
+              className="flex skills-slider"
+              style={{
+                animation: 'slide-left-slow 60s linear infinite'
+              }}
+            >
               {tripleSkills.map((skill, index) => (
                 <div
                   key={`left2-${index}`}
@@ -290,14 +323,31 @@ function TechSkills() {
       </div>
     </section>
   );
-}
+});
 
 export default function LandingPage() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen flex-col bg-black relative overflow-x-hidden">
+    <>
+      <style>{`
+        @keyframes slide-left-slow {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        
+        @keyframes slide-right-slow {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
+        }
+        
+        .group:hover .image-slider,
+        .group:hover .skills-slider {
+          animation-play-state: paused !important;
+        }
+      `}</style>
+      <div className="flex min-h-screen flex-col bg-black relative overflow-x-hidden">
       {/* Left and Right Side Shadows */}
       <div className="fixed inset-0 pointer-events-none z-30" style={{ right: '8px' }}>
         {/* Left shadow */}
@@ -415,6 +465,7 @@ export default function LandingPage() {
           setIsSignInOpen(true);
         }}
       />
-    </div>
+      </div>
+    </>
   );
 }

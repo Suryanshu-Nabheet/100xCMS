@@ -19,6 +19,38 @@ const FooterCTA: React.FC<FooterCTAProps> = ({ setIsSignUpOpen }) => {
   };
 
   return (
+    <>
+      <style>{`
+        .mockup-container * {
+          background-color: transparent !important;
+          background: transparent !important;
+          background-image: none !important;
+        }
+        
+        .mockup-container img {
+          background-color: transparent !important;
+          background: transparent !important;
+          background-image: none !important;
+          box-shadow: none !important;
+          filter: contrast(1.2) brightness(1.1) hue-rotate(0deg) saturate(1) !important;
+          mix-blend-mode: normal !important;
+          isolation: isolate !important;
+          background-clip: padding-box !important;
+          -webkit-background-clip: padding-box !important;
+          opacity: 1 !important;
+          transform: translateZ(0) !important;
+          backface-visibility: hidden !important;
+          border: none !important;
+          outline: none !important;
+          border-radius: 0px !important;
+        }
+        
+        .mockup-container div {
+          background-color: transparent !important;
+          background: transparent !important;
+          background-image: none !important;
+        }
+      `}</style>
     <section className="py-4 md:py-6 bg-black overflow-hidden relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="group">
@@ -66,24 +98,46 @@ const FooterCTA: React.FC<FooterCTAProps> = ({ setIsSignUpOpen }) => {
         </div>
         <motion.div
           animate={floatingAnimation}
-          className="absolute mx-auto w-full justify-center md:-right-8 md:-top-8"
+          className="absolute mx-auto w-full justify-center md:-right-8 md:-top-8 mockup-container"
+          style={{ 
+            backgroundColor: 'transparent !important',
+            background: 'transparent !important',
+            backgroundImage: 'none !important',
+            backgroundClip: 'padding-box',
+            WebkitBackgroundClip: 'padding-box'
+          }}
         >
-          <div className="absolute w-[100%] rotate-3 transition-all duration-300 group-hover:-translate-y-4 group-hover:rotate-6 md:-right-8 md:w-[55%]">
+          <div 
+            className="absolute w-[100%] rotate-3 transition-all duration-300 group-hover:-translate-y-4 group-hover:rotate-6 md:-right-8 md:w-[55%]" 
+            style={{ 
+              backgroundColor: 'transparent !important', 
+              background: 'transparent !important',
+              backgroundImage: 'none !important',
+              backgroundClip: 'padding-box',
+              WebkitBackgroundClip: 'padding-box'
+            }}
+          >
             <img
               src="public/Mockup.png"
               alt="ClassX App Mockup"
-              className="w-full h-auto shadow-2xl mockup-image"
+              className="w-full h-auto shadow-2xl"
               loading="lazy"
               decoding="async"
               style={{ 
                 backgroundColor: 'transparent !important',
-                background: 'none !important',
+                background: 'transparent !important',
                 backgroundImage: 'none !important',
                 borderRadius: '0px !important',
-                filter: 'contrast(1.2) brightness(1.1)',
-                mixBlendMode: 'screen',
+                filter: 'contrast(1.2) brightness(1.1) hue-rotate(0deg) saturate(1)',
+                mixBlendMode: 'normal',
                 border: 'none !important',
-                outline: 'none !important'
+                outline: 'none !important',
+                isolation: 'isolate',
+                backgroundClip: 'padding-box',
+                WebkitBackgroundClip: 'padding-box',
+                opacity: '1',
+                transform: 'translateZ(0)',
+                backfaceVisibility: 'hidden'
               }}
             />
           </div>
@@ -95,6 +149,7 @@ const FooterCTA: React.FC<FooterCTAProps> = ({ setIsSignUpOpen }) => {
       {/* Colorful separator line */}
       <div className="w-full h-px bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 opacity-60"></div>
     </section>
+    </>
   );
 };
 
