@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { User, Mail, Shield, BookOpen, Clock, CheckCircle } from 'lucide-react';
 import { useUser } from '@clerk/clerk-react';
 import { useApp } from '../App/contexts/AppContext';
+import { useAdminAuth } from '../../Admin';
 
 interface CourseProgress {
   courseId: string;
@@ -13,6 +14,7 @@ interface CourseProgress {
 export function ProfileView() {
   const { user } = useUser();
   const { getUserEnrolledCourses, getCourseProgress } = useApp();
+  const { isAdmin } = useAdminAuth();
   
   // Memoize enrolled courses to prevent unnecessary re-renders
   const enrolledCourses = useMemo(() => {
@@ -63,9 +65,9 @@ export function ProfileView() {
     return {
       fullName: user.fullName || user.firstName + ' ' + user.lastName || 'Unknown User',
       email: user.primaryEmailAddress?.emailAddress || 'No email provided',
-      role: 'Student'
+      role: isAdmin ? 'Admin' : 'Student'
     };
-  }, [user]);
+  }, [user, isAdmin]);
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">

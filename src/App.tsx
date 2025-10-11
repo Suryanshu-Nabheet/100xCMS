@@ -8,6 +8,7 @@ import { MyCourses } from './components/Dashboard/Courses/MyCourses/components/M
 import { CourseDetail } from './components/Dashboard/Courses/BrowseCourses/CourseDetail'
 import { ProfileView } from './components/Dashboard/Profile/ProfileView'
 import { UpdatesMain } from './components/Dashboard/Updates'
+import { AdminLoginForm, AdminDashboard, CourseManager, useAdminAuth } from './components/Admin'
 import Main from './components/Landing/main'
 
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -15,12 +16,22 @@ const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 function AppContent() {
   const [activeView, setActiveView] = useState('dashboard')
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null)
+  const { isAdmin, isLoading } = useAdminAuth()
 
   const handleNavigation = (view: string, courseId?: string) => {
     setActiveView(view)
     if (courseId) {
       setSelectedCourseId(courseId)
     }
+  }
+
+  // Show admin login if not authenticated as admin
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    )
   }
 
   const renderContent = () => {
@@ -47,13 +58,10 @@ function AppContent() {
         )
       case 'profile':
         return <ProfileView />
-      case 'users':
-        return (
-          <div className="liquid-glass rounded-professional p-8 text-center hover-lift">
-            <h2 className="text-2xl font-bold text-white mb-4">Users Management</h2>
-            <p className="text-white">Coming soon...</p>
-          </div>
-        )
+      case 'admin-dashboard':
+        return <AdminDashboard />
+      case 'course-manager':
+        return <CourseManager />
       case 'settings':
         return (
           <div className="liquid-glass rounded-professional p-8 text-center hover-lift">
@@ -73,9 +81,13 @@ function AppContent() {
       </SignedOut>
       
       <SignedIn>
-        <LayoutShell activeItem={activeView} onItemClick={handleNavigation}>
-          {renderContent()}
-        </LayoutShell>
+        {isAdmin ? (
+          <LayoutShell activeItem={activeView} onItemClick={handleNavigation}>
+            {renderContent()}
+          </LayoutShell>
+        ) : (
+          <AdminLoginForm />
+        )}
       </SignedIn>
     </>
   )

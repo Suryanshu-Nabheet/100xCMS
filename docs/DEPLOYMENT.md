@@ -11,7 +11,7 @@ The following packages are required for the Updates section to work properly:
 - `lucide-react` - For icons used in the UI
 
 ### Installation
-```bash
+   ```bash
 npm install react-syntax-highlighter @types/react-syntax-highlighter framer-motion lucide-react
 ```
 
