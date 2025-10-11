@@ -114,7 +114,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-in fade-in duration-300">
         <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose}></div>
         
-        <div className="relative w-full max-w-md bg-black border border-blue-600 rounded-2xl shadow-[0_25px_50px_rgba(0,0,0,0.9),0_0_0_1px_rgba(30,64,175,0.1)] p-6 text-white animate-in slide-in-from-bottom-4 duration-300">
+        <div className="relative w-full max-w-sm bg-black border border-blue-600 rounded-2xl shadow-[0_25px_50px_rgba(0,0,0,0.9),0_0_0_1px_rgba(30,64,175,0.1)] p-4 text-white animate-in slide-in-from-bottom-4 duration-300">
           <button
             onClick={onClose}
             className="absolute top-4 right-4 p-2 text-white/60 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
@@ -123,9 +123,9 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
             <X className="w-5 h-5" />
           </button>
 
-          <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-white mb-2">Verify Your Email</h2>
-            <p className="text-white/70 text-sm">
+          <div className="text-center mb-4">
+            <h2 className="text-xl font-bold text-white mb-1">Verify Your Email</h2>
+            <p className="text-white/70 text-xs">
               We've sent a verification code to <strong className="text-white">{emailAddress}</strong>
             </p>
           </div>
@@ -136,7 +136,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
             </div>
           )}
 
-          <form onSubmit={handleVerify} className="space-y-4">
+          <form onSubmit={handleVerify} className="space-y-3">
             <div className="space-y-2">
               <label htmlFor="verification-code" className="block text-sm font-medium text-white">
                 Verification Code
@@ -146,7 +146,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
                 type="text"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="w-full px-4 py-3 bg-black/60 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200 text-center text-lg tracking-widest"
+                className="w-full px-3 py-2.5 bg-black/60 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200 text-center text-base tracking-widest"
                 placeholder="123456"
                 required
                 autoComplete="one-time-code"
@@ -157,7 +157,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
 
             <button
               type="submit"
-              className={`w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 text-white font-medium rounded-lg transition-all duration-200 ${isLoading ? 'opacity-75 cursor-not-allowed' : ''}`}
+              className={`w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 text-white font-medium rounded-lg transition-all duration-200 text-sm ${isLoading ? 'opacity-75 cursor-not-allowed' : ''}`}
               disabled={isLoading || !isLoaded || code.length !== 6}
             >
               {isLoading ? (
@@ -174,7 +174,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
             </button>
           </form>
 
-          <div className="mt-6 space-y-2 text-center">
+          <div className="mt-4 space-y-2 text-center">
             <p className="text-sm text-white/70">
               Didn't receive the code?{' '}
               <button
@@ -215,10 +215,10 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
           <X className="w-5 h-5" />
         </button>
 
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-white mb-2">Create Account</h2>
-          <p className="text-white/70 text-sm">
-            Join ClassX and start your learning journey today
+        <div className="text-center mb-4">
+          <h2 className="text-xl font-bold text-white mb-1">Create Account</h2>
+          <p className="text-white/70 text-xs">
+            Join ClassX and start your learning journey
           </p>
         </div>
 
@@ -228,7 +228,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-3">
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
               <label htmlFor="signup-firstname" className="block text-sm font-medium text-white">
@@ -240,7 +240,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full px-4 py-3 bg-black/60 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200"
+                  className="w-full px-3 py-2.5 bg-black/60 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200 text-sm"
                   placeholder="John"
                   required
                   autoComplete="given-name"
@@ -259,7 +259,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  className="w-full px-4 py-3 bg-black/60 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200"
+                  className="w-full px-3 py-2.5 bg-black/60 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200 text-sm"
                   placeholder="Doe"
                   required
                   autoComplete="family-name"
@@ -334,7 +334,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
 
           <button
             type="submit"
-            className={`w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 text-white font-medium rounded-lg transition-all duration-200 ${isLoading ? 'opacity-75 cursor-not-allowed' : ''}`}
+            className={`w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 text-white font-medium rounded-lg transition-all duration-200 text-sm ${isLoading ? 'opacity-75 cursor-not-allowed' : ''}`}
             disabled={isLoading || !isLoaded}
           >
             {isLoading ? (
@@ -351,7 +351,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
           </button>
         </form>
 
-        <div className="mt-6 space-y-4">
+        <div className="mt-4 space-y-3">
           <div className="flex items-center gap-4">
             <div className="flex-1 h-px bg-white/10"></div>
             <span className="text-sm text-white/50">or continue with</span>
@@ -362,7 +362,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
             <button
               type="button"
               onClick={() => handleSocialSignUp('oauth_google')}
-              className="flex items-center justify-center gap-3 px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white transition-all duration-200"
+              className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white transition-all duration-200 text-sm"
               disabled={isLoading || !isLoaded}
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -377,7 +377,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
             <button
               type="button"
               onClick={() => handleSocialSignUp('oauth_apple')}
-              className="flex items-center justify-center gap-3 px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white transition-all duration-200"
+              className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white transition-all duration-200 text-sm"
               disabled={isLoading || !isLoaded}
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -389,7 +389,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
             <button
               type="button"
               onClick={() => handleSocialSignUp('oauth_microsoft')}
-              className="flex items-center justify-center gap-3 px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white transition-all duration-200"
+              className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white transition-all duration-200 text-sm"
               disabled={isLoading || !isLoaded}
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -403,7 +403,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
           </div>
         </div>
 
-        <div className="mt-6 text-center">
+        <div className="mt-4 text-center">
           <p className="text-sm text-white/70">
             Already have an account?{' '}
             <button

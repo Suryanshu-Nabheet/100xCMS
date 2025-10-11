@@ -90,17 +90,17 @@ const Navigation = React.memo(() => {
             </div>
             
             <div className="hidden md:block">
-              <div className="ml-6 lg:ml-10 flex items-baseline space-x-3 lg:space-x-6">
+              <div className="ml-6 lg:ml-10 flex items-baseline space-x-4 lg:space-x-6">
                 <button 
                   onClick={() => setIsSignInOpen(true)}
-                  className="text-white/80 hover:text-white transition-colors duration-200 px-4 lg:px-6 py-2 text-sm font-medium border border-white/20 rounded-xl hover:bg-white/10"
+                  className="text-white/90 hover:text-white transition-all duration-300 px-6 lg:px-8 py-3 text-base font-semibold border border-white/30 rounded-xl hover:bg-white/15 hover:border-white/50 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105"
                   aria-label="Open sign in modal"
                 >
                   Sign In
                 </button>
                 <button 
                   onClick={() => setIsSignUpOpen(true)}
-                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 lg:px-6 py-2 text-sm font-medium transition-all duration-200 transform hover:scale-105 rounded-xl"
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 lg:px-8 py-3 text-base font-semibold transition-all duration-300 transform hover:scale-105 rounded-xl shadow-lg hover:shadow-xl border border-blue-500/30 hover:border-blue-400/50"
                   aria-label="Open sign up modal"
                 >
                   Sign Up
@@ -123,13 +123,13 @@ const Navigation = React.memo(() => {
           {/* Mobile Menu */}
           {mobileMenuOpen && (
             <div className="md:hidden mt-4 pt-4 border-t border-white/10">
-              <div className="flex flex-col space-y-3">
+              <div className="flex flex-col space-y-4">
                 <button 
                   onClick={() => {
                     setIsSignInOpen(true);
                     setMobileMenuOpen(false);
                   }}
-                  className="text-white/80 hover:text-white transition-colors duration-200 px-3 py-2 text-sm font-medium cursor-pointer rounded-lg hover:bg-white/10 border border-white/20 w-full"
+                  className="text-white/90 hover:text-white transition-all duration-300 px-4 py-3 text-base font-semibold cursor-pointer rounded-xl hover:bg-white/15 border border-white/30 hover:border-white/50 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105 w-full"
                   aria-label="Open sign in modal"
                 >
                   Sign In
@@ -139,7 +139,7 @@ const Navigation = React.memo(() => {
                     setIsSignUpOpen(true);
                     setMobileMenuOpen(false);
                   }}
-                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 text-sm font-medium transition-all duration-200 rounded-xl w-full"
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-3 text-base font-semibold transition-all duration-300 rounded-xl w-full shadow-lg hover:shadow-xl border border-blue-500/30 hover:border-blue-400/50 transform hover:scale-105"
                   aria-label="Open sign up modal"
                 >
                   Sign Up
