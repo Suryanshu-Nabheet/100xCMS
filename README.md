@@ -1,4 +1,3 @@
-<div align="center">
 # ClassX Platform
 
 <div align="center">
