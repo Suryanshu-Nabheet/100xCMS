@@ -58,6 +58,11 @@ const IconSearch = ({ className }: { className?: string }) => (
     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-4.35-4.35" />
   </svg>
 )
+const IconBell = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M14.828 14.828a4 4 0 0 1-5.656 0M9 10a3 3 0 1 1 6 0M15 17h5l-1.405-1.405A2.032 2.032 0 0 1 18 14.158V11a6.002 6.002 0 0 0-4-5.659V5a2 2 0 1 0-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 1 1-6 0v-1m6 0H9" />
+  </svg>
+)
 
 // Utils
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ')
@@ -74,6 +79,7 @@ const menuItems: MenuItem[] = [
   { id: 'dashboard', label: 'Home Page', icon: <IconHome className="h-5 w-5" />, roles: ['student','instructor','admin'] },
   { id: 'my-courses', label: 'My Courses', icon: <IconBookOpen className="h-5 w-5" />, roles: ['student','instructor','admin'] },
   { id: 'browse', label: 'Browse Courses', icon: <IconBook className="h-5 w-5" />, roles: ['student','instructor','admin'] },
+  { id: 'updates', label: 'Updates', icon: <IconBell className="h-5 w-5" />, roles: ['student','instructor','admin'] },
   { id: 'profile', label: 'Profile', icon: <IconUser className="h-5 w-5" />, roles: ['student','instructor','admin'] },
   { id: 'users', label: 'Users', icon: <IconUsers className="h-5 w-5" />, roles: ['admin'] },
   { id: 'settings', label: 'Settings', icon: <IconSettings className="h-5 w-5" />, roles: ['instructor','admin'] }

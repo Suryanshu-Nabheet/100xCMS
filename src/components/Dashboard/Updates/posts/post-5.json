@@ -1,0 +1,31 @@
+{
+  "id": "5",
+  "title": "Community Challenge: Build a Todo App",
+  "description": "Join our monthly coding challenge and build a todo application using React and TypeScript.",
+  "date": "2024-01-05",
+  "time": "3:20 PM",
+  "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop",
+  "category": "Community Challenge",
+  "priority": "medium",
+  "content": [
+    {
+      "type": "text",
+      "data": "Join our January Community Challenge! Build a fully functional todo application and showcase your skills.\n\nChallenge Requirements:\n\n• Built with React and TypeScript\n• Add, edit, delete todos\n• Mark todos as complete\n• Local storage persistence\n• Responsive design\n• Deploy to Vercel/Netlify\n\nPrizes:\n\n🥇 1st Place: $500 + ClassX Pro subscription\n🥈 2nd Place: $300 + ClassX Pro subscription\n🥉 3rd Place: $200 + ClassX Pro subscription\n\nSubmission Deadline: January 31, 2024\n\nSubmit your projects and get feedback from our expert judges!"
+    },
+    {
+      "type": "image",
+      "data": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop",
+      "caption": "Example todo app design"
+    },
+    {
+      "type": "link",
+      "data": "https://classx.com/challenges/todo-app-january",
+      "caption": "Join the Challenge"
+    },
+    {
+      "type": "doc",
+      "data": "/documents/todo-challenge-guidelines.pdf",
+      "caption": "Download Challenge Guidelines"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "4",
+  "title": "New Feature: Offline Learning Mode",
+  "description": "Download courses for offline access and continue learning anywhere, anytime.",
+  "date": "2024-01-08",
+  "time": "11:45 AM",
+  "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=400&fit=crop",
+  "category": "Feature Update",
+  "priority": "high",
+  "content": [
+    {
+      "type": "text",
+      "data": "We are thrilled to announce our new Offline Learning Mode! Now you can download course content and continue learning even without an internet connection.\n\nKey Features:\n\n• Download entire courses or individual lessons\n• Sync progress when back online\n• Works on mobile and desktop\n• Automatic updates when connected\n• No additional cost for offline access\n\nPerfect for:\n• Commuting and travel\n• Areas with poor internet\n• Focused learning sessions\n• International students\n\nStart downloading your favorite courses today!"
+    },
+    {
+      "type": "image",
+      "data": "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop",
+      "caption": "Offline learning in action"
+    },
+    {
+      "type": "link",
+      "data": "https://classx.com/help/offline-mode",
+      "caption": "Learn How to Use Offline Mode"
+    }
+  ]
+}

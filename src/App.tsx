@@ -7,6 +7,7 @@ import { CourseCatalog } from './components/Dashboard/Courses/BrowseCourses/comp
 import { MyCourses } from './components/Dashboard/Courses/MyCourses/components/MyCourses'
 import { CourseDetail } from './components/Dashboard/Courses/BrowseCourses/CourseDetail'
 import { ProfileView } from './components/Dashboard/Profile/ProfileView'
+import { UpdatesMain } from './components/Dashboard/Updates'
 import Main from './components/Landing/main'
 
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -30,6 +31,8 @@ function AppContent() {
         return <MyCourses onNavigate={handleNavigation} />
       case 'browse':
         return <CourseCatalog />
+      case 'updates':
+        return <UpdatesMain />
       case 'course-detail':
         return selectedCourseId ? (
           <CourseDetail

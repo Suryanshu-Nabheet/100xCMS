@@ -1,0 +1,26 @@
+{
+  "id": "3",
+  "title": "Student Success Story: Sarah Chen",
+  "description": "Read about how Sarah transitioned from marketing to software development using ClassX courses.",
+  "date": "2024-01-10",
+  "time": "9:15 AM",
+  "image": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=800&h=400&fit=crop",
+  "category": "Success Story",
+  "priority": "low",
+  "content": [
+    {
+      "type": "text",
+      "data": "Meet Sarah Chen, a former marketing professional who successfully transitioned to software development using ClassX courses.\n\n\"I never thought I could learn programming at 32, but ClassX made it possible. The structured curriculum and supportive community helped me land my dream job as a frontend developer.\"\n\nSarah's Journey:\n\n• Started with HTML/CSS fundamentals\n• Completed JavaScript and React courses\n• Built 5 portfolio projects\n• Landed a job at a tech startup\n• Now mentoring other students\n\nHer advice to new learners: \"Start with the basics, practice consistently, and don't be afraid to ask questions in the community forums.\""
+    },
+    {
+      "type": "image",
+      "data": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=300&fit=crop",
+      "caption": "Sarah at her new workplace"
+    },
+    {
+      "type": "video",
+      "data": "/videos/sarah-success-story.mp4",
+      "caption": "Watch Sarah's full interview"
+    }
+  ]
+}

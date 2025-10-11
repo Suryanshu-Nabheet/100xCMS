@@ -1,0 +1,20 @@
+{
+  "id": "2",
+  "title": "Platform Maintenance Scheduled",
+  "description": "Scheduled maintenance window for platform updates and performance improvements.",
+  "date": "2024-01-12",
+  "time": "2:00 PM",
+  "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=400&fit=crop",
+  "category": "System Update",
+  "priority": "medium",
+  "content": [
+    {
+      "type": "text",
+      "data": "We will be performing scheduled maintenance on our platform to implement important updates and performance improvements.\n\nMaintenance Details:\n\n• Date: January 15, 2024\n• Time: 2:00 AM - 6:00 AM EST\n• Duration: Approximately 4 hours\n• Impact: Platform will be temporarily unavailable\n\nDuring this time, you will not be able to access:\n• Course content\n• Progress tracking\n• User dashboard\n• Mobile app\n\nWe apologize for any inconvenience and appreciate your patience."
+    },
+    {
+      "type": "text",
+      "data": "What to expect after maintenance:\n\n✅ Improved page load times\n✅ Enhanced video streaming quality\n✅ Better mobile app performance\n✅ New features and bug fixes\n\nWe will send a notification once maintenance is complete."
+    }
+  ]
+}

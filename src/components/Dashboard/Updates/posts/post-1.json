@@ -1,0 +1,31 @@
+{
+  "id": "1",
+  "title": "New Course: Advanced React Patterns",
+  "description": "Learn advanced React patterns including hooks, context, and performance optimization techniques.",
+  "date": "2024-01-15",
+  "time": "10:30 AM",
+  "image": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=400&fit=crop",
+  "category": "Course Announcement",
+  "priority": "high",
+  "content": [
+    {
+      "type": "text",
+      "data": "We are excited to announce our new comprehensive course on Advanced React Patterns! This course is designed for developers who want to take their React skills to the next level.\n\nIn this course, you will learn:\n\n• Advanced Hook patterns and custom hooks\n• Context API best practices\n• Performance optimization techniques\n• State management patterns\n• Testing strategies for complex components\n\nThe course includes hands-on projects, real-world examples, and expert guidance from our experienced instructors."
+    },
+    {
+      "type": "image",
+      "data": "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=800&h=400&fit=crop",
+      "caption": "Course curriculum overview"
+    },
+    {
+      "type": "link",
+      "data": "https://classx.com/courses/advanced-react-patterns",
+      "caption": "Enroll Now - Advanced React Patterns"
+    },
+    {
+      "type": "pdf",
+      "data": "/documents/react-patterns-syllabus.pdf",
+      "caption": "Download Course Syllabus"
+    }
+  ]
+}
