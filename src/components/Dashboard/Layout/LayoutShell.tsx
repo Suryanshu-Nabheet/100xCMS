@@ -248,7 +248,136 @@ export default function LayoutShell({ activeItem, onItemClick, children }: Layou
                       userButtonPopoverCardBoxInnerWrapper: "bg-black",
                       userButtonPopoverCardBoxInnerWrapperInner: "bg-black",
                       userButtonPopoverCardBoxInnerWrapperInnerInner: "bg-black",
-                      userButtonPopoverCardBoxInnerWrapperInnerInnerInner: "bg-black"
+                      userButtonPopoverCardBoxInnerWrapperInnerInnerInner: "bg-black",
+                      // Additional comprehensive Clerk styling
+                      userButtonPopoverAvatar: "bg-black",
+                      userButtonPopoverAvatarBox: "bg-black",
+                      userButtonPopoverAvatarImage: "bg-black",
+                      userButtonPopoverHeader: "bg-black",
+                      userButtonPopoverHeaderText: "text-white",
+                      userButtonPopoverHeaderSubtext: "text-white/80",
+                      userButtonPopoverFooterBox: "bg-black",
+                      userButtonPopoverFooterBoxInner: "bg-black",
+                      userButtonPopoverFooterBoxInnerWrapper: "bg-black",
+                      userButtonPopoverFooterBoxInnerWrapperInner: "bg-black",
+                      // Account Management Modal/Sidebar
+                      accountManagementModal: "bg-black",
+                      accountManagementSidebar: "bg-black",
+                      accountManagementSidebarHeader: "bg-black",
+                      accountManagementSidebarTitle: "text-white",
+                      accountManagementSidebarSubtitle: "text-white",
+                      accountManagementSidebarContent: "bg-black",
+                      accountManagementSidebarFooter: "bg-black",
+                      // Navigation Items
+                      accountManagementNavItem: "text-white bg-black hover:bg-white/10",
+                      accountManagementNavItemActive: "bg-blue-500/20 text-white border-l-3 border-blue-500/80",
+                      accountManagementNavItemIcon: "text-white",
+                      accountManagementNavItemText: "text-white",
+                      // Profile Details
+                      profileDetails: "bg-black",
+                      profileDetailsHeader: "bg-black",
+                      profileDetailsTitle: "text-white",
+                      profileDetailsContent: "bg-black",
+                      profileDetailsSection: "bg-black border border-white/10",
+                      profileDetailsSectionTitle: "text-white",
+                      profileDetailsSectionContent: "bg-black",
+                      // Profile Avatar and Text
+                      profileAvatar: "bg-black",
+                      profileAvatarText: "text-white",
+                      profileName: "text-white",
+                      profileEmail: "text-white",
+                      // Connected Accounts
+                      connectedAccounts: "bg-black",
+                      connectedAccountsItem: "bg-black",
+                      connectedAccountsItemText: "text-white",
+                      connectedAccountsItemEmail: "text-white",
+                      connectedAccountsItemIcon: "text-white",
+                      // Action Buttons
+                      actionButton: "bg-black border border-white/10 text-white hover:bg-white/10",
+                      actionButtonPrimary: "bg-blue-500/80 border border-blue-500/80 text-white hover:bg-blue-500",
+                      // Modal Close Button
+                      modalCloseButton: "text-white bg-black hover:bg-white/10",
+                      // Form Fields
+                      formField: "bg-black border border-white/10 text-white",
+                      formFieldInput: "bg-black border border-white/10 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20",
+                      formFieldLabel: "text-white",
+                      formFieldError: "text-red-400",
+                      // Buttons
+                      button: "bg-black border border-blue-500/30 text-white hover:bg-blue-500/10 hover:border-blue-500/50",
+                      buttonPrimary: "bg-blue-500/80 border border-blue-500/80 text-white hover:bg-blue-500",
+                      // Modal
+                      modal: "bg-black/95 backdrop-blur-20",
+                      modalContent: "bg-black border border-white/10 shadow-2xl",
+                      modalHeader: "bg-black border-b border-white/10",
+                      modalTitle: "text-white",
+                      // Cards
+                      card: "bg-black border border-white/10",
+                      cardHeader: "bg-black border-b border-white/10",
+                      cardTitle: "text-white",
+                      cardContent: "bg-black",
+                      // User Profile
+                      userProfile: "bg-black border border-white/10",
+                      userProfileHeader: "bg-black border-b border-white/10",
+                      userProfileTitle: "text-white",
+                      userProfileSubtitle: "text-white/70",
+                      userProfileContent: "bg-black",
+                      userProfileSection: "bg-black border border-white/10",
+                      userProfileSectionTitle: "text-white",
+                      userProfileSectionContent: "bg-black",
+                      // Security Components
+                      securitySection: "bg-black border border-white/10",
+                      securitySectionTitle: "text-white",
+                      securitySectionContent: "bg-black",
+                      securityItem: "bg-black border border-white/10",
+                      securityItemTitle: "text-white",
+                      securityItemDescription: "text-white/70",
+                      securityItemAction: "bg-black border border-blue-500/30 text-white hover:bg-blue-500/10 hover:border-blue-500/50",
+                      // Settings Components
+                      settingsSection: "bg-black border border-white/10",
+                      settingsSectionTitle: "text-white",
+                      settingsSectionContent: "bg-black",
+                      settingsItem: "bg-black border border-white/10",
+                      settingsItemTitle: "text-white",
+                      settingsItemDescription: "text-white/70",
+                      settingsItemToggle: "bg-black border border-white/10",
+                      settingsItemToggleActive: "bg-blue-500/80 border-blue-500/80",
+                      // Notification Components
+                      notificationSection: "bg-black border border-white/10",
+                      notificationSectionTitle: "text-white",
+                      notificationSectionContent: "bg-black",
+                      notificationItem: "bg-black border border-white/10",
+                      notificationItemTitle: "text-white",
+                      notificationItemDescription: "text-white/70",
+                      notificationItemToggle: "bg-black border border-white/10",
+                      notificationItemToggleActive: "bg-blue-500/80 border-blue-500/80",
+                      // Data Table Components
+                      dataTable: "bg-black border border-white/10",
+                      dataTableHeader: "bg-black border-b border-white/10",
+                      dataTableHeaderCell: "text-white bg-black",
+                      dataTableRow: "bg-black border-b border-white/5 hover:bg-white/5",
+                      dataTableCell: "text-white bg-black",
+                      // Pagination Components
+                      pagination: "bg-black",
+                      paginationButton: "bg-black border border-white/10 text-white hover:bg-white/10",
+                      paginationButtonActive: "bg-blue-500/80 border-blue-500/80 text-white",
+                      // Loading States
+                      loadingSpinner: "border-blue-500/30 border-t-blue-500/80",
+                      loadingText: "text-white/70",
+                      // Error States
+                      errorMessage: "bg-red-500/10 border border-red-500/20 text-red-400",
+                      errorTitle: "text-red-400",
+                      errorDescription: "text-red-400/80",
+                      // Success States
+                      successMessage: "bg-green-500/10 border border-green-500/20 text-green-400",
+                      successTitle: "text-green-400",
+                      successDescription: "text-green-400/80",
+                      // Tooltip Components
+                      tooltip: "bg-black border border-white/10 text-white shadow-2xl",
+                      tooltipArrow: "border-black",
+                      // Dropdown Components
+                      dropdown: "bg-black border border-white/10 shadow-2xl",
+                      dropdownItem: "text-white bg-black hover:bg-white/10",
+                      dropdownDivider: "border-white/10"
                     }
                   }}
                 />
