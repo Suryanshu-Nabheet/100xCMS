@@ -14,7 +14,11 @@ interface CourseProgress {
 export function ProfileView() {
   const { user } = useUser();
   const { getUserEnrolledCourses, getCourseProgress } = useApp();
-  const { isAdmin } = useAdminAuth();
+  const { isAdminEmail } = useAdminAuth();
+  
+  // Check if the current user's email is the admin email
+  const userEmail = user?.primaryEmailAddress?.emailAddress
+  const isAdminByEmail = userEmail ? isAdminEmail(userEmail) : false
   
   // Memoize enrolled courses to prevent unnecessary re-renders
   const enrolledCourses = useMemo(() => {
@@ -65,9 +69,9 @@ export function ProfileView() {
     return {
       fullName: user.fullName || user.firstName + ' ' + user.lastName || 'Unknown User',
       email: user.primaryEmailAddress?.emailAddress || 'No email provided',
-      role: isAdmin ? 'Admin' : 'Student'
+      role: isAdminByEmail ? 'Admin' : 'Student'
     };
-  }, [user, isAdmin]);
+  }, [user, isAdminByEmail]);
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">

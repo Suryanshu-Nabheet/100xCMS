@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-react'
+import { ClerkProvider, SignedIn, SignedOut, useUser } from '@clerk/clerk-react'
 import { AppProvider } from './components/Dashboard/App/contexts/AppContext'
 import LayoutShell from './components/Dashboard/Layout/LayoutShell'
 import { HomePage } from './components/Dashboard/Home/HomePage'
@@ -8,7 +8,7 @@ import { MyCourses } from './components/Dashboard/Courses/MyCourses/components/M
 import { CourseDetail } from './components/Dashboard/Courses/BrowseCourses/CourseDetail'
 import { ProfileView } from './components/Dashboard/Profile/ProfileView'
 import { UpdatesMain } from './components/Dashboard/Updates'
-import { AdminLoginForm, AdminDashboard, CourseManager, useAdminAuth } from './components/Admin'
+import { AdminDashboard, CourseManager, useAdminAuth } from './components/Admin'
 import Main from './components/Landing/main'
 
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -16,7 +16,12 @@ const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 function AppContent() {
   const [activeView, setActiveView] = useState('dashboard')
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null)
-  const { isAdmin, isLoading } = useAdminAuth()
+  const { user } = useUser()
+  const { isAdminEmail } = useAdminAuth()
+  
+  // Check if the current user's email is the admin email
+  const userEmail = user?.primaryEmailAddress?.emailAddress
+  const isAdminByEmail = userEmail ? isAdminEmail(userEmail) : false
 
   const handleNavigation = (view: string, courseId?: string) => {
     setActiveView(view)
@@ -25,14 +30,6 @@ function AppContent() {
     }
   }
 
-  // Show admin login if not authenticated as admin
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-white">Loading...</div>
-      </div>
-    )
-  }
 
   const renderContent = () => {
     switch (activeView) {
@@ -81,12 +78,14 @@ function AppContent() {
       </SignedOut>
       
       <SignedIn>
-        {isAdmin ? (
+        {isAdminByEmail ? (
           <LayoutShell activeItem={activeView} onItemClick={handleNavigation}>
             {renderContent()}
           </LayoutShell>
         ) : (
-          <AdminLoginForm />
+          <LayoutShell activeItem={activeView} onItemClick={handleNavigation}>
+            {renderContent()}
+          </LayoutShell>
         )}
       </SignedIn>
     </>

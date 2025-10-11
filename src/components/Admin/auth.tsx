@@ -4,16 +4,10 @@ import { useState, useEffect } from 'react'
 interface AdminUser {
   name: string
   email: string
-  password: string
   role: 'admin'
 }
 
-const ADMIN_CREDENTIALS: AdminUser = {
-  name: 'Suryanshu Nabheet',
-  email: 'suryanshunab@gmail.com',
-  password: 'suryanshu@30052010',
-  role: 'admin'
-}
+const ADMIN_EMAIL = 'suryanshunab@gmail.com'
 
 export function useAdminAuth() {
   const [isAdmin, setIsAdmin] = useState(false)
@@ -26,21 +20,23 @@ export function useAdminAuth() {
     if (adminSession) {
       try {
         const sessionData = JSON.parse(adminSession)
-        if (sessionData.email === ADMIN_CREDENTIALS.email) {
+        if (sessionData.email === ADMIN_EMAIL) {
           setIsAdmin(true)
           setAdminUser(sessionData)
         }
-      } catch (error) {
+      } catch {
         localStorage.removeItem('admin_session')
       }
     }
     setIsLoading(false)
   }, [])
 
-  const loginAdmin = (email: string, password: string): boolean => {
-    if (email === ADMIN_CREDENTIALS.email && password === ADMIN_CREDENTIALS.password) {
+  const loginAdmin = (email: string): boolean => {
+    if (email === ADMIN_EMAIL) {
       const sessionData = {
-        ...ADMIN_CREDENTIALS,
+        name: 'Suryanshu Nabheet',
+        email: ADMIN_EMAIL,
+        role: 'admin' as const,
         loginTime: Date.now()
       }
       localStorage.setItem('admin_session', JSON.stringify(sessionData))
@@ -58,7 +54,7 @@ export function useAdminAuth() {
   }
 
   const isAdminEmail = (email: string): boolean => {
-    return email === ADMIN_CREDENTIALS.email
+    return email === ADMIN_EMAIL
   }
 
   return {
@@ -68,13 +64,12 @@ export function useAdminAuth() {
     loginAdmin,
     logoutAdmin,
     isAdminEmail,
-    ADMIN_CREDENTIALS
+    ADMIN_EMAIL
   }
 }
 
 export function AdminLoginForm() {
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const { loginAdmin } = useAdminAuth()
@@ -84,9 +79,9 @@ export function AdminLoginForm() {
     setIsLoading(true)
     setError('')
 
-    const success = loginAdmin(email, password)
+    const success = loginAdmin(email)
     if (!success) {
-      setError('Invalid admin credentials')
+      setError('Invalid admin email')
     }
     
     setIsLoading(false)
@@ -103,7 +98,7 @@ export function AdminLoginForm() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-white mb-2">
-              Email Address
+              Admin Email Address
             </label>
             <input
               id="email"
@@ -111,22 +106,7 @@ export function AdminLoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 bg-white/10 border border-blue-500/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50 transition-all duration-300"
-              placeholder="Enter admin email"
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-white mb-2">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 bg-white/10 border border-blue-500/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50 transition-all duration-300"
-              placeholder="Enter admin password"
+              placeholder="suryanshunab@gmail.com"
               required
             />
           </div>

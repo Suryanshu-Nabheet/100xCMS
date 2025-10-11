@@ -3,6 +3,7 @@ import { useState, type ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ClerkAccountHandler } from './Account'
 import { useAdminAuth } from '../../Admin'
+import { useUser } from '@clerk/clerk-react'
 
 
 // Icons
@@ -101,19 +102,17 @@ interface LayoutShellProps {
 
 export default function LayoutShell({ activeItem, onItemClick, children }: LayoutShellProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const { isAdmin, isLoading } = useAdminAuth()
+  const { user } = useUser()
+  const { isAdminEmail } = useAdminAuth()
   
-  const role = isAdmin ? 'admin' : 'student'
-  const menuItems = getMenuItems(isAdmin)
+  // Check if the current user's email is the admin email
+  const userEmail = user?.primaryEmailAddress?.emailAddress
+  const isAdminByEmail = userEmail ? isAdminEmail(userEmail) : false
+  
+  const role = isAdminByEmail ? 'admin' : 'student'
+  const menuItems = getMenuItems(isAdminByEmail)
   const visibleMenu = menuItems.filter(m => !m.roles || m.roles.includes(role as 'student' | 'instructor' | 'admin') || role === 'admin')
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-white">Loading...</div>
-      </div>
-    )
-  }
 
   const headerHeight = 64 // 16 * 4
   const sidebarWidth = isOpen ? 280 : 80
