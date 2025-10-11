@@ -395,7 +395,7 @@ export default function LandingPage() {
       </main>
       
       <TechSkills />
-      <FooterCTA />
+        <FooterCTA setIsSignUpOpen={setIsSignUpOpen} />
       <Footer />
       
       {/* Auth Modals */}

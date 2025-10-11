@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Users, Award, BookOpen, Clock, CheckCircle, TrendingUp, Target, Zap } from 'lucide-react';
-import { SignInButton, SignUpButton } from '@clerk/clerk-react';
 import { cn } from '../../../lib/utils';
 
 interface HomePageProps {
@@ -399,74 +398,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
 
   return (
     <div className="relative bg-black min-h-screen">
-      {/* Navigation Bar */}
-      <nav className="absolute top-0 left-0 right-0 z-50 p-6">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">CX</span>
-            </div>
-            <span className="text-white font-bold text-xl">
-              <span className="text-white">Class</span><span className="text-blue-400">X</span>
-            </span>
-          </div>
-          
-          {/* Auth Buttons */}
-          <div className="flex items-center space-x-4">
-            <SignInButton 
-              mode="modal"
-              appearance={{
-                elements: {
-                  modalContent: "bg-black border border-white/10",
-                  headerTitle: "text-white",
-                  headerSubtitle: "text-white/80",
-                  socialButtonsBlockButton: "bg-white/5 border border-white/10 text-white hover:bg-white/10",
-                  socialButtonsBlockButtonText: "text-white",
-                  formFieldInput: "bg-white/5 border border-white/10 text-white",
-                  formFieldLabel: "text-white",
-                  identityPreviewText: "text-white",
-                  formButtonPrimary: "bg-blue-600 hover:bg-blue-700 text-white",
-                  footerActionLink: "text-blue-400 hover:text-blue-300",
-                  formResendCodeLink: "text-blue-400 hover:text-blue-300",
-                  formFieldSuccessText: "text-green-400",
-                  formFieldErrorText: "text-red-400",
-                  alertText: "text-white"
-                }
-              }}
-            >
-              <button className="px-6 py-2 text-white border border-white/20 rounded-full hover:bg-white/10 transition-all duration-300 font-medium">
-                Sign In
-              </button>
-            </SignInButton>
-            <SignUpButton 
-              mode="modal"
-              appearance={{
-                elements: {
-                  modalContent: "bg-black border border-white/10",
-                  headerTitle: "text-white",
-                  headerSubtitle: "text-white/80",
-                  socialButtonsBlockButton: "bg-white/5 border border-white/10 text-white hover:bg-white/10",
-                  socialButtonsBlockButtonText: "text-white",
-                  formFieldInput: "bg-white/5 border border-white/10 text-white",
-                  formFieldLabel: "text-white",
-                  identityPreviewText: "text-white",
-                  formButtonPrimary: "bg-blue-600 hover:bg-blue-700 text-white",
-                  footerActionLink: "text-blue-400 hover:text-blue-300",
-                  formResendCodeLink: "text-blue-400 hover:text-blue-300",
-                  formFieldSuccessText: "text-green-400",
-                  formFieldErrorText: "text-red-400",
-                  alertText: "text-white"
-                }
-              }}
-            >
-              <button className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all duration-300 font-medium">
-                Sign Up
-              </button>
-            </SignUpButton>
-          </div>
-        </div>
-      </nav>
 
       {/* Dark blue aesthetic spots */}
       <div className="absolute top-20 left-10 w-96 h-96 bg-blue-900/10 rounded-full blur-3xl pointer-events-none"></div>

@@ -236,9 +236,12 @@ export default function LayoutShell({ activeItem, onItemClick, children }: Layou
                       userButtonPopoverActionButton: "text-white hover:bg-white/10",
                       userButtonPopoverActionButtonText: "text-white",
                       userButtonPopoverActionButtonIcon: "text-white",
-                      userButtonPopoverFooter: "bg-black",
+                      userButtonPopoverFooter: "bg-black border-t border-white/10",
                       userButtonPopoverMainIdentifier: "text-white",
-                      userButtonPopoverSecondaryIdentifier: "text-white/80"
+                      userButtonPopoverSecondaryIdentifier: "text-white/80",
+                      userButtonPopoverFooterText: "text-white/60",
+                      userButtonPopoverFooterAction: "text-white/60",
+                      userButtonPopoverFooterActionText: "text-white/60"
                     }
                   }}
                 />

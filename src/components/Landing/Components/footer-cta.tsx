@@ -3,7 +3,12 @@ import React from 'react';
 import { Download, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const FooterCTA = () => {
+interface FooterCTAProps {
+  setIsSignUpOpen: (isOpen: boolean) => void;
+}
+
+const FooterCTA: React.FC<FooterCTAProps> = ({ setIsSignUpOpen }) => {
+  
   const floatingAnimation = {
     y: [0, -10, 0],
     transition: {
@@ -50,6 +55,7 @@ const FooterCTA = () => {
               Download App
             </button>
             <button 
+              onClick={() => setIsSignUpOpen(true)}
               className="flex w-full items-center gap-3 md:w-fit bg-white/20 text-white hover:bg-white/30 px-6 py-3 rounded-xl font-semibold text-base transition-all duration-200 border border-white/30 shadow-xl hover:shadow-2xl"
               aria-label="Join ClassX platform"
             >
@@ -60,7 +66,7 @@ const FooterCTA = () => {
         </div>
         <motion.div
           animate={floatingAnimation}
-          className="absolute mx-auto w-full justify-center md:-right-8 md:-top-4"
+          className="absolute mx-auto w-full justify-center md:-right-8 md:-top-8"
         >
           <div className="absolute w-[100%] rotate-3 transition-all duration-300 group-hover:-translate-y-4 group-hover:rotate-6 md:-right-8 md:w-[55%]">
             <img
