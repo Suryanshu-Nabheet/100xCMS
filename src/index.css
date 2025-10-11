@@ -402,6 +402,58 @@ footer a:active {
   color: #60a5fa !important;
 }
 
+/* Clerk UserButton Dark Theme Overrides */
+.cl-userButtonPopoverCard {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-userButtonPopoverActions {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverActionButton {
+  color: white !important;
+  background-color: transparent !important;
+}
+
+.cl-userButtonPopoverActionButton:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-userButtonPopoverActionButtonText {
+  color: white !important;
+}
+
+.cl-userButtonPopoverActionButtonIcon {
+  color: white !important;
+}
+
+.cl-userButtonPopoverFooter {
+  background-color: #000000 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-userButtonPopoverFooterText {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.cl-userButtonPopoverFooterAction {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.cl-userButtonPopoverFooterActionText {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.cl-userButtonPopoverMainIdentifier {
+  color: white !important;
+}
+
+.cl-userButtonPopoverSecondaryIdentifier {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
 /* Responsive Typography */
 @media (max-width: 640px) {
   h1 { font-size: 1.875rem; }

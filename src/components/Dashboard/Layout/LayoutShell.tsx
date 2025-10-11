@@ -229,6 +229,7 @@ export default function LayoutShell({ activeItem, onItemClick, children }: Layou
               <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
                 <UserButton 
                   appearance={{
+                    baseTheme: undefined,
                     elements: {
                       avatarBox: "w-8 h-8",
                       userButtonPopoverCard: "bg-black border border-white/10",
@@ -241,7 +242,12 @@ export default function LayoutShell({ activeItem, onItemClick, children }: Layou
                       userButtonPopoverSecondaryIdentifier: "text-white/80",
                       userButtonPopoverFooterText: "text-white/60",
                       userButtonPopoverFooterAction: "text-white/60",
-                      userButtonPopoverFooterActionText: "text-white/60"
+                      userButtonPopoverFooterActionText: "text-white/60",
+                      userButtonPopoverCardBox: "bg-black",
+                      userButtonPopoverCardBoxInner: "bg-black",
+                      userButtonPopoverCardBoxInnerWrapper: "bg-black",
+                      userButtonPopoverCardBoxInnerWrapperInner: "bg-black",
+                      userButtonPopoverCardBoxInnerWrapperInnerInner: "bg-black"
                     }
                   }}
                 />
