@@ -497,15 +497,15 @@ export function HomePage({ onNavigate }: HomePageProps) {
           </h1>
           
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-12 tracking-tight relative">
-            <span className="text-white font-black">Unlock Your</span> <span className="text-blue-400 font-black">Potential</span>
+            <span className="text-white font-black">Unlock Your</span> <span className="text-white font-black">Potential</span>
           </h2>
           
           <motion.p 
             variants={fadeInUp}
             transition={{ delay: 0.8, duration: 0.6 }}
-            className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed relative z-10"
+            className="text-lg sm:text-xl md:text-2xl text-white max-w-3xl mx-auto mb-12 leading-relaxed relative z-10"
           >
-            <span className="text-gray-300">Join ClassX and transform your career with</span> <span className="text-blue-400 font-semibold">cutting-edge courses, expert instructors, and a vibrant community.</span>
+            <span className="text-white">Join ClassX and transform your career with</span> <span className="text-white font-semibold">cutting-edge courses, expert instructors, and a vibrant community.</span>
           </motion.p>
 
           <motion.div
