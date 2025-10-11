@@ -7,7 +7,7 @@ import { CourseCatalog } from './components/Dashboard/Courses/BrowseCourses/comp
 import { MyCourses } from './components/Dashboard/Courses/MyCourses/components/MyCourses'
 import { CourseDetail } from './components/Dashboard/Courses/BrowseCourses/CourseDetail'
 import { ProfileView } from './components/Dashboard/Profile/ProfileView'
-import Main from './components/Home/main'
+import Main from './components/Landing/main'
 
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 

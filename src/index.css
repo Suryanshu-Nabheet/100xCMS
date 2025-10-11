@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Wrapper utility class */
+.wrapper {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Mockup image specific styles */
+.mockup-image {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 @layer base {
   * {
     @apply border-gray-700/20;
@@ -369,8 +384,22 @@ input:focus, textarea:focus, select:focus {
 }
 
 /* Ensure ALL text is white by default */
-h1, h2, h3, h4, h5, h6, p, div, a, button, label, li, td, th {
+h1, h2, h3, h4, h5, h6, p, div, button, label, li, td, th {
   color: white !important;
+}
+
+/* Footer links with hover effects */
+footer a {
+  color: white !important;
+  transition: color 0.2s ease !important;
+}
+
+footer a:hover {
+  color: #60a5fa !important;
+}
+
+footer a:active {
+  color: #60a5fa !important;
 }
 
 /* Responsive Typography */

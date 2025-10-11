@@ -7,4 +7,7 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  define: {
+    'import.meta.env.VITE_CLERK_PUBLISHABLE_KEY': JSON.stringify('pk_test_aW1tZW5zZS1ncmFja2xlLTI0LmNsZXJrLmFjY291bnRzLmRldiQ'),
+  },
 });
