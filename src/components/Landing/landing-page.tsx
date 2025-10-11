@@ -199,30 +199,45 @@ const InfiniteMovingCards = React.memo(({ items }: { items: typeof heroItems }) 
 });
 
 // Tech Skills Component
-const techSkills = [
+
+// Create different tech stacks for each row
+const frontendSkills = [
   { name: "React", icon: SiReact, color: "text-cyan-400" },
-  { name: "Node.js", icon: SiNodedotjs, color: "text-green-400" },
-  { name: "Python", icon: SiPython, color: "text-yellow-400" },
-  { name: "JavaScript", icon: SiJavascript, color: "text-yellow-300" },
-  { name: "TypeScript", icon: SiTypescript, color: "text-blue-400" },
+  { name: "Next.js", icon: SiNextdotjs, color: "text-white" },
   { name: "HTML5", icon: SiHtml5, color: "text-orange-400" },
   { name: "CSS3", icon: SiCss3, color: "text-blue-500" },
   { name: "Tailwind", icon: SiTailwindcss, color: "text-cyan-300" },
+  { name: "JavaScript", icon: SiJavascript, color: "text-yellow-300" },
+  { name: "TypeScript", icon: SiTypescript, color: "text-blue-400" },
+  { name: "Figma", icon: SiFigma, color: "text-purple-400" },
+];
+
+const backendSkills = [
+  { name: "Node.js", icon: SiNodedotjs, color: "text-green-400" },
+  { name: "Python", icon: SiPython, color: "text-yellow-400" },
+  { name: "Express", icon: SiExpress, color: "text-gray-400" },
   { name: "MongoDB", icon: SiMongodb, color: "text-green-500" },
   { name: "PostgreSQL", icon: SiPostgresql, color: "text-blue-600" },
+  { name: "Redis", icon: SiRedis, color: "text-red-500" },
+  { name: "GraphQL", icon: SiGraphql, color: "text-pink-400" },
   { name: "Docker", icon: SiDocker, color: "text-blue-400" },
+];
+
+const devopsSkills = [
   { name: "Kubernetes", icon: SiKubernetes, color: "text-blue-500" },
   { name: "AWS", icon: SiAmazon, color: "text-orange-400" },
   { name: "Git", icon: SiGit, color: "text-red-400" },
   { name: "Vim", icon: SiVim, color: "text-green-400" },
-  { name: "Figma", icon: SiFigma, color: "text-purple-400" },
-  { name: "GraphQL", icon: SiGraphql, color: "text-pink-400" },
+  { name: "Docker", icon: SiDocker, color: "text-blue-400" },
   { name: "Redis", icon: SiRedis, color: "text-red-500" },
+  { name: "PostgreSQL", icon: SiPostgresql, color: "text-blue-600" },
   { name: "Express", icon: SiExpress, color: "text-gray-400" },
-  { name: "Next.js", icon: SiNextdotjs, color: "text-white" },
 ];
 
-const tripleSkills = [...techSkills, ...techSkills, ...techSkills, ...techSkills];
+// Duplicate each array to create continuous scrolling effect
+const frontendSkillsExtended = [...frontendSkills, ...frontendSkills, ...frontendSkills, ...frontendSkills];
+const backendSkillsExtended = [...backendSkills, ...backendSkills, ...backendSkills, ...backendSkills];
+const devopsSkillsExtended = [...devopsSkills, ...devopsSkills, ...devopsSkills, ...devopsSkills];
 
 const TechSkills = React.memo(() => {
   return (
@@ -246,13 +261,12 @@ const TechSkills = React.memo(() => {
         </div>
 
         <div className="space-y-6">
-          {/* First row - Left to Right */}
+          {/* First row - Right to Left */}
           <div className="slider-container relative group">
-            
-            <div className="flex skills-slider">
-              {tripleSkills.map((skill, index) => (
+            <div className="flex skills-slider-row1">
+              {frontendSkillsExtended.map((skill, index) => (
                 <div
-                  key={`left-${index}`}
+                  key={`frontend-${index}`}
                   className="flex-shrink-0 flex items-center bg-white/5 backdrop-blur-sm rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 mx-2 sm:mx-2.5 md:mx-3 min-w-fit relative overflow-hidden"
                 >
                   <skill.icon className={`w-4 sm:w-5 h-4 sm:h-5 mr-1.5 sm:mr-2 ${skill.color} relative z-10`} />
@@ -264,13 +278,12 @@ const TechSkills = React.memo(() => {
             </div>
           </div>
 
-          {/* Second row - Right to Left */}
+          {/* Second row - Left to Right */}
           <div className="slider-container relative group">
-            
-            <div className="flex skills-slider">
-              {tripleSkills.map((skill, index) => (
+            <div className="flex skills-slider-row2">
+              {backendSkillsExtended.map((skill, index) => (
                 <div
-                  key={`right-${index}`}
+                  key={`backend-${index}`}
                   className="flex-shrink-0 flex items-center bg-white/5 backdrop-blur-sm rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 mx-2 sm:mx-2.5 md:mx-3 min-w-fit relative overflow-hidden"
                 >
                   <skill.icon className={`w-4 sm:w-5 h-4 sm:h-5 mr-1.5 sm:mr-2 ${skill.color} relative z-10`} />
@@ -282,13 +295,12 @@ const TechSkills = React.memo(() => {
             </div>
           </div>
 
-          {/* Third row - Left to Right */}
+          {/* Third row - Right to Left */}
           <div className="slider-container relative group">
-            
-            <div className="flex skills-slider">
-              {tripleSkills.map((skill, index) => (
+            <div className="flex skills-slider-row3">
+              {devopsSkillsExtended.map((skill, index) => (
                 <div
-                  key={`left2-${index}`}
+                  key={`devops-${index}`}
                   className="flex-shrink-0 flex items-center bg-white/5 backdrop-blur-sm rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 mx-2 sm:mx-2.5 md:mx-3 min-w-fit relative overflow-hidden"
                 >
                   <skill.icon className={`w-4 sm:w-5 h-4 sm:h-5 mr-1.5 sm:mr-2 ${skill.color} relative z-10`} />
@@ -323,7 +335,9 @@ export default function LandingPage() {
         }
         
         .group:hover .image-slider,
-        .group:hover .skills-slider {
+        .group:hover .skills-slider-row1,
+        .group:hover .skills-slider-row2,
+        .group:hover .skills-slider-row3 {
           animation-play-state: paused !important;
         }
         
@@ -331,16 +345,16 @@ export default function LandingPage() {
           animation: slide-left-slow 60s linear infinite;
         }
         
-        .skills-slider:nth-of-type(1) {
-          animation: slide-left-slow 60s linear infinite;
+        .skills-slider-row1 {
+          animation: slide-right-slow 50s linear infinite;
         }
         
-        .skills-slider:nth-of-type(2) {
-          animation: slide-right-slow 60s linear infinite;
+        .skills-slider-row2 {
+          animation: slide-left-slow 45s linear infinite;
         }
         
-        .skills-slider:nth-of-type(3) {
-          animation: slide-left-slow 60s linear infinite;
+        .skills-slider-row3 {
+          animation: slide-right-slow 55s linear infinite;
         }
       `}</style>
       <div className="flex min-h-screen flex-col bg-black relative overflow-x-hidden">
