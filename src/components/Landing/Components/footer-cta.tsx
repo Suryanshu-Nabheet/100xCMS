@@ -60,7 +60,7 @@ const FooterCTA = () => {
         </div>
         <motion.div
           animate={floatingAnimation}
-          className="absolute mx-auto w-full justify-center md:-right-8 md:top-4"
+          className="absolute mx-auto w-full justify-center md:-right-8 md:-top-4"
         >
           <div className="absolute w-[100%] rotate-3 transition-all duration-300 group-hover:-translate-y-4 group-hover:rotate-6 md:-right-8 md:w-[55%]">
             <img
