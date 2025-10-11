@@ -1,7 +1,99 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Star, Users, Award, BookOpen, Clock, CheckCircle, TrendingUp, Target, Zap } from 'lucide-react';
+import { Users, BookOpen, TrendingUp, Target, Zap } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+
+// Floating Animation Utils
+const floatingAnimation = {
+  y: [0, -15, 0],
+  rotate: [0, 2, 0],
+};
+
+const glowAnimation = {
+  boxShadow: [
+    "0 0 25px rgba(59, 130, 246, 0.4)",
+    "0 0 40px rgba(59, 130, 246, 0.7)",
+    "0 0 25px rgba(59, 130, 246, 0.4)"
+  ]
+};
+
+// Floating Logos Component
+const FloatingLogos: React.FC = () => {
+  const logos = [
+    {
+      src: "https://img.icons8.com/color/96/visual-studio-code-2019.png",
+      alt: "VS Code",
+      position: "top-20 left-4 md:left-8 lg:left-16",
+      color: "blue"
+    },
+    {
+      src: "https://img.icons8.com/color/96/typescript.png",
+      alt: "TypeScript",
+      position: "top-20 right-4 md:right-8 lg:right-16",
+      color: "blue"
+    },
+    {
+      src: "https://img.icons8.com/color/96/nodejs.png",
+      alt: "Node.js",
+      position: "bottom-32 left-4 md:left-8 lg:left-16",
+      color: "green"
+    }
+  ];
+
+  return (
+    <>
+      {logos.map((logo, index) => (
+        <div key={logo.alt} className={`absolute ${logo.position} z-10 opacity-60`}>
+          <motion.div
+            className={`w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-${logo.color}-600/20 backdrop-blur-sm rounded-3xl flex items-center justify-center border border-${logo.color}-400/40 shadow-lg shadow-${logo.color}-400/40`}
+            animate={{
+              ...floatingAnimation,
+              ...glowAnimation
+            }}
+            transition={{
+              duration: 4 + index,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <img 
+              src={logo.src} 
+              alt={logo.alt} 
+              className="w-8 h-8 md:w-12 md:h-12 lg:w-14 lg:h-14"
+            />
+          </motion.div>
+        </div>
+      ))}
+      
+      {/* Deno Logo */}
+      <div className="absolute bottom-32 right-4 md:right-8 lg:right-16 z-10 opacity-60">
+        <motion.div
+          className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-green-600/20 backdrop-blur-sm rounded-3xl flex items-center justify-center border border-green-400/30 shadow-lg shadow-green-400/30"
+          animate={{
+            y: [0, 12, 0],
+            rotate: [0, -3, 0],
+            boxShadow: [
+              "0 0 25px rgba(48, 220, 128, 0.4)",
+              "0 0 40px rgba(48, 220, 128, 0.7)",
+              "0 0 25px rgba(48, 220, 128, 0.4)"
+            ]
+          }}
+          transition={{
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 48 48" className="w-8 h-8 md:w-12 md:h-12 lg:w-14 lg:h-14">
+            <path fill="#30dc80" d="M24,14.088C11.427,14.088,1.108,23.716,0,36h48C46.892,23.716,36.573,14.088,24,14.088z M33.179,27.079c0-1.104,0.895-1.999,1.999-1.999c1.104,0,1.999,0.895,1.999,1.999c0,1.104-0.895,1.999-1.999,1.999	C34.074,29.078,33.179,28.183,33.179,27.079z M12.822,29.078c-1.104,0-1.999-0.895-1.999-1.999c0-1.104,0.895-1.999,1.999-1.999	s1.999,0.895,1.999,1.999C14.821,28.183,13.926,29.078,12.822,29.078z"/>
+            <path fill="#30dc80" d="M34.038,19.313c-0.14,0-0.281-0.035-0.41-0.11c-0.393-0.227-0.527-0.729-0.301-1.122l5.197-9.008	c0.227-0.394,0.729-0.529,1.122-0.301c0.393,0.227,0.527,0.729,0.301,1.122l-5.197,9.008C34.598,19.166,34.322,19.313,34.038,19.313	z"/>
+            <path fill="#30dc80" d="M13.962,19.313c-0.284,0-0.56-0.148-0.712-0.411L8.054,9.894C7.827,9.501,7.962,8.999,8.354,8.772	c0.392-0.228,0.895-0.093,1.122,0.301l5.197,9.008c0.227,0.394,0.092,0.896-0.301,1.122C14.243,19.278,14.102,19.313,13.962,19.313z"/>
+          </svg>
+        </motion.div>
+      </div>
+    </>
+  );
+};
 
 interface HomePageProps {
   onNavigate: (view: string) => void;
@@ -375,26 +467,6 @@ const bentoItems = [
 ];
 
 export function HomePage({ onNavigate }: HomePageProps) {
-  const stats = [
-    {
-      icon: Users,
-      value: "50K+",
-      label: "Students Enrolled",
-      sublabel: "Worldwide community"
-    },
-    {
-      icon: Star,
-      value: "4.9/5",
-      label: "Average Rating",
-      sublabel: "From 10K+ reviews"
-    },
-    {
-      icon: Award,
-      value: "95%",
-      label: "Success Rate",
-      sublabel: "Career advancement"
-    }
-  ];
 
   return (
     <div className="relative bg-black min-h-screen">
@@ -405,7 +477,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
       <div className="absolute bottom-20 left-1/3 w-64 h-64 bg-blue-700/20 rounded-full blur-3xl pointer-events-none"></div>
       
       {/* Hero Section */}
-      <div className="text-center mb-12 pt-24 relative min-h-[85vh] flex flex-col justify-center bg-black">
+      <div className="text-center mb-12 pt-16 relative min-h-[85vh] flex flex-col justify-center bg-black">
+        {/* Floating Logos */}
+        <FloatingLogos />
+        
         {/* Dark blue aesthetic spots for hero */}
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-900/20 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-800/15 rounded-full blur-3xl pointer-events-none"></div>
@@ -417,20 +492,20 @@ export function HomePage({ onNavigate }: HomePageProps) {
           transition={{ duration: 0.6 }}
           className="px-4 relative z-10"
         >
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 tracking-tight relative">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 tracking-tight relative">
             <span className="text-white font-black">Class</span><span className="text-blue-400 font-black">X</span>
           </h1>
           
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-16 tracking-tight relative">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-12 tracking-tight relative">
             <span className="text-white font-black">Unlock Your</span> <span className="text-blue-400 font-black">Potential</span>
           </h2>
           
           <motion.p 
             variants={fadeInUp}
             transition={{ delay: 0.8, duration: 0.6 }}
-            className="text-lg sm:text-xl md:text-2xl text-white max-w-3xl mx-auto mb-10 leading-relaxed relative z-10"
+            className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed relative z-10"
           >
-            <span className="text-white">Join ClassX and transform your career with</span> <span className="text-blue-400">cutting-edge courses, expert instructors, and a vibrant community.</span>
+            <span className="text-gray-300">Join ClassX and transform your career with</span> <span className="text-blue-400 font-semibold">cutting-edge courses, expert instructors, and a vibrant community.</span>
           </motion.p>
 
           <motion.div
@@ -440,7 +515,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
           >
             <button 
               onClick={() => onNavigate('browse')}
-              className="btn-primary text-white px-8 py-3 rounded-full text-lg font-semibold hover-lift glow-blue"
+              className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-10 py-5 rounded-xl text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl border border-blue-400/30 hover:border-blue-300/50 hover:scale-105"
             >
               Explore Courses
             </button>
@@ -448,44 +523,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </motion.div>
       </div>
 
-      {/* Stats Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16 relative">
-        {/* Dark blue aesthetic spots for stats */}
-        <div className="absolute -top-10 left-1/4 w-64 h-64 bg-blue-900/15 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute -bottom-10 right-1/4 w-80 h-80 bg-blue-800/10 rounded-full blur-3xl pointer-events-none"></div>
-        
-        {stats.map((stat, index) => {
-          const IconComponent = stat.icon;
-          
-          return (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 + index * 0.2 }}
-              whileHover={{ y: -2 }}
-              className="relative z-10"
-            >
-              {/* Pure Glass Card */}
-              <div className="relative bg-white/3 backdrop-blur-2xl border border-white/10 rounded-2xl p-8 text-center hover:bg-white/5 transition-all duration-300">
-                {/* Icon Container */}
-                <div className="mb-6">
-                  <div className="w-16 h-16 bg-white/5 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto border border-white/10">
-                    <IconComponent className="w-8 h-8 text-white/80" />
-                  </div>
-                </div>
-                
-                {/* Content */}
-                <div className="space-y-3">
-                  <h3 className="text-4xl md:text-5xl font-bold text-white">{stat.value}</h3>
-                  <p className="text-white/90 font-medium text-lg">{stat.label}</p>
-                  <p className="text-white/60 text-sm">{stat.sublabel}</p>
-                </div>
-              </div>
-            </motion.div>
-          );
-        })}
-      </div>
 
       {/* BentoGrid Section */}
       <div className="mb-16 relative">
@@ -502,7 +539,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
         >
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Why Choose ClassX?</h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
               Discover the features that make ClassX the perfect platform for your learning journey
             </p>
           </div>
@@ -524,6 +561,3 @@ export function HomePage({ onNavigate }: HomePageProps) {
     </div>
   );
 }
-
-
-
