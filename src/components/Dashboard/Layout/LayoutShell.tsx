@@ -101,7 +101,7 @@ export default function LayoutShell({ activeItem, onItemClick, children }: Layou
   const headerHeight = 64 // 16 * 4
   const sidebarWidth = isOpen ? 280 : 80
   const lShapeStyle: React.CSSProperties = {
-    background: 'rgba(0,0,0,0.92)',
+    background: '#000000',
     clipPath: `polygon(0 0, 100% 0, 100% ${headerHeight}px, ${sidebarWidth}px ${headerHeight}px, ${sidebarWidth}px 100%, 0 100%)`
   }
 
@@ -232,22 +232,23 @@ export default function LayoutShell({ activeItem, onItemClick, children }: Layou
                     baseTheme: undefined,
                     elements: {
                       avatarBox: "w-8 h-8",
-                      userButtonPopoverCard: "bg-black border border-white/10",
+                      userButtonPopoverCard: "bg-black border border-white/15 shadow-2xl",
                       userButtonPopoverActions: "bg-black",
-                      userButtonPopoverActionButton: "text-white hover:bg-white/10",
-                      userButtonPopoverActionButtonText: "text-white",
+                      userButtonPopoverActionButton: "text-white hover:bg-white/10 transition-all duration-200",
+                      userButtonPopoverActionButtonText: "text-white font-medium",
                       userButtonPopoverActionButtonIcon: "text-white",
-                      userButtonPopoverFooter: "bg-black border-t border-white/10",
-                      userButtonPopoverMainIdentifier: "text-white",
+                      userButtonPopoverFooter: "bg-black border-t border-white/15",
+                      userButtonPopoverMainIdentifier: "text-white font-semibold",
                       userButtonPopoverSecondaryIdentifier: "text-white/80",
-                      userButtonPopoverFooterText: "text-white/60",
-                      userButtonPopoverFooterAction: "text-white/60",
-                      userButtonPopoverFooterActionText: "text-white/60",
+                      userButtonPopoverFooterText: "text-white/70",
+                      userButtonPopoverFooterAction: "text-white/70",
+                      userButtonPopoverFooterActionText: "text-white/70",
                       userButtonPopoverCardBox: "bg-black",
                       userButtonPopoverCardBoxInner: "bg-black",
                       userButtonPopoverCardBoxInnerWrapper: "bg-black",
                       userButtonPopoverCardBoxInnerWrapperInner: "bg-black",
-                      userButtonPopoverCardBoxInnerWrapperInnerInner: "bg-black"
+                      userButtonPopoverCardBoxInnerWrapperInnerInner: "bg-black",
+                      userButtonPopoverCardBoxInnerWrapperInnerInnerInner: "bg-black"
                     }
                   }}
                 />

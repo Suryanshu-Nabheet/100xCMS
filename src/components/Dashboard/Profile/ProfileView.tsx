@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { User, Mail, Shield, BookOpen, Clock, CheckCircle, AlertCircle } from 'lucide-react';
+import { User, Mail, Shield, BookOpen, Clock, CheckCircle } from 'lucide-react';
 import { useUser } from '@clerk/clerk-react';
 import { useApp } from '../App/contexts/AppContext';
 
@@ -69,12 +69,11 @@ export function ProfileView() {
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
-      {/* Enhanced aesthetic spots */}
+      {/* Pure black background with subtle blue accents */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-blue-900/8 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 right-10 w-80 h-80 bg-blue-800/12 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-1/3 w-64 h-64 bg-blue-700/15 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/4 right-1/4 w-48 h-48 bg-purple-600/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 left-10 w-96 h-96 bg-blue-900/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 right-10 w-80 h-80 bg-blue-800/8 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-1/3 w-64 h-64 bg-blue-700/10 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative z-10 p-6 md:p-8 lg:p-12 max-w-7xl mx-auto">
@@ -91,7 +90,7 @@ export function ProfileView() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* Login Credentials */}
-          <div className="bg-white/3 backdrop-blur-2xl border border-white/10 rounded-3xl p-8">
+          <div className="bg-black/80 backdrop-blur-2xl border border-white/15 rounded-3xl p-8 shadow-2xl">
             <div className="flex items-center mb-8">
               <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mr-4">
                 <Shield className="w-6 h-6 text-blue-400" />
@@ -136,7 +135,7 @@ export function ProfileView() {
           </div>
 
           {/* Course Statistics */}
-          <div className="bg-white/3 backdrop-blur-2xl border border-white/10 rounded-3xl p-8">
+          <div className="bg-black/80 backdrop-blur-2xl border border-white/15 rounded-3xl p-8 shadow-2xl">
             <div className="flex items-center mb-8">
               <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mr-4">
                 <BookOpen className="w-6 h-6 text-green-400" />

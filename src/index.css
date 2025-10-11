@@ -402,10 +402,62 @@ footer a:active {
   color: #60a5fa !important;
 }
 
-/* Clerk UserButton Dark Theme Overrides */
+/* Comprehensive Clerk Dark Theme Overrides - Pure Black */
 .cl-userButtonPopoverCard {
   background-color: #000000 !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Fix Clerk UserButton Popover Header Section */
+.cl-userButtonPopoverCardBox {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverCardBoxInner {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverCardBoxInnerWrapper {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverCardBoxInnerWrapperInner {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverCardBoxInnerWrapperInnerInner {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverCardBoxInnerWrapperInnerInnerInner {
+  background-color: #000000 !important;
+}
+
+/* Fix Clerk UserButton Avatar Section */
+.cl-userButtonPopoverAvatar {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverAvatarBox {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverAvatarImage {
+  background-color: #000000 !important;
+}
+
+/* Fix Clerk UserButton Header Text */
+.cl-userButtonPopoverHeader {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverHeaderText {
+  color: #ffffff !important;
+}
+
+.cl-userButtonPopoverHeaderSubtext {
+  color: rgba(255, 255, 255, 0.8) !important;
 }
 
 .cl-userButtonPopoverActions {
@@ -413,45 +465,1071 @@ footer a:active {
 }
 
 .cl-userButtonPopoverActionButton {
-  color: white !important;
+  color: #ffffff !important;
   background-color: transparent !important;
+  border: none !important;
+  transition: all 0.2s ease !important;
 }
 
 .cl-userButtonPopoverActionButton:hover {
   background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
 }
 
 .cl-userButtonPopoverActionButtonText {
-  color: white !important;
+  color: #ffffff !important;
+  font-weight: 500 !important;
 }
 
 .cl-userButtonPopoverActionButtonIcon {
-  color: white !important;
+  color: #ffffff !important;
 }
 
 .cl-userButtonPopoverFooter {
   background-color: #000000 !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
 }
 
 .cl-userButtonPopoverFooterText {
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
 .cl-userButtonPopoverFooterAction {
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
 .cl-userButtonPopoverFooterActionText {
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Additional Clerk Footer Overrides - Fix Light Beige/Striped Background */
+.cl-userButtonPopoverFooterBox {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverFooterBoxInner {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverFooterBoxInnerWrapper {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverFooterBoxInnerWrapperInner {
+  background-color: #000000 !important;
+}
+
+/* Fix Any Remaining Clerk Component Backgrounds */
+.cl-component {
+  background-color: #000000 !important;
+}
+
+.cl-componentHeader {
+  background-color: #000000 !important;
+}
+
+.cl-componentContent {
+  background-color: #000000 !important;
+}
+
+.cl-componentFooter {
+  background-color: #000000 !important;
+}
+
+/* Force All Clerk Elements to Black Background */
+[class*="cl-"] {
+  background-color: #000000 !important;
+}
+
+/* Override Any White/Beige Backgrounds in Clerk Components */
+[class*="cl-"][style*="background-color: white"],
+[class*="cl-"][style*="background-color: #fff"],
+[class*="cl-"][style*="background-color: #ffffff"],
+[class*="cl-"][style*="background-color: beige"],
+[class*="cl-"][style*="background-color: #f5f5f5"] {
+  background-color: #000000 !important;
+}
+
+/* Fix Clerk Account Management Modal/Sidebar */
+.cl-accountManagementModal {
+  background-color: #000000 !important;
+}
+
+.cl-accountManagementSidebar {
+  background-color: #000000 !important;
+}
+
+.cl-accountManagementSidebarHeader {
+  background-color: #000000 !important;
+}
+
+.cl-accountManagementSidebarTitle {
+  color: #ffffff !important;
+}
+
+.cl-accountManagementSidebarSubtitle {
+  color: #ffffff !important;
+}
+
+.cl-accountManagementSidebarContent {
+  background-color: #000000 !important;
+}
+
+.cl-accountManagementSidebarFooter {
+  background-color: #000000 !important;
+}
+
+/* Fix Clerk Navigation Items */
+.cl-accountManagementNavItem {
+  color: #ffffff !important;
+  background-color: #000000 !important;
+}
+
+.cl-accountManagementNavItem:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-accountManagementNavItemActive {
+  background-color: rgba(59, 130, 246, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.cl-accountManagementNavItemIcon {
+  color: #ffffff !important;
+}
+
+.cl-accountManagementNavItemText {
+  color: #ffffff !important;
+}
+
+/* Fix Clerk Profile Details Section */
+.cl-profileDetails {
+  background-color: #000000 !important;
+}
+
+.cl-profileDetailsHeader {
+  background-color: #000000 !important;
+}
+
+.cl-profileDetailsTitle {
+  color: #ffffff !important;
+}
+
+.cl-profileDetailsContent {
+  background-color: #000000 !important;
+}
+
+.cl-profileDetailsSection {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-profileDetailsSectionTitle {
+  color: #ffffff !important;
+}
+
+.cl-profileDetailsSectionContent {
+  background-color: #000000 !important;
+}
+
+/* Fix Clerk Profile Avatar and Text */
+.cl-profileAvatar {
+  background-color: #000000 !important;
+}
+
+.cl-profileAvatarText {
+  color: #ffffff !important;
+}
+
+.cl-profileName {
+  color: #ffffff !important;
+}
+
+.cl-profileEmail {
+  color: #ffffff !important;
+}
+
+/* Fix Clerk Connected Accounts */
+.cl-connectedAccounts {
+  background-color: #000000 !important;
+}
+
+.cl-connectedAccountsItem {
+  background-color: #000000 !important;
+}
+
+.cl-connectedAccountsItemText {
+  color: #ffffff !important;
+}
+
+.cl-connectedAccountsItemEmail {
+  color: #ffffff !important;
+}
+
+.cl-connectedAccountsItemIcon {
+  color: #ffffff !important;
+}
+
+/* Fix Clerk Action Buttons */
+.cl-actionButton {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+.cl-actionButton:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-actionButtonPrimary {
+  background-color: rgba(59, 130, 246, 0.8) !important;
+  border: 1px solid rgba(59, 130, 246, 0.8) !important;
+  color: #ffffff !important;
+}
+
+.cl-actionButtonPrimary:hover {
+  background-color: rgba(59, 130, 246, 1) !important;
+}
+
+/* Fix Clerk Modal Close Button */
+.cl-modalCloseButton {
+  color: #ffffff !important;
+  background-color: #000000 !important;
+}
+
+.cl-modalCloseButton:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Force All Text in Clerk Components to White */
+[class*="cl-"] * {
+  color: #ffffff !important;
+}
+
+/* Override Specific Gray Text Colors */
+[class*="cl-"] .text-gray-400,
+[class*="cl-"] .text-gray-500,
+[class*="cl-"] .text-gray-600,
+[class*="cl-"] .text-gray-700 {
+  color: #ffffff !important;
+}
+
+/* Override Any Background Patterns or Images */
+[class*="cl-"][style*="background-image"],
+[class*="cl-"][style*="background:"] {
+  background: #000000 !important;
+  background-image: none !important;
+}
+
+/* Aggressive Override for Clerk Footer - Fix Light Beige Background */
+.cl-userButtonPopoverFooter,
+.cl-userButtonPopoverFooterBox,
+.cl-userButtonPopoverFooterBoxInner,
+.cl-userButtonPopoverFooterBoxInnerWrapper,
+.cl-userButtonPopoverFooterBoxInnerWrapperInner,
+.cl-userButtonPopoverFooterBoxInnerWrapperInnerInner,
+.cl-userButtonPopoverFooterBoxInnerWrapperInnerInnerInner {
+  background-color: #000000 !important;
+  background: #000000 !important;
+  background-image: none !important;
+}
+
+/* Force All Clerk Footer Elements to Black */
+[class*="cl-"][class*="footer"],
+[class*="cl-"][class*="Footer"] {
+  background-color: #000000 !important;
+  background: #000000 !important;
+  background-image: none !important;
+}
+
+/* Override Any Stripe/Pattern Backgrounds */
+[class*="cl-"][style*="stripe"],
+[class*="cl-"][style*="pattern"],
+[class*="cl-"][style*="gradient"] {
+  background: #000000 !important;
+  background-image: none !important;
+}
+
+/* Nuclear Option - Force All Elements with Light Backgrounds to Black */
+[class*="cl-"] *[style*="background-color: #f"],
+[class*="cl-"] *[style*="background-color: #e"],
+[class*="cl-"] *[style*="background-color: #d"],
+[class*="cl-"] *[style*="background-color: #c"],
+[class*="cl-"] *[style*="background-color: #b"],
+[class*="cl-"] *[style*="background-color: #a"],
+[class*="cl-"] *[style*="background-color: #9"],
+[class*="cl-"] *[style*="background-color: #8"],
+[class*="cl-"] *[style*="background-color: #7"],
+[class*="cl-"] *[style*="background-color: #6"],
+[class*="cl-"] *[style*="background-color: #5"],
+[class*="cl-"] *[style*="background-color: #4"],
+[class*="cl-"] *[style*="background-color: #3"],
+[class*="cl-"] *[style*="background-color: #2"],
+[class*="cl-"] *[style*="background-color: #1"] {
+  background-color: #000000 !important;
+}
+
+/* Override Any CSS Variables or Custom Properties */
+[class*="cl-"] {
+  --clerk-background: #000000 !important;
+  --clerk-color: #ffffff !important;
+  --clerk-border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Force All Clerk Elements to Use Black Background */
+[class*="cl-"] * {
+  background-color: #000000 !important;
+  background: #000000 !important;
+}
+
+/* Exception for Text Elements - Keep Text White */
+[class*="cl-"] *[class*="text"],
+[class*="cl-"] *[class*="Text"],
+[class*="cl-"] span,
+[class*="cl-"] p,
+[class*="cl-"] div[class*="text"],
+[class*="cl-"] div[class*="Text"] {
+  background-color: transparent !important;
+  background: transparent !important;
+  color: #ffffff !important;
 }
 
 .cl-userButtonPopoverMainIdentifier {
-  color: white !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
 }
 
 .cl-userButtonPopoverSecondaryIdentifier {
   color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Additional Clerk Component Overrides */
+.cl-userButtonPopoverCardBox {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverCardBoxInner {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverCardBoxInnerWrapper {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverCardBoxInnerWrapperInner {
+  background-color: #000000 !important;
+}
+
+.cl-userButtonPopoverCardBoxInnerWrapperInnerInner {
+  background-color: #000000 !important;
+}
+
+/* Clerk User Profile Components */
+.cl-profileSection {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-profileSectionTitle {
+  color: #ffffff !important;
+}
+
+.cl-profileSectionContent {
+  background-color: #000000 !important;
+}
+
+.cl-formField {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+.cl-formFieldInput {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-formFieldInput:focus {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+.cl-formFieldLabel {
+  color: #ffffff !important;
+}
+
+.cl-formFieldError {
+  color: #ef4444 !important;
+}
+
+.cl-button {
+  background-color: #000000 !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  color: #ffffff !important;
+}
+
+.cl-button:hover {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  border-color: rgba(59, 130, 246, 0.5) !important;
+}
+
+.cl-buttonPrimary {
+  background-color: rgba(59, 130, 246, 0.8) !important;
+  border: 1px solid rgba(59, 130, 246, 0.8) !important;
+  color: #ffffff !important;
+}
+
+.cl-buttonPrimary:hover {
+  background-color: rgba(59, 130, 246, 1) !important;
+}
+
+/* Clerk Modal Overrides */
+.cl-modal {
+  background-color: rgba(0, 0, 0, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+.cl-modalContent {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9) !important;
+}
+
+.cl-modalHeader {
+  background-color: #000000 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-modalTitle {
+  color: #ffffff !important;
+}
+
+.cl-modalCloseButton {
+  color: #ffffff !important;
+}
+
+.cl-modalCloseButton:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Clerk Navigation Components */
+.cl-navbar {
+  background-color: #000000 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-navbarItem {
+  color: #ffffff !important;
+}
+
+.cl-navbarItem:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Clerk Form Components */
+.cl-form {
+  background-color: #000000 !important;
+}
+
+.cl-formHeader {
+  background-color: #000000 !important;
+}
+
+.cl-formHeaderTitle {
+  color: #ffffff !important;
+}
+
+.cl-formHeaderSubtitle {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.cl-formFieldRow {
+  background-color: #000000 !important;
+}
+
+.cl-formFieldRowLabel {
+  color: #ffffff !important;
+}
+
+.cl-formFieldRowInput {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+.cl-formFieldRowInput:focus {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+.cl-formFieldRowInput::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Clerk Card Components */
+.cl-card {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-cardHeader {
+  background-color: #000000 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-cardTitle {
+  color: #ffffff !important;
+}
+
+.cl-cardContent {
+  background-color: #000000 !important;
+}
+
+/* Additional Clerk Component Overrides for Complete Black Theme */
+.cl-userProfile {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-userProfileHeader {
+  background-color: #000000 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-userProfileTitle {
+  color: #ffffff !important;
+}
+
+.cl-userProfileSubtitle {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.cl-userProfileContent {
+  background-color: #000000 !important;
+}
+
+.cl-userProfileSection {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-userProfileSectionTitle {
+  color: #ffffff !important;
+}
+
+.cl-userProfileSectionContent {
+  background-color: #000000 !important;
+}
+
+/* Clerk Account Management Components - Complete Black Theme */
+.cl-accountManagement {
+  background-color: #000000 !important;
+}
+
+.cl-accountManagementHeader {
+  background-color: #000000 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-accountManagementTitle {
+  color: #ffffff !important;
+}
+
+.cl-accountManagementContent {
+  background-color: #000000 !important;
+}
+
+.cl-accountManagementSection {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-accountManagementSectionTitle {
+  color: #ffffff !important;
+}
+
+.cl-accountManagementSectionContent {
+  background-color: #000000 !important;
+}
+
+/* Clerk User Profile Management - Fix Mixed Backgrounds */
+.cl-userProfile {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-userProfileHeader {
+  background-color: #000000 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-userProfileTitle {
+  color: #ffffff !important;
+}
+
+.cl-userProfileSubtitle {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.cl-userProfileContent {
+  background-color: #000000 !important;
+}
+
+.cl-userProfileSection {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-userProfileSectionTitle {
+  color: #ffffff !important;
+}
+
+.cl-userProfileSectionContent {
+  background-color: #000000 !important;
+}
+
+/* Clerk User Profile Card Components */
+.cl-userProfileCard {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-userProfileCardHeader {
+  background-color: #000000 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-userProfileCardTitle {
+  color: #ffffff !important;
+}
+
+.cl-userProfileCardContent {
+  background-color: #000000 !important;
+}
+
+.cl-userProfileCardFooter {
+  background-color: #000000 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Clerk User Profile Form Components */
+.cl-userProfileForm {
+  background-color: #000000 !important;
+}
+
+.cl-userProfileFormField {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-userProfileFormFieldLabel {
+  color: #ffffff !important;
+}
+
+.cl-userProfileFormFieldInput {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+.cl-userProfileFormFieldInput:focus {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+.cl-userProfileFormFieldInput::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.cl-userProfileFormFieldError {
+  color: #ef4444 !important;
+}
+
+/* Clerk User Profile Button Components */
+.cl-userProfileButton {
+  background-color: #000000 !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  color: #ffffff !important;
+}
+
+.cl-userProfileButton:hover {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  border-color: rgba(59, 130, 246, 0.5) !important;
+}
+
+.cl-userProfileButtonPrimary {
+  background-color: rgba(59, 130, 246, 0.8) !important;
+  border: 1px solid rgba(59, 130, 246, 0.8) !important;
+  color: #ffffff !important;
+}
+
+.cl-userProfileButtonPrimary:hover {
+  background-color: rgba(59, 130, 246, 1) !important;
+}
+
+/* Clerk Security Components */
+.cl-securitySection {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-securitySectionTitle {
+  color: #ffffff !important;
+}
+
+.cl-securitySectionContent {
+  background-color: #000000 !important;
+}
+
+.cl-securityItem {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-securityItemTitle {
+  color: #ffffff !important;
+}
+
+.cl-securityItemDescription {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.cl-securityItemAction {
+  background-color: #000000 !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  color: #ffffff !important;
+}
+
+.cl-securityItemAction:hover {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  border-color: rgba(59, 130, 246, 0.5) !important;
+}
+
+/* Clerk Settings Components */
+.cl-settingsSection {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-settingsSectionTitle {
+  color: #ffffff !important;
+}
+
+.cl-settingsSectionContent {
+  background-color: #000000 !important;
+}
+
+.cl-settingsItem {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-settingsItemTitle {
+  color: #ffffff !important;
+}
+
+.cl-settingsItemDescription {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.cl-settingsItemToggle {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-settingsItemToggleActive {
+  background-color: rgba(59, 130, 246, 0.8) !important;
+  border-color: rgba(59, 130, 246, 0.8) !important;
+}
+
+/* Clerk Notification Components */
+.cl-notificationSection {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-notificationSectionTitle {
+  color: #ffffff !important;
+}
+
+.cl-notificationSectionContent {
+  background-color: #000000 !important;
+}
+
+.cl-notificationItem {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-notificationItemTitle {
+  color: #ffffff !important;
+}
+
+.cl-notificationItemDescription {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.cl-notificationItemToggle {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-notificationItemToggleActive {
+  background-color: rgba(59, 130, 246, 0.8) !important;
+  border-color: rgba(59, 130, 246, 0.8) !important;
+}
+
+/* Clerk Data Table Components */
+.cl-dataTable {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-dataTableHeader {
+  background-color: #000000 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-dataTableHeaderCell {
+  color: #ffffff !important;
+  background-color: #000000 !important;
+}
+
+.cl-dataTableRow {
+  background-color: #000000 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.cl-dataTableRow:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.cl-dataTableCell {
+  color: #ffffff !important;
+  background-color: #000000 !important;
+}
+
+/* Clerk Pagination Components */
+.cl-pagination {
+  background-color: #000000 !important;
+}
+
+.cl-paginationButton {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+.cl-paginationButton:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.cl-paginationButtonActive {
+  background-color: rgba(59, 130, 246, 0.8) !important;
+  border-color: rgba(59, 130, 246, 0.8) !important;
+  color: #ffffff !important;
+}
+
+/* Clerk Loading States */
+.cl-loadingSpinner {
+  border-color: rgba(59, 130, 246, 0.3) !important;
+  border-top-color: rgba(59, 130, 246, 0.8) !important;
+}
+
+.cl-loadingText {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Clerk Error States */
+.cl-errorMessage {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+  color: #f87171 !important;
+}
+
+.cl-errorTitle {
+  color: #f87171 !important;
+}
+
+.cl-errorDescription {
+  color: rgba(248, 113, 113, 0.8) !important;
+}
+
+/* Clerk Success States */
+.cl-successMessage {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+  border: 1px solid rgba(16, 185, 129, 0.2) !important;
+  color: #10b981 !important;
+}
+
+.cl-successTitle {
+  color: #10b981 !important;
+}
+
+.cl-successDescription {
+  color: rgba(16, 185, 129, 0.8) !important;
+}
+
+/* Clerk Tooltip Components */
+.cl-tooltip {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8) !important;
+}
+
+.cl-tooltipArrow {
+  border-color: #000000 transparent transparent transparent !important;
+}
+
+/* Clerk Dropdown Components */
+.cl-dropdown {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8) !important;
+}
+
+.cl-dropdownItem {
+  color: #ffffff !important;
+  background-color: #000000 !important;
+}
+
+.cl-dropdownItem:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Enhanced Dashboard Black Theme - Ensure Complete Black Background */
+.dashboard-container {
+  background-color: #000000 !important;
+}
+
+.dashboard-header {
+  background-color: #000000 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.dashboard-sidebar {
+  background-color: #000000 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.dashboard-content {
+  background-color: #000000 !important;
+}
+
+.dashboard-card {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8) !important;
+}
+
+.dashboard-card-header {
+  background-color: #000000 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.dashboard-card-title {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+.dashboard-card-content {
+  background-color: #000000 !important;
+}
+
+.dashboard-card-footer {
+  background-color: #000000 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Enhanced Text Visibility */
+.dashboard-text-primary {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+}
+
+.dashboard-text-secondary {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.dashboard-text-muted {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.dashboard-text-accent {
+  color: #60a5fa !important;
+}
+
+/* Enhanced Button Styling */
+.dashboard-button {
+  background-color: #000000 !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  color: #ffffff !important;
+  transition: all 0.2s ease !important;
+}
+
+.dashboard-button:hover {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  border-color: rgba(59, 130, 246, 0.5) !important;
+}
+
+.dashboard-button-primary {
+  background-color: rgba(59, 130, 246, 0.8) !important;
+  border: 1px solid rgba(59, 130, 246, 0.8) !important;
+  color: #ffffff !important;
+}
+
+.dashboard-button-primary:hover {
+  background-color: rgba(59, 130, 246, 1) !important;
+}
+
+/* Enhanced Input Styling */
+.dashboard-input {
+  background-color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+.dashboard-input:focus {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+.dashboard-input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Enhanced Navigation Styling */
+.dashboard-nav-item {
+  color: #ffffff !important;
+  transition: all 0.2s ease !important;
+}
+
+.dashboard-nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dashboard-nav-item-active {
+  background-color: rgba(59, 130, 246, 0.2) !important;
+  color: #60a5fa !important;
+}
+
+/* Enhanced Status Indicators */
+.dashboard-status-success {
+  color: #10b981 !important;
+}
+
+.dashboard-status-warning {
+  color: #f59e0b !important;
+}
+
+.dashboard-status-error {
+  color: #ef4444 !important;
+}
+
+.dashboard-status-info {
+  color: #3b82f6 !important;
 }
 
 /* Responsive Typography */
