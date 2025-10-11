@@ -178,12 +178,7 @@ const InfiniteMovingCards = React.memo(({ items }: { items: typeof heroItems }) 
   return (
     <div className="slider-container relative group">
       
-      <div 
-        className="flex image-slider"
-        style={{
-          animation: 'slide-left-slow 60s linear infinite'
-        }}
-      >
+      <div className="flex image-slider">
         {duplicatedItems.map((item, index) => (
           <div
             key={index}
@@ -254,12 +249,7 @@ const TechSkills = React.memo(() => {
           {/* First row - Left to Right */}
           <div className="slider-container relative group">
             
-            <div 
-              className="flex skills-slider"
-              style={{
-                animation: 'slide-left-slow 60s linear infinite'
-              }}
-            >
+            <div className="flex skills-slider">
               {tripleSkills.map((skill, index) => (
                 <div
                   key={`left-${index}`}
@@ -277,12 +267,7 @@ const TechSkills = React.memo(() => {
           {/* Second row - Right to Left */}
           <div className="slider-container relative group">
             
-            <div 
-              className="flex skills-slider"
-              style={{
-                animation: 'slide-right-slow 60s linear infinite'
-              }}
-            >
+            <div className="flex skills-slider">
               {tripleSkills.map((skill, index) => (
                 <div
                   key={`right-${index}`}
@@ -300,12 +285,7 @@ const TechSkills = React.memo(() => {
           {/* Third row - Left to Right */}
           <div className="slider-container relative group">
             
-            <div 
-              className="flex skills-slider"
-              style={{
-                animation: 'slide-left-slow 60s linear infinite'
-              }}
-            >
+            <div className="flex skills-slider">
               {tripleSkills.map((skill, index) => (
                 <div
                   key={`left2-${index}`}
@@ -345,6 +325,22 @@ export default function LandingPage() {
         .group:hover .image-slider,
         .group:hover .skills-slider {
           animation-play-state: paused !important;
+        }
+        
+        .image-slider {
+          animation: slide-left-slow 60s linear infinite;
+        }
+        
+        .skills-slider:nth-of-type(1) {
+          animation: slide-left-slow 60s linear infinite;
+        }
+        
+        .skills-slider:nth-of-type(2) {
+          animation: slide-right-slow 60s linear infinite;
+        }
+        
+        .skills-slider:nth-of-type(3) {
+          animation: slide-left-slow 60s linear infinite;
         }
       `}</style>
       <div className="flex min-h-screen flex-col bg-black relative overflow-x-hidden">
