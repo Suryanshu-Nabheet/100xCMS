@@ -228,3 +228,65 @@ storybook-static/
 
 # Turbo
 .turbo
+
+# React Syntax Highlighter
+node_modules/react-syntax-highlighter/
+node_modules/@types/react-syntax-highlighter/
+
+# Framer Motion
+node_modules/framer-motion/
+
+# Lucide React Icons
+node_modules/lucide-react/
+
+# Deployment artifacts
+.vercel/
+.netlify/
+.firebase/
+.aws/
+
+# Package manager lock files (keep package-lock.json for consistency)
+yarn.lock
+pnpm-lock.yaml
+
+# Build artifacts
+build/
+dist/
+out/
+.next/
+.nuxt/
+
+# Environment files
+.env*
+!.env.example
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Cache directories
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp

@@ -2,12 +2,16 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Calendar, Clock, FileText, Link, Download, ChevronRight } from 'lucide-react'
+import { CodeBlock } from './components/code-block'
 
 // Post content type definitions
 export interface PostContent {
-  type: 'text' | 'image' | 'video' | 'link' | 'pdf' | 'doc'
+  type: 'text' | 'image' | 'video' | 'link' | 'pdf' | 'doc' | 'code'
   data: string
   caption?: string
+  language?: string
+  filename?: string
+  highlightLines?: number[]
 }
 
 export interface Post {
@@ -25,9 +29,9 @@ export interface Post {
 // Priority Badge Component
 export const PriorityBadge: React.FC<{ priority: Post['priority'] }> = ({ priority }) => {
   const colors = {
-    high: 'bg-red-500/20 text-red-400 border-red-500/30 backdrop-blur-sm',
-    medium: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30 backdrop-blur-sm',
-    low: 'bg-green-500/20 text-green-400 border-green-500/30 backdrop-blur-sm'
+    high: 'bg-blue-500/20 text-blue-200 border-blue-400/40 backdrop-blur-sm',
+    medium: 'bg-blue-600/20 text-blue-200 border-blue-500/40 backdrop-blur-sm',
+    low: 'bg-blue-700/20 text-blue-200 border-blue-600/40 backdrop-blur-sm'
   }
   
   return (
@@ -43,9 +47,9 @@ export const ContentRenderer: React.FC<{ content: PostContent[] }> = ({ content 
     switch (item.type) {
       case 'text':
         return (
-          <div key={index} className="mb-8">
-            <div className="bg-gray-50 rounded-2xl p-6 md:p-8 border border-gray-200">
-              <p className="text-gray-700 leading-relaxed text-lg whitespace-pre-wrap">
+          <div key={index} className="mb-10">
+            <div className="bg-blue-900/20 backdrop-blur-sm rounded-3xl p-8 md:p-10 border border-blue-500/30 shadow-2xl">
+              <p className="text-white leading-relaxed text-xl whitespace-pre-wrap font-light">
                 {item.data}
               </p>
             </div>
@@ -55,17 +59,16 @@ export const ContentRenderer: React.FC<{ content: PostContent[] }> = ({ content 
       case 'image':
         return (
           <div key={index} className="mb-8">
-            <div className="relative group overflow-hidden rounded-2xl shadow-2xl">
+            <div className="relative overflow-hidden rounded-2xl shadow-xl bg-blue-900/10 backdrop-blur-sm border border-blue-500/20">
               <img
                 src={item.data}
                 alt={item.caption || 'Post image'}
-                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-auto object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
             {item.caption && (
               <div className="mt-4 text-center">
-                <p className="text-gray-600 italic text-lg font-medium bg-gray-50 px-4 py-2 rounded-lg inline-block">
+                <p className="text-blue-200 italic text-base font-medium bg-blue-900/20 backdrop-blur-sm px-4 py-2 rounded-lg inline-block border border-blue-500/30">
                   {item.caption}
                 </p>
               </div>
@@ -76,7 +79,7 @@ export const ContentRenderer: React.FC<{ content: PostContent[] }> = ({ content 
       case 'video':
         return (
           <div key={index} className="mb-8">
-            <div className="relative overflow-hidden rounded-2xl shadow-2xl bg-black">
+            <div className="relative overflow-hidden rounded-2xl shadow-xl bg-black border border-blue-500/20">
               <video
                 src={item.data}
                 controls
@@ -86,7 +89,7 @@ export const ContentRenderer: React.FC<{ content: PostContent[] }> = ({ content 
             </div>
             {item.caption && (
               <div className="mt-4 text-center">
-                <p className="text-gray-600 italic text-lg font-medium bg-gray-50 px-4 py-2 rounded-lg inline-block">
+                <p className="text-blue-200 italic text-base font-medium bg-blue-900/20 backdrop-blur-sm px-4 py-2 rounded-lg inline-block border border-blue-500/30">
                   {item.caption}
                 </p>
               </div>
@@ -101,21 +104,21 @@ export const ContentRenderer: React.FC<{ content: PostContent[] }> = ({ content 
               href={item.data}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block p-6 bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 rounded-2xl border border-blue-200 transition-all duration-300 hover:shadow-lg"
+              className="block p-6 bg-gradient-to-r from-blue-500/10 to-blue-600/10 rounded-2xl border border-blue-400/40"
             >
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-blue-500 rounded-xl group-hover:scale-110 transition-transform duration-300">
-                  <Link className="w-6 h-6 text-white" />
+                <div className="p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg">
+                  <Link className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex-1">
-                  <span className="font-semibold text-blue-700 text-lg group-hover:text-blue-800">
+                  <span className="font-semibold text-blue-200 text-lg">
                     {item.caption || 'External Link'}
                   </span>
-                  <p className="text-blue-600 text-sm mt-1 opacity-80">
+                  <p className="text-blue-300 text-sm mt-1 opacity-80">
                     Click to open in new tab
                   </p>
                 </div>
-                <ChevronRight className="w-6 h-6 text-blue-500 group-hover:translate-x-2 transition-transform duration-300" />
+                <ChevronRight className="w-5 h-5 text-blue-300" />
               </div>
             </a>
           </div>
@@ -128,21 +131,21 @@ export const ContentRenderer: React.FC<{ content: PostContent[] }> = ({ content 
               href={item.data}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block p-6 bg-gradient-to-r from-red-50 to-pink-50 hover:from-red-100 hover:to-pink-100 rounded-2xl border border-red-200 transition-all duration-300 hover:shadow-lg"
+              className="block p-6 bg-gradient-to-r from-blue-500/10 to-blue-700/10 rounded-2xl border border-blue-400/40"
             >
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-red-500 rounded-xl group-hover:scale-110 transition-transform duration-300">
-                  <FileText className="w-6 h-6 text-white" />
+                <div className="p-3 bg-gradient-to-r from-blue-500 to-blue-700 rounded-xl shadow-lg">
+                  <FileText className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex-1">
-                  <span className="font-semibold text-red-700 text-lg group-hover:text-red-800">
+                  <span className="font-semibold text-blue-200 text-lg">
                     {item.caption || 'PDF Document'}
                   </span>
-                  <p className="text-red-600 text-sm mt-1 opacity-80">
+                  <p className="text-blue-300 text-sm mt-1 opacity-80">
                     Click to download PDF
                   </p>
                 </div>
-                <Download className="w-6 h-6 text-red-500 group-hover:scale-110 transition-transform duration-300" />
+                <Download className="w-5 h-5 text-blue-300" />
               </div>
             </a>
           </div>
@@ -155,23 +158,45 @@ export const ContentRenderer: React.FC<{ content: PostContent[] }> = ({ content 
               href={item.data}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block p-6 bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 rounded-2xl border border-green-200 transition-all duration-300 hover:shadow-lg"
+              className="block p-6 bg-gradient-to-r from-blue-500/10 to-blue-600/10 rounded-2xl border border-blue-400/40"
             >
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-green-500 rounded-xl group-hover:scale-110 transition-transform duration-300">
-                  <FileText className="w-6 h-6 text-white" />
+                <div className="p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg">
+                  <FileText className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex-1">
-                  <span className="font-semibold text-green-700 text-lg group-hover:text-green-800">
+                  <span className="font-semibold text-blue-200 text-lg">
                     {item.caption || 'Document'}
                   </span>
-                  <p className="text-green-600 text-sm mt-1 opacity-80">
+                  <p className="text-blue-300 text-sm mt-1 opacity-80">
                     Click to download document
                   </p>
                 </div>
-                <Download className="w-6 h-6 text-green-500 group-hover:scale-110 transition-transform duration-300" />
+                <Download className="w-5 h-5 text-blue-300" />
               </div>
             </a>
+          </div>
+        )
+      
+      case 'code':
+        return (
+          <div key={index} className="mb-8">
+            <div className="bg-blue-900/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-blue-500/20">
+              <CodeBlock
+                language={item.language || 'javascript'}
+                filename={item.filename}
+                highlightLines={item.highlightLines || []}
+                code={item.data}
+                className="bg-transparent"
+              />
+              {item.caption && (
+                <div className="px-6 pb-4">
+                  <p className="text-blue-200 text-sm italic text-center bg-blue-900/20 backdrop-blur-sm px-4 py-2 rounded-lg inline-block">
+                    {item.caption}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         )
       
@@ -181,7 +206,7 @@ export const ContentRenderer: React.FC<{ content: PostContent[] }> = ({ content 
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {content.map((item, index) => renderContentItem(item, index))}
     </div>
   )
@@ -231,79 +256,131 @@ export const PostHeader: React.FC<{ post: Post }> = ({ post }) => {
 }
 
 // Complete Post Component
-export const PostComponent: React.FC<{ post: Post }> = ({ post }) => {
+export const PostComponent: React.FC<{ post: Post; onClose?: () => void; layoutId?: string }> = ({ post, onClose, layoutId }) => {
+  const handleClose = () => {
+    if (onClose) {
+      onClose()
+    }
+  }
+
   return (
-    <div className="fixed inset-0 bg-black z-50 flex flex-col">
-      {/* Fixed Header Image */}
-      <div className="relative h-80 md:h-96 flex-shrink-0">
-        <img
-          src={post.image}
-          alt={post.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-        
-        {/* Header Content */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-          <div className="max-w-4xl mx-auto">
-            {/* Meta Information */}
-            <div className="flex flex-wrap items-center gap-3 text-sm text-white/80 mb-4">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                <span>{post.date}</span>
+    <div className="fixed inset-0 grid place-items-center z-[100] p-4">
+      {/* Close Button */}
+      <motion.button
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.8 }}
+        transition={{ duration: 0.2 }}
+        onClick={handleClose}
+        className="absolute top-4 right-4 z-[101] flex items-center justify-center bg-blue-900/50 backdrop-blur-sm rounded-full h-10 w-10 hover:bg-blue-800/50 transition-colors border border-blue-500/30"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-4 w-4 text-white"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M18 6l-12 12" />
+          <path d="M6 6l12 12" />
+        </svg>
+      </motion.button>
+
+      {/* Modal Container */}
+      <motion.div
+        layoutId={layoutId ? `card-${layoutId}` : undefined}
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className="w-full max-w-4xl max-h-[90vh] bg-black rounded-3xl overflow-hidden shadow-2xl border border-blue-500/30"
+      >
+        {/* Scrollable Content */}
+        <div className="max-h-[90vh] overflow-y-auto bg-black">
+          {/* Header Image - Scrollable */}
+          <motion.div 
+            layoutId={layoutId ? `image-${layoutId}` : undefined}
+            className="relative h-64 md:h-80 overflow-hidden"
+          >
+            <img
+              src={post.image}
+              alt={post.title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-blue-900/20 to-transparent" />
+            
+            {/* Header Content */}
+            <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
+              <div className="max-w-4xl mx-auto">
+                {/* Meta Information */}
+                <div className="flex flex-wrap items-center gap-3 text-sm text-white mb-4">
+                  <div className="flex items-center gap-2 bg-blue-900/30 backdrop-blur-sm px-3 py-2 rounded-lg border border-blue-500/30">
+                    <Calendar className="w-4 h-4 text-blue-300" />
+                    <span>{post.date}</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-blue-900/30 backdrop-blur-sm px-3 py-2 rounded-lg border border-blue-500/30">
+                    <Clock className="w-4 h-4 text-blue-300" />
+                    <span>{post.time}</span>
+                  </div>
+                  <span className="px-3 py-1 bg-blue-500/20 backdrop-blur-sm text-blue-200 rounded-lg font-medium border border-blue-400/40">
+                    {post.category}
+                  </span>
+                  <PriorityBadge priority={post.priority} />
+                </div>
+
+              {/* Title and Description */}
+              <motion.h1 
+                layoutId={layoutId ? `title-${layoutId}` : undefined}
+                className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight"
+              >
+                {post.title}
+              </motion.h1>
+                <p className="text-white text-lg md:text-xl leading-relaxed max-w-3xl font-light">
+                  {post.description}
+                </p>
               </div>
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                <span>{post.time}</span>
+            </div>
+          </motion.div>
+
+          {/* Content */}
+          <div className="max-w-4xl mx-auto p-4 md:p-6">
+            {/* Content Header */}
+            <div className="mb-8">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-blue-300 rounded-full"></div>
+                <h2 className="text-2xl font-bold text-white">Content</h2>
               </div>
-              <span className="px-3 py-1 bg-white/20 backdrop-blur-sm text-white rounded-full font-medium border border-white/30">
-                {post.category}
-              </span>
-              <PriorityBadge priority={post.priority} />
+              <p className="text-blue-200">Explore the detailed information below</p>
             </div>
 
-            {/* Title and Description */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-              {post.title}
-            </h1>
-            <p className="text-white/90 text-lg md:text-xl leading-relaxed max-w-3xl">
-              {post.description}
-            </p>
-          </div>
-        </div>
-      </div>
+            {/* Post Content */}
+            <div className="space-y-6">
+              <ContentRenderer content={post.content} />
+            </div>
 
-      {/* Scrollable Content */}
-      <div className="flex-1 overflow-y-auto bg-white">
-        <div className="max-w-4xl mx-auto p-6 md:p-8">
-          {/* Content Header */}
-          <div className="mb-8">
-            <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mb-6"></div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Post Content</h2>
-            <p className="text-gray-600">Scroll down to read the full content</p>
-          </div>
-
-          {/* Post Content */}
-          <div className="prose prose-lg prose-gray max-w-none">
-            <ContentRenderer content={post.content} />
-          </div>
-
-          {/* Footer */}
-          <div className="mt-12 pt-8 border-t border-gray-200">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="text-sm text-gray-500">
-                Published on {post.date} at {post.time}
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500">Category:</span>
-                <span className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm font-medium">
-                  {post.category}
-                </span>
+            {/* Footer */}
+            <div className="mt-12 pt-6 border-t border-blue-800/50">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="text-blue-200 text-sm">
+                  <span className="text-blue-300">Published on</span> {post.date} at {post.time}
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-blue-300 text-sm">Category:</span>
+                  <span className="px-3 py-1 bg-blue-500/20 text-blue-200 rounded-lg text-xs font-medium border border-blue-400/40">
+                    {post.category}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }

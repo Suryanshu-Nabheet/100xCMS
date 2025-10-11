@@ -1,20 +1,7 @@
 import { Post } from './post'
 
-// Import JSON files dynamically
-import post1 from './posts/post-1.json'
-import post2 from './posts/post-2.json'
-import post3 from './posts/post-3.json'
-import post4 from './posts/post-4.json'
-import post5 from './posts/post-5.json'
-
 // Load posts from JSON files
-export const posts: Post[] = [
-  post1,
-  post2,
-  post3,
-  post4,
-  post5
-]
+export const posts: Post[] = []
 
 // Helper function to get post by ID
 export const getPostById = (id: string): Post | undefined => {
