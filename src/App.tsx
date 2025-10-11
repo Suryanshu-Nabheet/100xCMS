@@ -1,20 +1,19 @@
 import { useState } from 'react'
-import { useAuth, AuthProvider } from './components/Auth/contexts/AuthContext'
-import { AppProvider } from './components/App/contexts/AppContext'
-import LayoutShell from './components/Layout/LayoutShell'
-import { LoginForm } from './components/Auth/components/LoginForm'
-import { SignupForm } from './components/Auth/components/SignupForm'
-import { HomePage } from './components/Home/HomePage'
-import { CourseCatalog } from './components/Courses/BrowseCourses/components/CourseCatalog'
-import { MyCourses } from './components/Courses/MyCourses/components/MyCourses'
-import { CourseDetail } from './components/Courses/BrowseCourses/CourseDetail'
-import { ProfileView } from './components/Profile/components/ProfileView'
+import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-react'
+import { AppProvider } from './components/Dashboard/App/contexts/AppContext'
+import LayoutShell from './components/Dashboard/Layout/LayoutShell'
+import { HomePage } from './components/Dashboard/Home/HomePage'
+import { CourseCatalog } from './components/Dashboard/Courses/BrowseCourses/components/CourseCatalog'
+import { MyCourses } from './components/Dashboard/Courses/MyCourses/components/MyCourses'
+import { CourseDetail } from './components/Dashboard/Courses/BrowseCourses/CourseDetail'
+import { ProfileView } from './components/Dashboard/Profile/ProfileView'
+import Main from './components/Home/main'
+
+const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 function AppContent() {
-  const { user, loading } = useAuth()
   const [activeView, setActiveView] = useState('dashboard')
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null)
-  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login')
 
   const handleNavigation = (view: string, courseId?: string) => {
     setActiveView(view)
@@ -33,9 +32,9 @@ function AppContent() {
         return <CourseCatalog />
       case 'course-detail':
         return selectedCourseId ? (
-          <CourseDetail 
-            courseId={selectedCourseId} 
-            onBack={() => setActiveView('my-courses')} 
+          <CourseDetail
+            courseId={selectedCourseId}
+            onBack={() => setActiveView('my-courses')}
           />
         ) : (
           <div className="liquid-glass rounded-professional p-8 text-center hover-lift">
@@ -64,51 +63,39 @@ function AppContent() {
     }
   }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center gpu-accelerated bg-gradient-to-br from-black via-gray-900 to-blue-900">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-20 w-20 border-4 border-white/10 border-t-blue-500 mx-auto mb-6 glow-blue"></div>
-          <div className="mb-2">
-            <div className="font-bold text-3xl select-none">
-              <span className="text-white">Class</span>
-              <span className="text-blue-400 text-4xl font-bold">X</span>
-            </div>
-          </div>
-          <p className="text-white/80">Loading your learning platform...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (!user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center p-4 gpu-accelerated bg-gradient-to-br from-black via-gray-900 to-blue-900 overflow-hidden">
-        <div className="w-full max-w-md">
-          {authMode === 'login' ? (
-            <LoginForm onToggleMode={() => setAuthMode('signup')} />
-          ) : (
-            <SignupForm onToggleMode={() => setAuthMode('login')} />
-          )}
-        </div>
-      </div>
-    )
-  }
-
   return (
-    <LayoutShell activeItem={activeView} onItemClick={handleNavigation}>
-      {renderContent()}
-    </LayoutShell>
+    <>
+      <SignedOut>
+        <Main />
+      </SignedOut>
+      
+      <SignedIn>
+        <LayoutShell activeItem={activeView} onItemClick={handleNavigation}>
+          {renderContent()}
+        </LayoutShell>
+      </SignedIn>
+    </>
   )
 }
 
 function App() {
+  if (!clerkPubKey) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-black">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-white mb-4">Missing Clerk Configuration</h1>
+          <p className="text-white/80">Please check your environment variables.</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <AuthProvider>
+    <ClerkProvider publishableKey={clerkPubKey}>
       <AppProvider>
         <AppContent />
       </AppProvider>
-    </AuthProvider>
+    </ClerkProvider>
   )
 }
 
