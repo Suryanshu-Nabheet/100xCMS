@@ -1,0 +1,21 @@
+{
+  "id": "holiday-schedule",
+  "title": "Holiday Schedule & Winter Break Information",
+  "description": "Important information about our holiday schedule and winter break closures.",
+  "date": "December 20, 2024",
+  "time": "4:00 PM",
+  "image": "https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=800&h=400&fit=crop",
+  "category": "Schedule",
+  "priority": "medium",
+  "content": [
+    {
+      "type": "text",
+      "data": "Dear ClassX Community,\n\nAs we approach the holiday season, we want to inform you about our winter break schedule:\n\nHoliday Schedule:\n• December 24-25: Platform closed\n• December 31-January 1: Platform closed\n• January 2: Normal operations resume\n\nDuring the break:\n• All courses will remain accessible\n• Support will be limited\n• New enrollments will be processed after January 2\n\nWe wish you all a wonderful holiday season and a happy new year! Thank you for being part of the ClassX community.\n\nBest regards,\nThe ClassX Team"
+    },
+    {
+      "type": "image",
+      "data": "https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=800&h=400&fit=crop",
+      "caption": "Happy Holidays from the ClassX Team!"
+    }
+  ]
+}

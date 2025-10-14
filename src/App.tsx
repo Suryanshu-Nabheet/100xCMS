@@ -8,7 +8,7 @@ import { MyCourses } from './components/Dashboard/Courses/MyCourses/components/M
 import { CourseDetail } from './components/Dashboard/Courses/BrowseCourses/CourseDetail'
 import { ProfileView } from './components/Dashboard/Profile/ProfileView'
 import { UpdatesMain } from './components/Dashboard/Updates'
-import { AdminDashboard, CourseManager, useAdminAuth } from './components/Admin'
+import { AdminDashboard, useAdminAuth } from './components/Admin'
 import Main from './components/Landing/main'
 
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -57,8 +57,6 @@ function AppContent() {
         return <ProfileView />
       case 'admin-dashboard':
         return <AdminDashboard />
-      case 'course-manager':
-        return <CourseManager />
       case 'settings':
         return (
           <div className="liquid-glass rounded-professional p-8 text-center hover-lift">

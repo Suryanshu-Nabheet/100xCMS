@@ -15,20 +15,46 @@ interface ClerkUser {
 
 // Client-side service that doesn't expose secret keys
 export class ClerkServiceClient {
-  // Fetch users from server-side API
+  // Fetch users directly from Clerk API
   static async fetchAllUsers(): Promise<ClerkUser[]> {
     try {
-      const response = await fetch('/api/admin/students')
+      const response = await fetch('https://api.clerk.com/v1/users', {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer sk_test_Da5TLNMHCM7mMFoawvfYuiL5KoEUzeCN8P7xOIohhn',
+          'Content-Type': 'application/json'
+        },
+        mode: 'cors'
+      })
       
       if (!response.ok) {
-        throw new Error(`API error: ${response.status} ${response.statusText}`)
+        throw new Error(`Clerk API error: ${response.status} ${response.statusText}`)
       }
       
-      const users = await response.json()
-      return users
+      const data = await response.json()
+      
+      // Transform Clerk API response to our ClerkUser interface
+      return data.map((user: {
+        id: string
+        first_name: string | null
+        last_name: string | null
+        email_addresses: Array<{ emailAddress: string }>
+        image_url: string
+        created_at: string
+        last_sign_in_at: string | null
+        public_metadata: Record<string, unknown>
+      }) => ({
+        id: user.id,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        emailAddresses: user.email_addresses || [],
+        imageUrl: user.image_url || '/default-avatar.png',
+        createdAt: user.created_at,
+        lastSignInAt: user.last_sign_in_at,
+        publicMetadata: user.public_metadata || {}
+      }))
     } catch (error) {
-      console.error('Error fetching users:', error)
-      console.warn('Make sure to implement /api/admin/students endpoint with Clerk integration')
+      console.error('Error fetching users from Clerk:', error)
       return []
     }
   }
@@ -36,14 +62,31 @@ export class ClerkServiceClient {
   // Fetch user by ID
   static async fetchUserById(userId: string): Promise<ClerkUser | null> {
     try {
-      const response = await fetch(`/api/admin/students/${userId}`)
+      const response = await fetch(`https://api.clerk.com/v1/users/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer sk_test_Da5TLNMHCM7mMFoawvfYuiL5KoEUzeCN8P7xOIohhn',
+          'Content-Type': 'application/json'
+        },
+        mode: 'cors'
+      })
       
       if (!response.ok) {
-        throw new Error(`API error: ${response.status} ${response.statusText}`)
+        throw new Error(`Clerk API error: ${response.status} ${response.statusText}`)
       }
       
       const user = await response.json()
-      return user
+      
+      return {
+        id: user.id,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        emailAddresses: user.email_addresses || [],
+        imageUrl: user.image_url || '/default-avatar.png',
+        createdAt: user.created_at,
+        lastSignInAt: user.last_sign_in_at,
+        publicMetadata: user.public_metadata || {}
+      }
     } catch (error) {
       console.error('Error fetching user by ID:', error)
       return null

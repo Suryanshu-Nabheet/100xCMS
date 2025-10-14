@@ -1,6 +1,5 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { InputSanitizer } from './InputSanitizer'
 
 interface AdminUser {
   id: string
@@ -61,29 +60,8 @@ export function useAdminAuth() {
     const adminSession = localStorage.getItem(ADMIN_SESSION_KEY)
     if (adminSession) {
       try {
-        // Decrypt session data
-        const decryptedSession = JSON.parse(atob(adminSession))
-        
-        // Validate session token
-        if (!decryptedSession.sessionToken) {
-          localStorage.removeItem(ADMIN_SESSION_KEY)
-          setIsLoading(false)
-          return
-        }
-        
-        // Parse session token
-        const tokenData = JSON.parse(atob(decryptedSession.sessionToken))
-        
-        // Check session expiry (24 hours)
-        const sessionAge = Date.now() - tokenData.timestamp
-        if (sessionAge > 24 * 60 * 60 * 1000) {
-          localStorage.removeItem(ADMIN_SESSION_KEY)
-          setIsLoading(false)
-          return
-        }
-        
-        // Find admin
-        const admin = adminUsers.find(a => a.id === tokenData.id)
+        const sessionData = JSON.parse(adminSession)
+        const admin = adminUsers.find(a => a.email === sessionData.email)
         if (admin) {
           setIsAdmin(true)
           setAdminUser(admin)
@@ -98,136 +76,46 @@ export function useAdminAuth() {
   }, [adminUsers])
 
   const loginAdmin = (email: string, password: string): boolean => {
-    // Input validation and sanitization
-    const sanitizedEmail = InputSanitizer.sanitizeEmail(email)
-    const sanitizedPassword = InputSanitizer.sanitizePassword(password)
-    
-    // Basic validation
-    if (!sanitizedEmail || !sanitizedPassword) {
-      return false
-    }
-    
-    // Email format validation
-    if (!InputSanitizer.isValidEmail(sanitizedEmail)) {
-      return false
-    }
-    
-    // Password length validation
-    if (sanitizedPassword.length < 8) {
-      return false
-    }
-    
-    // Rate limiting check
-    const lastAttempt = localStorage.getItem('admin_login_attempt')
-    const now = Date.now()
-    if (lastAttempt && now - parseInt(lastAttempt) < 5000) { // 5 second cooldown
-      return false
-    }
-    
-    // Store attempt time
-    localStorage.setItem('admin_login_attempt', now.toString())
-    
-    // Find admin with case-insensitive email comparison
-    const admin = adminUsers.find(a => 
-      a.email.toLowerCase() === sanitizedEmail && a.password === sanitizedPassword
-    )
-    
+    const admin = adminUsers.find(a => a.email === email && a.password === password)
     if (admin) {
-      // Generate secure session token
-      const sessionToken = btoa(JSON.stringify({
-        id: admin.id,
-        email: admin.email,
-        role: admin.role,
-        timestamp: Date.now(),
-        random: Math.random().toString(36).substring(2)
-      }))
-      
       const sessionData = {
         ...admin,
-        sessionToken,
         loginTime: Date.now(),
-        lastLogin: new Date().toISOString(),
-        ipAddress: 'unknown', // In production, get real IP
-        userAgent: navigator.userAgent
+        lastLogin: new Date().toISOString()
       }
-      
-      // Encrypt session data (basic obfuscation)
-      const encryptedSession = btoa(JSON.stringify(sessionData))
-      localStorage.setItem(ADMIN_SESSION_KEY, encryptedSession)
-      
+      localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(sessionData))
       setIsAdmin(true)
       setAdminUser(admin)
       
       // Update last login
       const updatedAdmins = adminUsers.map(a => 
-        a.email.toLowerCase() === sanitizedEmail ? { ...a, lastLogin: new Date().toISOString() } : a
+        a.email === email ? { ...a, lastLogin: new Date().toISOString() } : a
       )
       setAdminUsers(updatedAdmins)
       localStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify(updatedAdmins))
       
-      // Clear failed attempts
-      localStorage.removeItem('admin_login_attempt')
-      
       return true
     }
-    
     return false
   }
 
   const logoutAdmin = () => {
-    // Clear all admin-related data
     localStorage.removeItem(ADMIN_SESSION_KEY)
-    localStorage.removeItem('admin_login_attempt')
-    localStorage.removeItem('cms_courses') // Clear course data for security
-    
-    // Clear any other sensitive data
-    try {
-      // Clear all localStorage keys that might contain sensitive data
-      Object.keys(localStorage).forEach(key => {
-        if (key.startsWith('admin_') || key.startsWith('cms_')) {
-          localStorage.removeItem(key)
-        }
-      })
-    } catch (error) {
-      console.error('Error clearing sensitive data:', error)
-    }
-    
     setIsAdmin(false)
     setAdminUser(null)
-    
-    // Force page reload to clear any cached data
-    window.location.reload()
   }
 
   const addAdmin = (name: string, email: string, password: string): boolean => {
-    // Sanitize inputs
-    const sanitizedName = InputSanitizer.sanitizeText(name)
-    const sanitizedEmail = InputSanitizer.sanitizeEmail(email)
-    const sanitizedPassword = InputSanitizer.sanitizePassword(password)
-    
-    // Validate inputs
-    if (!sanitizedName || !sanitizedEmail || !sanitizedPassword) {
-      return false
-    }
-    
-    if (!InputSanitizer.isValidEmail(sanitizedEmail)) {
-      return false
-    }
-    
-    if (sanitizedPassword.length < 8) {
-      return false
-    }
-    
     // Check if admin already exists
-    if (adminUsers.find(a => a.email.toLowerCase() === sanitizedEmail)) {
+    if (adminUsers.find(a => a.email === email)) {
       return false
     }
 
     const newAdmin: AdminUser = {
-      id: `admin-${Date.now()}-${InputSanitizer.generateSecureToken(8)}`,
-      name: sanitizedName,
-      email: sanitizedEmail,
-      password: InputSanitizer.hashPassword(sanitizedPassword), // Hash password
+      id: `admin-${Date.now()}`,
+      name,
+      email,
+      password, // In production, this should be hashed
       role: 'admin',
       createdAt: new Date().toISOString()
     }

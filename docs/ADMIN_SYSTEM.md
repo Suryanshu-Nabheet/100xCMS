@@ -2,7 +2,7 @@
 
 ## Overview
 
-The admin system provides comprehensive management capabilities for the ClassX platform, including user management, course creation, and system administration.
+The admin system provides streamlined management capabilities for the ClassX platform, focusing on student management and admin account administration. Courses are managed through hardcoded files.
 
 ## Admin Authentication
 
@@ -21,23 +21,21 @@ The admin system provides comprehensive management capabilities for the ClassX p
 ## Admin Features
 
 ### 1. Admin Dashboard
-- **Overview**: System statistics and metrics
-- **Users Tab**: View all registered users
-- **Courses Tab**: Manage all courses
-- **Real-time Stats**: Total users, courses, enrollments
+- **Students Tab**: View all registered students from Clerk API
+- **Admins Tab**: Manage admin accounts (Super Admin only)
+- **Real-time Stats**: Total students and admins count
 
-### 2. Course Manager
-- **Create Course**: Full course creation interface
-- **Course Details**: Title, description, price, category, level
-- **Lessons Management**: Add/edit/remove course lessons
-- **Media Support**: Thumbnail images, video URLs
-- **Publishing**: Draft and published course states
+### 2. Student Management
+- **Student List**: View all registered students
+- **Student Details**: Name, email, status, last sign-in
+- **Search Functionality**: Search students by name or email
+- **Clerk Integration**: Real-time data from Clerk API
 
-### 3. User Management
-- **User List**: View all registered users
-- **User Details**: Name, email, role, enrollment count
-- **User Actions**: View, edit, delete users
-- **Role Management**: Student, instructor, admin roles
+### 3. Admin Management
+- **Admin List**: View all admin accounts
+- **Add Admins**: Create new admin accounts (Super Admin only)
+- **Remove Admins**: Delete admin accounts (Super Admin only)
+- **Role Management**: Super Admin and Admin roles
 
 ## File Structure
 
@@ -45,7 +43,8 @@ The admin system provides comprehensive management capabilities for the ClassX p
 src/components/Admin/
 ├── auth.tsx              # Admin authentication logic
 ├── dashboard.tsx         # Admin dashboard interface
-├── course-manager.tsx    # Course creation and management
+├── AdminGuard.tsx        # Route protection
+├── AdminPanel.tsx        # Main admin component
 └── index.ts             # Export declarations
 ```
 
@@ -72,15 +71,14 @@ const {
 
 ### AdminDashboard Component
 - System overview with statistics
-- Tabbed interface (Overview, Users, Courses)
+- Tabbed interface (Students, Admins)
 - Real-time data display
 - Action buttons for management
 
-### CourseManager Component
-- Course creation form
-- Course management interface
-- Lesson management system
-- Media upload support
+### AdminPanel Component
+- Main admin component wrapper
+- Includes AdminGuard for protection
+- Simplified admin interface
 
 ## Integration Points
 
@@ -115,10 +113,10 @@ const {
 - Login time tracking
 - Session validation
 
-### Mock Data
-- Sample users and courses
-- Realistic test data
-- Easy to replace with real API
+### Clerk API Integration
+- Real student data from Clerk
+- Server-side API calls for security
+- Error handling and fallbacks
 
 ## Usage Instructions
 
@@ -126,8 +124,8 @@ const {
 1. Sign in with regular Clerk authentication
 2. Enter admin credentials when prompted
 3. Access admin dashboard
-4. Manage users and courses
-5. Create and publish content
+4. Manage students and admin accounts
+5. View student data from Clerk API
 
 ### For Developers
 1. Admin system is self-contained
@@ -138,18 +136,18 @@ const {
 ## Future Enhancements
 
 ### Planned Features
-- Real database integration
-- Advanced user management
-- Course analytics
+- Enhanced student management
+- Advanced admin controls
+- System analytics
 - Content moderation
 - System settings
 - Audit logs
 
 ### API Integration
-- Replace mock data with real APIs
-- User management endpoints
-- Course CRUD operations
-- File upload handling
+- Enhanced Clerk API integration
+- Student management endpoints
+- Admin management operations
+- Real-time data updates
 
 ## Troubleshooting
 
@@ -157,7 +155,7 @@ const {
 1. **Admin login not working**: Check email/password
 2. **Session expired**: Re-login required
 3. **Menu items missing**: Check admin authentication
-4. **Course creation fails**: Validate form data
+4. **Student data not loading**: Check Clerk API integration
 
 ### Debug Mode
 - Check localStorage for admin session
@@ -168,7 +166,7 @@ const {
 ## Notes
 
 - Admin system is designed for single admin (Suryanshu Nabheet)
-- All content creation is done through local code
-- No external posting capabilities
+- Courses are managed through hardcoded files
+- Student data comes from Clerk API
 - Secure and private admin access
 - Easy to maintain and extend

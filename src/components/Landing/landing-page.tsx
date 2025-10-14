@@ -359,7 +359,7 @@ export default function LandingPage() {
       `}</style>
       <div className="flex min-h-screen flex-col bg-black relative overflow-x-hidden">
       {/* Left and Right Side Shadows */}
-      <div className="fixed inset-0 pointer-events-none z-30" style={{ right: '8px' }}>
+      <div className="fixed inset-0 pointer-events-none z-30">
         {/* Left shadow */}
         <div 
           className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black via-black/80 to-transparent"

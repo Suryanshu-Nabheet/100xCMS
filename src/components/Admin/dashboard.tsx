@@ -1,48 +1,26 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Users, BookOpen, Eye, Edit, AlertCircle, Plus, Trash2, Shield, LogOut, Search } from 'lucide-react'
+import { Users, AlertCircle, Plus, Trash2, Shield, Search } from 'lucide-react'
 import { useAdminAuth } from './auth'
 import { ClerkServiceClient, ClerkUser } from '../../services/clerkServiceClient'
-
+import { courses as hardcodedCourses, Course } from '../../data/courses'
 // ClerkUser interface is now imported from clerkService
-
-interface Course {
-  id: string
-  title: string
-  description: string
-  thumbnail: string
-  price: number
-  category: string
-  level: 'beginner' | 'intermediate' | 'advanced'
-  duration: string
-  lessons: Array<{
-    id: string
-    title: string
-    description: string
-    videoUrl: string
-    duration: string
-    order: number
-  }>
-  status: 'published' | 'draft'
-  createdAt: string
-  enrolledStudents: number
-}
-
+// Course interface is imported from data/courses
 // AdminUser interface is imported from auth.tsx
 
 export function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'courses' | 'admins'>('overview')
+  const [activeTab, setActiveTab] = useState<'students' | 'courses' | 'admins'>('students')
   const [clerkUsers, setClerkUsers] = useState<ClerkUser[]>([])
-  const [courses, setCourses] = useState<Course[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [showAddAdmin, setShowAddAdmin] = useState(false)
   const [newAdminData, setNewAdminData] = useState({ name: '', email: '', password: '' })
   const [searchQuery, setSearchQuery] = useState('')
   const [filteredUsers, setFilteredUsers] = useState<ClerkUser[]>([])
+  const [courses] = useState<Course[]>(hardcodedCourses)
   
-  const { adminUser, adminUsers, addAdmin, removeAdmin, logoutAdmin } = useAdminAuth()
+  const { adminUser, adminUsers, addAdmin, removeAdmin } = useAdminAuth()
 
   // Load users data from Clerk API
   useEffect(() => {
@@ -51,14 +29,16 @@ export function AdminDashboard() {
         setIsLoading(true)
         setError(null)
         
+        console.log('Loading users from Clerk API...')
         // Fetch users from Clerk service
         const users = await ClerkServiceClient.fetchAllUsers()
+        console.log('Loaded users:', users)
         setClerkUsers(users)
         setFilteredUsers(users)
         setIsLoading(false)
       } catch (err) {
         console.error('Error loading users:', err)
-        setError('Failed to load users from Clerk API')
+        setError(`Failed to load users from Clerk API: ${err instanceof Error ? err.message : 'Unknown error'}`)
         setIsLoading(false)
         setClerkUsers([])
         setFilteredUsers([])
@@ -67,6 +47,8 @@ export function AdminDashboard() {
 
     loadUsers()
   }, [])
+
+  // Courses are managed through hardcoded files - no dummy data loaded
 
   // Filter users based on search query
   useEffect(() => {
@@ -82,28 +64,11 @@ export function AdminDashboard() {
     }
   }, [searchQuery, clerkUsers])
 
-  // Load hardcoded courses (these will be managed through code)
-  useEffect(() => {
-    const loadCourses = async () => {
-      try {
-        // Import courses from the hardcoded data
-        const { courses: hardcodedCourses } = await import('../../data/courses')
-        setCourses(hardcodedCourses)
-      } catch (error) {
-        console.error('Error loading courses:', error)
-        setCourses([])
-      }
-    }
-
-    loadCourses()
-  }, [])
-
   const stats = {
     totalUsers: clerkUsers.length,
     totalCourses: courses.length,
     publishedCourses: courses.filter(c => c.status === 'published').length,
     draftCourses: courses.filter(c => c.status === 'draft').length,
-    totalEnrollments: courses.reduce((sum, course) => sum + course.enrolledStudents, 0),
     totalAdmins: adminUsers.length
   }
 
@@ -148,33 +113,12 @@ export function AdminDashboard() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-white mb-2">Admin Dashboard</h1>
-              <p className="text-blue-200">Manage users, courses, and system settings</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="text-right">
-                <p className="text-white font-medium">{adminUser?.name}</p>
-                <p className="text-blue-200 text-sm">{adminUser?.email}</p>
-                <span className={`px-2 py-1 rounded text-xs ${
-                  adminUser?.role === 'super-admin' 
-                    ? 'bg-red-500/20 text-red-200' 
-                    : 'bg-blue-500/20 text-blue-200'
-                }`}>
-                  {adminUser?.role === 'super-admin' ? 'Super Admin' : 'Admin'}
-                </span>
-              </div>
-              <button
-                onClick={logoutAdmin}
-                data-admin-logout="true"
-                className="bg-red-500/20 text-red-200 px-3 py-2 rounded-lg hover:bg-red-500/30 transition-colors flex items-center gap-2"
-              >
-                <LogOut className="w-4 h-4" />
-                Logout
-              </button>
-            </div>
+          <div>
+          <h1 className="text-3xl font-bold text-white mb-2">Admin Dashboard</h1>
+            <p className="text-blue-200">Manage students and admin accounts</p>
           </div>
+        </div>
+        
           {error && (
             <div className="mt-4 bg-red-500/20 border border-red-500/30 rounded-lg p-3">
               <div className="flex items-center gap-2">
@@ -183,10 +127,9 @@ export function AdminDashboard() {
               </div>
             </div>
           )}
-        </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -213,7 +156,7 @@ export function AdminDashboard() {
                 <p className="text-green-200 text-sm">Total Courses</p>
                 <p className="text-2xl font-bold text-white">{stats.totalCourses}</p>
               </div>
-              <BookOpen className="w-8 h-8 text-green-400" />
+              <Plus className="w-8 h-8 text-green-400" />
             </div>
           </motion.div>
 
@@ -228,7 +171,7 @@ export function AdminDashboard() {
                 <p className="text-purple-200 text-sm">Published</p>
                 <p className="text-2xl font-bold text-white">{stats.publishedCourses}</p>
               </div>
-              <Eye className="w-8 h-8 text-purple-400" />
+              <Shield className="w-8 h-8 text-purple-400" />
             </div>
           </motion.div>
 
@@ -236,21 +179,6 @@ export function AdminDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-yellow-900/20 backdrop-blur-sm rounded-xl p-6 border border-yellow-500/30"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-yellow-200 text-sm">Draft</p>
-                <p className="text-2xl font-bold text-white">{stats.draftCourses}</p>
-              </div>
-              <Edit className="w-8 h-8 text-yellow-400" />
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
             className="bg-red-900/20 backdrop-blur-sm rounded-xl p-6 border border-red-500/30"
           >
             <div className="flex items-center justify-between">
@@ -267,14 +195,13 @@ export function AdminDashboard() {
         <div className="mb-6">
           <div className="flex space-x-1 bg-white/5 backdrop-blur-sm rounded-lg p-1 border border-blue-500/20">
             {[
-              { id: 'overview', label: 'Overview' },
-              { id: 'users', label: 'Students' },
+              { id: 'students', label: 'Students' },
               { id: 'courses', label: 'Courses' },
               { id: 'admins', label: 'Admins' }
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as 'overview' | 'users' | 'courses' | 'admins')}
+                onClick={() => setActiveTab(tab.id as 'students' | 'courses' | 'admins')}
                 className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                   activeTab === tab.id
                     ? 'bg-blue-500/20 text-blue-400 shadow-lg'
@@ -295,96 +222,8 @@ export function AdminDashboard() {
           transition={{ duration: 0.3 }}
           className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-blue-500/20"
         >
-          {activeTab === 'overview' && (
-            <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-white mb-4">System Overview</h2>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Recent Users */}
-                <div>
-                  <h3 className="text-lg font-medium text-white mb-3">Recent Users</h3>
-                  <div className="space-y-3">
-                    {isLoading ? (
-                      <div className="text-center py-4">
-                        <div className="w-8 h-8 mx-auto mb-2 bg-blue-900/20 rounded-full flex items-center justify-center">
-                          <Users className="w-4 h-4 text-blue-400 animate-pulse" />
-                        </div>
-                        <p className="text-blue-200">Loading users...</p>
-                      </div>
-                    ) : clerkUsers.length === 0 ? (
-                      <div className="text-center py-4">
-                        <div className="w-8 h-8 mx-auto mb-2 bg-blue-900/20 rounded-full flex items-center justify-center">
-                          <Users className="w-4 h-4 text-blue-400" />
-                        </div>
-                        <p className="text-blue-200">No users registered yet</p>
-                      </div>
-                    ) : (
-                      clerkUsers.slice(0, 3).map((clerkUser) => (
-                        <div key={clerkUser.id} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
-                          <div className="flex items-center space-x-3">
-                            <img
-                              src={clerkUser.imageUrl}
-                              alt={clerkUser.firstName || 'User'}
-                              className="w-8 h-8 rounded-full"
-                            />
-                            <div>
-                              <p className="text-white font-medium">
-                                {clerkUser.firstName} {clerkUser.lastName}
-                              </p>
-                              <p className="text-blue-200 text-sm">
-                                {clerkUser.emailAddresses[0]?.emailAddress}
-                              </p>
-                            </div>
-                          </div>
-                          <span className={`px-2 py-1 rounded text-xs ${
-                            clerkUser.emailAddresses[0]?.emailAddress === 'suryanshunab@gmail.com' 
-                              ? 'bg-red-500/20 text-red-200' 
-                              : 'bg-blue-500/20 text-blue-200'
-                          }`}>
-                            {clerkUser.emailAddresses[0]?.emailAddress === 'suryanshunab@gmail.com' ? 'Admin' : 'Student'}
-                          </span>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </div>
 
-                {/* Recent Courses */}
-                <div>
-                  <h3 className="text-lg font-medium text-white mb-3">Recent Courses</h3>
-                  <div className="space-y-3">
-                    {courses.length === 0 ? (
-                      <div className="text-center py-4">
-                        <div className="w-8 h-8 mx-auto mb-2 bg-blue-900/20 rounded-full flex items-center justify-center">
-                          <BookOpen className="w-4 h-4 text-blue-400" />
-                        </div>
-                        <p className="text-blue-200">No courses created yet</p>
-                        <p className="text-blue-300 text-xs mt-1">Courses are managed through hardcoded files</p>
-                      </div>
-                    ) : (
-                      courses.slice(0, 3).map((course) => (
-                        <div key={course.id} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
-                          <div>
-                            <p className="text-white font-medium">{course.title}</p>
-                            <p className="text-blue-200 text-sm">{course.enrolledStudents} students</p>
-                          </div>
-                          <span className={`px-2 py-1 rounded text-xs ${
-                            course.status === 'published' 
-                              ? 'bg-green-500/20 text-green-200' 
-                              : 'bg-yellow-500/20 text-yellow-200'
-                          }`}>
-                            {course.status}
-                          </span>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'users' && (
+          {activeTab === 'students' && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold text-white">All Students</h2>
@@ -462,29 +301,29 @@ export function AdminDashboard() {
                           new Date(clerkUser.lastSignInAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
                         
                         return (
-                          <tr key={clerkUser.id} className="border-b border-white/5">
-                            <td className="py-3 px-4">
-                              <img
-                                src={clerkUser.imageUrl}
-                                alt={clerkUser.firstName || 'User'}
-                                className="w-8 h-8 rounded-full"
-                              />
-                            </td>
-                            <td className="py-3 px-4 text-white">
-                              {clerkUser.firstName} {clerkUser.lastName}
-                            </td>
-                            <td className="py-3 px-4 text-blue-200">
-                              {clerkUser.emailAddresses[0]?.emailAddress}
-                            </td>
-                            <td className="py-3 px-4 text-blue-200">
-                              {new Date(clerkUser.createdAt).toLocaleDateString()}
-                            </td>
-                            <td className="py-3 px-4 text-blue-200">
-                              {clerkUser.lastSignInAt 
-                                ? new Date(clerkUser.lastSignInAt).toLocaleDateString()
-                                : 'Never'
-                              }
-                            </td>
+                        <tr key={clerkUser.id} className="border-b border-white/5">
+                          <td className="py-3 px-4">
+                            <img
+                              src={clerkUser.imageUrl}
+                              alt={clerkUser.firstName || 'User'}
+                              className="w-8 h-8 rounded-full"
+                            />
+                          </td>
+                          <td className="py-3 px-4 text-white">
+                            {clerkUser.firstName} {clerkUser.lastName}
+                          </td>
+                          <td className="py-3 px-4 text-blue-200">
+                            {clerkUser.emailAddresses[0]?.emailAddress}
+                          </td>
+                          <td className="py-3 px-4 text-blue-200">
+                            {new Date(clerkUser.createdAt).toLocaleDateString()}
+                          </td>
+                          <td className="py-3 px-4 text-blue-200">
+                            {clerkUser.lastSignInAt 
+                              ? new Date(clerkUser.lastSignInAt).toLocaleDateString()
+                              : 'Never'
+                            }
+                          </td>
                             <td className="py-3 px-4">
                               <span className={`px-2 py-1 rounded text-xs ${
                                 isActive 
@@ -494,7 +333,7 @@ export function AdminDashboard() {
                                 {isActive ? 'Active' : 'Inactive'}
                               </span>
                             </td>
-                          </tr>
+                        </tr>
                         )
                       })}
                     </tbody>
@@ -518,16 +357,15 @@ export function AdminDashboard() {
                 <div className="flex items-start gap-3">
                   <AlertCircle className="w-5 h-5 text-blue-400 mt-0.5" />
                   <div>
-                    <h3 className="text-white font-medium mb-1">Hardcoded Course Management</h3>
+                    <h3 className="text-white font-medium mb-1">Real Course Data from Browse Courses</h3>
                     <p className="text-blue-200 text-sm mb-2">
-                      Courses are managed through hardcoded files in your codebase. This dashboard shows real-time data from your course files.
+                      These courses are loaded from your hardcoded course files and are the same courses shown in the Browse Courses section.
                     </p>
                     <div className="text-blue-300 text-xs space-y-1">
-                      <p>• View course details, thumbnails, and videos</p>
-                      <p>• Test course functionality and content</p>
-                      <p>• Monitor enrollment and engagement</p>
                       <p>• All courses are 100% free</p>
-                      <p>• To add/modify courses, update the hardcoded course files</p>
+                      <p>• Real course data with thumbnails and videos</p>
+                      <p>• Connected to Browse Courses section</p>
+                      <p>• To add/modify courses, update the course files</p>
                     </div>
                   </div>
                 </div>
@@ -536,15 +374,15 @@ export function AdminDashboard() {
               {courses.length === 0 ? (
                 <div className="text-center py-12">
                   <div className="w-16 h-16 mx-auto mb-4 bg-blue-900/20 rounded-full flex items-center justify-center">
-                    <BookOpen className="w-8 h-8 text-blue-400" />
+                    <Plus className="w-8 h-8 text-blue-400" />
                   </div>
                   <h3 className="text-xl font-semibold text-white mb-2">No Courses Found</h3>
                   <p className="text-gray-400 mb-6">
-                    No hardcoded courses have been added to the system yet.
+                    No courses have been added to the system yet.
                   </p>
                   <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4 max-w-md mx-auto">
                     <p className="text-blue-200 text-sm">
-                      To add courses, create course files in your codebase and import them into the course management system. All courses are 100% free.
+                      To add courses, create course files in your codebase. All courses are 100% free.
                     </p>
                   </div>
                 </div>
@@ -559,10 +397,10 @@ export function AdminDashboard() {
                           className="w-full h-32 object-cover rounded-lg mb-4"
                         />
                       )}
-                      
+
                       <h3 className="text-lg font-semibold text-white mb-2">{course.title}</h3>
                       <p className="text-blue-200 text-sm mb-4 line-clamp-2">{course.description}</p>
-                      
+
                       <div className="space-y-2 mb-4">
                         <div className="flex items-center justify-between">
                           <span className="text-blue-300 text-xs">Category</span>
@@ -578,29 +416,30 @@ export function AdminDashboard() {
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-blue-300 text-xs">Lessons</span>
-                          <span className="text-white text-xs">{course.lessons.length}</span>
+                          <span className="text-white text-xs">{course.lessons?.length || 0}</span>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center justify-between mb-4">
                         <span className={`px-2 py-1 rounded text-xs ${
-                          course.status === 'published' 
-                            ? 'bg-green-500/20 text-green-200' 
+                          course.status === 'published'
+                            ? 'bg-green-500/20 text-green-200'
                             : 'bg-yellow-500/20 text-yellow-200'
                         }`}>
                           {course.status}
                         </span>
                         <span className="text-green-400 font-semibold">Free</span>
                       </div>
-                      
+
                       <div className="flex space-x-2">
-                        <button className="flex-1 bg-blue-500/20 text-blue-200 px-3 py-2 rounded text-sm hover:bg-blue-500/30 transition-colors">
-                          <Eye className="w-4 h-4 inline mr-1" />
-                          Test
+                        <button
+                          onClick={() => window.open('/browse', '_blank')}
+                          className="flex-1 bg-blue-500/20 text-blue-200 px-3 py-2 rounded text-sm hover:bg-blue-500/30 transition-colors"
+                        >
+                          View in Browse
                         </button>
                         <button className="flex-1 bg-green-500/20 text-green-200 px-3 py-2 rounded text-sm hover:bg-green-500/30 transition-colors">
-                          <Edit className="w-4 h-4 inline mr-1" />
-                          Edit
+                          Edit File
                         </button>
                       </div>
                     </div>
@@ -615,7 +454,7 @@ export function AdminDashboard() {
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold text-white">Admin Management</h2>
                 <div className="flex items-center gap-4">
-                  <div className="text-blue-200 text-sm">
+                <div className="text-blue-200 text-sm">
                     {adminUsers.length} total admins
                   </div>
                   {adminUser?.role === 'super-admin' && (
@@ -645,7 +484,7 @@ export function AdminDashboard() {
                           className="w-full px-3 py-2 bg-white/10 border border-blue-500/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50"
                           placeholder="Admin Name"
                         />
-                      </div>
+                  </div>
                       <div>
                         <label className="block text-sm font-medium text-white mb-2">Email</label>
                         <input

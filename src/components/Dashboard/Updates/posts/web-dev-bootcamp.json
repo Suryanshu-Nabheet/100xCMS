@@ -1,0 +1,33 @@
+{
+  "id": "web-dev-bootcamp",
+  "title": "Full-Stack Web Development Bootcamp - Spring 2025",
+  "description": "Intensive 16-week bootcamp covering modern web development technologies from frontend to backend.",
+  "date": "December 11, 2024",
+  "time": "9:00 AM",
+  "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=400&fit=crop",
+  "category": "Course",
+  "priority": "high",
+  "content": [
+    {
+      "type": "text",
+      "data": "Full-Stack Web Development Bootcamp - Spring 2025 Cohort\n\nTransform your career with our intensive 16-week bootcamp!\n\nCurriculum Overview:\n\nFrontend Development (Weeks 1-6):\n• HTML5, CSS3, JavaScript ES6+\n• React.js with Hooks and Context\n• TypeScript for type-safe development\n• Responsive design and mobile-first approach\n• State management with Redux Toolkit\n\nBackend Development (Weeks 7-12):\n• Node.js and Express.js\n• RESTful API design and development\n• Database design with MongoDB and PostgreSQL\n• Authentication and authorization\n• API testing and documentation\n\nDevOps & Deployment (Weeks 13-16):\n• Git version control and collaboration\n• Docker containerization\n• AWS cloud deployment\n• CI/CD pipelines\n• Performance optimization\n\nBootcamp Features:\n• Live coding sessions with industry experts\n• Real-world project portfolio\n• Career coaching and job placement\n• Networking events with tech companies\n• 6-month post-graduation support"
+    },
+    {
+      "type": "image",
+      "data": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=400&fit=crop",
+      "caption": "Students working on full-stack projects during bootcamp"
+    },
+    {
+      "type": "code",
+      "data": "// Example: Full-stack application structure\n// Frontend (React)\nconst App = () => {\n  const [users, setUsers] = useState([]);\n  \n  useEffect(() => {\n    fetch('/api/users')\n      .then(res => res.json())\n      .then(data => setUsers(data));\n  }, []);\n  \n  return (\n    <div className=\"app\">\n      <h1>User Management System</h1>\n      <UserList users={users} />\n    </div>\n  );\n};\n\n// Backend (Node.js/Express)\napp.get('/api/users', async (req, res) => {\n  try {\n    const users = await User.find();\n    res.json(users);\n  } catch (error) {\n    res.status(500).json({ error: error.message });\n  }\n});",
+      "language": "javascript",
+      "filename": "fullstack-example.js",
+      "caption": "Full-stack application example you'll build"
+    },
+    {
+      "type": "pdf",
+      "data": "/bootcamp-syllabus-spring-2025.pdf",
+      "caption": "Download Complete Bootcamp Syllabus"
+    }
+  ]
+}
