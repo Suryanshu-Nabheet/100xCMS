@@ -48,28 +48,18 @@ Install these essential extensions:
 Create `.env.local` for local development:
 
 ```env
+# Clerk Authentication
+VITE_CLERK_PUBLISHABLE_KEY=your-clerk-publishable-key
+VITE_CLERK_SECRET_KEY=your-clerk-secret-key
+
 # Application
 VITE_APP_NAME=ClassX
 VITE_APP_VERSION=1.0.0
 VITE_APP_ENV=development
 
-# API Configuration
-VITE_API_BASE_URL=http://localhost:3000/api
-VITE_API_TIMEOUT=10000
-
-# Authentication
-VITE_JWT_SECRET=your-development-secret
-VITE_AUTH_TOKEN_KEY=classx_auth_token
-
 # Features Flags
 VITE_ENABLE_ANALYTICS=false
 VITE_ENABLE_DEBUG=true
-VITE_ENABLE_MOCK_DATA=true
-
-# External Services
-VITE_OPENAI_API_KEY=your-openai-key
-VITE_STRIPE_PUBLISHABLE_KEY=your-stripe-key
-VITE_GOOGLE_ANALYTICS_ID=your-ga-id
 ```
 
 ## Code Standards
@@ -132,51 +122,85 @@ const UserProfile: React.FC<UserProps> = ({ user }) => {
 
 ```
 src/components/
-├── common/           # Reusable UI components
-│   ├── Button/
-│   ├── Modal/
-│   ├── Input/
+├── Auth/                 # Authentication components
+│   ├── SignIn.tsx
+│   ├── SignUp.tsx
 │   └── index.ts
-├── layout/           # Layout components
-│   ├── Header/
-│   ├── Sidebar/
-│   └── Footer/
-├── features/         # Feature-specific components
-│   ├── auth/
-│   ├── courses/
-│   └── dashboard/
-└── pages/           # Page components
-    ├── HomePage/
-    ├── LoginPage/
-    └── DashboardPage/
+├── Admin/                # Admin dashboard components
+│   ├── AdminGuard.tsx
+│   ├── AdminPanel.tsx
+│   ├── auth.tsx
+│   ├── dashboard.tsx
+│   ├── index.ts
+│   └── USAGE.md
+├── Dashboard/            # Main application dashboard
+│   ├── Courses/          # Course management
+│   │   ├── AdhocClasses/
+│   │   ├── DevopsCohort/
+│   │   ├── DsaClasses/
+│   │   ├── SolanaFellowship/
+│   │   ├── Web3Cohort/
+│   │   ├── WebDevCohort/
+│   │   ├── CourseDetail.tsx
+│   │   └── coursesData.ts
+│   ├── Home/
+│   ├── Layout/
+│   ├── Profile/
+│   ├── Updates/
+│   └── Video/
+└── Landing/              # Landing page components
+    ├── Components/
+    ├── landing-page.tsx
+    ├── main.tsx
+    └── index.ts
 ```
 
 ### Component Template
 
 ```typescript
 import React from 'react';
-import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
 
 interface ComponentProps {
   title: string;
   children?: React.ReactNode;
   className?: string;
+  onBack?: () => void;
 }
 
 const Component: React.FC<ComponentProps> = ({
   title,
   children,
-  className = ''
+  className = '',
+  onBack
 }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className={`component-base ${className}`}
-    >
-      <h2 className="component-title">{title}</h2>
-      {children}
-    </motion.div>
+    <div className={`min-h-screen bg-black text-white ${className}`}>
+      {/* Header */}
+      <div className="bg-black/50 backdrop-blur-md border-b border-gray-800 p-4">
+        <div className="flex items-center justify-between">
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-900/90 hover:bg-blue-800/90 rounded-lg transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back
+            </button>
+          )}
+          <div className="flex-1 text-center">
+            <h1 className="text-lg font-bold">{title}</h1>
+            <p className="text-sm text-gray-400">By Suryanshu Nabheet</p>
+          </div>
+          <div className="w-24" /> {/* Spacer for centering */}
+        </div>
+      </div>
+      
+      {/* Content */}
+      <div className="p-4">
+        {children}
+      </div>
+    </div>
   );
 };
 
@@ -204,6 +228,30 @@ export const useTheme = () => {
     throw new Error('useTheme must be used within ThemeProvider');
   }
   return context;
+};
+```
+
+### Clerk Authentication Integration
+
+The project uses Clerk for authentication and user management:
+
+```typescript
+// Example Clerk integration
+import { useUser, useAuth } from '@clerk/clerk-react';
+
+const ProtectedComponent = () => {
+  const { user, isLoaded } = useUser();
+  const { signOut } = useAuth();
+
+  if (!isLoaded) return <div>Loading...</div>;
+  if (!user) return <div>Please sign in</div>;
+
+  return (
+    <div>
+      <h1>Welcome, {user.firstName}!</h1>
+      <button onClick={() => signOut()}>Sign Out</button>
+    </div>
+  );
 };
 ```
 
@@ -248,14 +296,15 @@ export const useLocalStorage = <T>(
 - Create custom components for repeated patterns
 - Use CSS variables for theme colors
 - Implement responsive design with mobile-first approach
+- Follow the dark theme design system
 
 ```typescript
-// Good
+// Good - Dark theme button component
 const Button: React.FC<ButtonProps> = ({ variant, size, children }) => {
   const baseClasses = 'font-medium rounded-lg transition-all duration-200';
   const variantClasses = {
     primary: 'bg-blue-600 text-white hover:bg-blue-700',
-    secondary: 'bg-gray-200 text-gray-900 hover:bg-gray-300',
+    secondary: 'bg-gray-800 text-gray-200 hover:bg-gray-700',
     outline: 'border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
   };
   const sizeClasses = {
@@ -285,6 +334,14 @@ Define theme variables in `index.css`:
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
+  
+  --bg-primary: #000000;
+  --bg-secondary: #111111;
+  --bg-tertiary: #1a1a1a;
+  
+  --text-primary: #ffffff;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
   
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
@@ -456,9 +513,11 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
       '@components': path.resolve(__dirname, './src/components'),
-      '@utils': path.resolve(__dirname, './src/utils'),
-      '@types': path.resolve(__dirname, './src/types'),
+      '@utils': path.resolve(__dirname, './src/lib'),
     },
+  },
+  define: {
+    VITE_CLERK_SECRET_KEY: JSON.stringify(process.env.VITE_CLERK_SECRET_KEY),
   },
   build: {
     outDir: 'dist',
@@ -467,7 +526,8 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
-          ui: ['framer-motion', 'tailwindcss'],
+          clerk: ['@clerk/clerk-react'],
+          ui: ['lucide-react'],
         },
       },
     },
@@ -505,6 +565,7 @@ export default defineConfig(({ mode }) => {
     define: {
       __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
       __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+      VITE_CLERK_SECRET_KEY: JSON.stringify(process.env.VITE_CLERK_SECRET_KEY),
     },
     build: {
       minify: mode === 'production',
@@ -516,13 +577,16 @@ export default defineConfig(({ mode }) => {
 
 ### Deployment Checklist
 
-- [ ] Environment variables configured
+- [ ] Clerk environment variables configured
 - [ ] Build passes without errors
 - [ ] Tests pass
 - [ ] Performance audit completed
 - [ ] Security scan completed
 - [ ] Accessibility audit completed
 - [ ] Cross-browser testing completed
+- [ ] Video player functionality tested
+- [ ] Admin dashboard access verified
+- [ ] Course data synchronization confirmed
 
 ## Best Practices Summary
 
@@ -533,9 +597,12 @@ export default defineConfig(({ mode }) => {
 5. **Security**: Validate inputs and sanitize outputs
 6. **Documentation**: Keep code and documentation in sync
 7. **Monitoring**: Implement error tracking and analytics
+8. **Authentication**: Use Clerk for secure user management
+9. **Course Management**: Follow the real course data system
+10. **Admin Dashboard**: Ensure proper admin access controls
 
 ---
 
 **Happy coding! 🚀**
 
-For more information, check out our [API Documentation](API.md) and [Deployment Guide](DEPLOYMENT.md).
+For more information, check out our [Course Management Guide](HARDCODED_COURSES.md), [Admin System Documentation](ADMIN_SYSTEM.md), and [Deployment Guide](DEPLOYMENT.md).

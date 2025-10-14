@@ -22,13 +22,13 @@ ClassX is a comprehensive educational technology platform designed to revolution
 ### 🚀 Key Features
 
 - **🎨 Modern Landing Experience**: Responsive, animated landing page with glass-morphism design
-- **🔐 Secure Authentication**: JWT-based authentication with dark-themed modals
-- **📚 Course Management**: Comprehensive course browsing and enrollment system
-- **🎥 Video Learning**: Integrated video player for course content
-- **📊 Progress Tracking**: Detailed analytics and learning progress monitoring
-- **👤 User Profiles**: Personalized user dashboard and profile management
+- **🔐 Clerk Authentication**: Secure user authentication and management with Clerk
+- **📚 Course Management**: Comprehensive course browsing with individual course pages
+- **🎥 Advanced Video Player**: YouTube-like video player with timeline navigation and keyboard shortcuts
+- **👨‍💼 Admin Dashboard**: Real-time course management and student analytics
 - **📱 Mobile-First Design**: Fully responsive across all device sizes
 - **⚡ Performance Optimized**: Lazy loading, code splitting, and optimized assets
+- **🎯 Real-Time Sync**: Automatic course updates between main platform and admin dashboard
 
 ---
 
@@ -41,34 +41,68 @@ ClassX/
 │   │   ├── 📁 Auth/                # Authentication components
 │   │   │   ├── SignIn.tsx          # Sign-in modal component
 │   │   │   ├── SignUp.tsx          # Sign-up modal component
-│   │   │   ├── auth.css            # Authentication styling
 │   │   │   └── index.ts            # Auth module exports
 │   │   │
+│   │   ├── 📁 Admin/               # Admin dashboard components
+│   │   │   ├── AdminGuard.tsx      # Admin access protection
+│   │   │   ├── AdminPanel.tsx      # Main admin interface
+│   │   │   ├── auth.tsx            # Admin authentication
+│   │   │   ├── dashboard.tsx       # Admin dashboard
+│   │   │   ├── index.ts            # Admin module exports
+│   │   │   └── USAGE.md            # Admin usage guide
+│   │   │
 │   │   ├── 📁 Dashboard/           # Main application dashboard
-│   │   │   │
 │   │   │   ├── 📁 Courses/         # Course management
-│   │   │   │   ├── Courses.tsx
-│   │   │   │   ├── CourseCard.tsx
-│   │   │   │   ├── CourseDetail.tsx
-│   │   │   │   ├── coursesData.ts
 │   │   │   │   ├── 📁 AdhocClasses/
+│   │   │   │   │   ├── AdhocClassesUI.tsx
+│   │   │   │   │   ├── data.ts
+│   │   │   │   │   └── index.ts
 │   │   │   │   ├── 📁 DevopsCohort/
+│   │   │   │   │   ├── DevopsCohortUI.tsx
+│   │   │   │   │   ├── data.ts
+│   │   │   │   │   └── index.ts
 │   │   │   │   ├── 📁 DsaClasses/
+│   │   │   │   │   ├── DsaClassesUI.tsx
+│   │   │   │   │   ├── data.ts
+│   │   │   │   │   └── index.ts
 │   │   │   │   ├── 📁 SolanaFellowship/
+│   │   │   │   │   ├── SolanaFellowshipUI.tsx
+│   │   │   │   │   ├── data.ts
+│   │   │   │   │   └── index.ts
 │   │   │   │   ├── 📁 Web3Cohort/
-│   │   │   │   └── 📁 WebDevCohort/
-│   │   │   │   │
+│   │   │   │   │   ├── Web3CohortUI.tsx
+│   │   │   │   │   ├── data.ts
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── 📁 WebDevCohort/
+│   │   │   │   │   ├── WebDevCohortUI.tsx
+│   │   │   │   │   ├── data.ts
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── CourseDetail.tsx # Course detail page
+│   │   │   │   └── coursesData.ts   # Course data aggregation
+│   │   │   │
 │   │   │   ├── 📁 Home/            # Dashboard home
 │   │   │   │   └── HomePage.tsx
 │   │   │   │
 │   │   │   ├── 📁 Layout/          # Layout components
-│   │   │   │   └── LayoutShell.tsx
+│   │   │   │   ├── 📁 Account/     # Account management
+│   │   │   │   │   ├── ClerkAccountHandler.tsx
+│   │   │   │   │   ├── ClerkAccountManagement.tsx
+│   │   │   │   │   └── index.ts
+│   │   │   │   └── LayoutShell.tsx # Main layout shell
 │   │   │   │
 │   │   │   ├── 📁 Profile/         # User profile
 │   │   │   │   └── ProfileView.tsx
 │   │   │   │
+│   │   │   ├── 📁 Updates/         # Updates system
+│   │   │   │   ├── 📁 components/  # Update components
+│   │   │   │   │   └── code-block.tsx
+│   │   │   │   ├── 📁 posts/       # Update posts
+│   │   │   │   ├── index.ts        # Updates exports
+│   │   │   │   ├── main.tsx        # Updates main component
+│   │   │   │   └── post.tsx        # Individual post component
+│   │   │   │
 │   │   │   └── 📁 Video/          # Video player
-│   │   │       └── VideoPlayer.tsx
+│   │   │       └── VideoPlayer.tsx # Advanced video player
 │   │   │
 │   │   └── 📁 Landing/            # Landing page components
 │   │       ├── 📁 Components/     # Reusable UI components
@@ -79,11 +113,12 @@ ClassX/
 │   │       ├── main.tsx           # Landing page entry point
 │   │       └── index.ts           # Landing module exports
 │   │
+│   ├── 📁 data/                   # Data management
+│   │   └── 📁 courses/           # Course data
+│   │       └── index.ts          # Course data exports
+│   │
 │   ├── 📁 lib/                    # Utility libraries
 │   │   └── utils.ts               # Common utility functions
-│   │
-│   ├── 📁 types/                  # TypeScript type definitions
-│   │   └── index.ts               # Global type definitions
 │   │
 │   ├── App.tsx                    # Main application component
 │   ├── main.tsx                   # Application entry point
@@ -91,9 +126,18 @@ ClassX/
 │   └── vite-env.d.ts             # Vite environment types
 │
 ├── 📁 docs/                       # Documentation
-│   └── INSTALL.md                 # Installation guide
+│   ├── ADMIN_SYSTEM.md            # Admin system documentation
+│   ├── API.md                     # API documentation
+│   ├── CSS_ORGANIZATION.md        # CSS organization guide
+│   ├── DEPLOYMENT.md              # Deployment guide
+│   ├── DEVELOPMENT.md              # Development guide
+│   ├── HARDCODED_COURSES.md       # Course management guide
+│   ├── INSTALL.md                 # Installation guide
+│   ├── SECURITY.md                # Security documentation
+│   └── TESTING.md                 # Testing guide
 │
 ├── 📁 Public/                    # Static assets
+│   ├── Mockup.png                 # Project mockup
 │   └── Suryanshu Nabheet.jpg     # Profile image
 │
 ├── 📄 Configuration Files
@@ -108,6 +152,7 @@ ClassX/
 ├── tsconfig.node.json             # Node-specific TypeScript config
 ├── vercel.json                   # Vercel deployment configuration
 ├── vite.config.ts                # Vite build configuration
+├── env.example                   # Environment variables template
 │
 ├── 📄 Documentation
 ├── README.md                     # This file
@@ -132,8 +177,9 @@ ClassX/
 - **React 18** - Modern React with hooks and concurrent features
 - **TypeScript** - Type-safe JavaScript development
 - **Tailwind CSS** - Utility-first CSS framework
-- **Framer Motion** - Production-ready motion library
+- **Clerk** - Authentication and user management
 - **Vite** - Next-generation frontend tooling
+- **Lucide React** - Beautiful icon library
 
 ### Development Tools
 - **ESLint** - Code linting and quality assurance
@@ -203,6 +249,14 @@ yarn preview
 ## 📚 Documentation
 
 - **[Installation Guide](docs/INSTALL.md)** - Detailed setup instructions
+- **[Admin System](docs/ADMIN_SYSTEM.md)** - Admin dashboard documentation
+- **[Course Management](docs/HARDCODED_COURSES.md)** - Course management guide
+- **[Development Guide](docs/DEVELOPMENT.md)** - Development workflow
+- **[Deployment Guide](docs/DEPLOYMENT.md)** - Deployment instructions
+- **[Security Guide](docs/SECURITY.md)** - Security best practices
+- **[API Documentation](docs/API.md)** - API reference
+- **[CSS Organization](docs/CSS_ORGANIZATION.md)** - Styling guidelines
+- **[Testing Guide](docs/TESTING.md)** - Testing procedures
 - **[Contributing Guidelines](CONTRIBUTING.md)** - How to contribute to the project
 - **[Code of Conduct](CODE_OF_CONDUCT.md)** - Community guidelines
 - **[Security Policy](SECURITY.md)** - Security reporting and policies

@@ -6,6 +6,24 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Build outputs
+dist/
+dist-ssr/
+build/
+out/
+.next/
+.nuxt/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.staging
+secrets.json
+config/secrets.json
+
 # Runtime data
 pids
 *.pid
@@ -15,24 +33,7 @@ pids
 # Coverage directory used by tools like istanbul
 coverage/
 *.lcov
-
-# nyc test coverage
 .nyc_output
-
-# Grunt intermediate storage
-.grunt
-
-# Bower dependency directory
-bower_components
-
-# node-waf configuration
-.lock-wscript
-
-# Compiled binary addons
-build/Release
-
-# Dependency directories
-jspm_packages/
 
 # TypeScript cache
 *.tsbuildinfo
@@ -61,31 +62,9 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
-
 # parcel-bundler cache
 .cache
 .parcel-cache
-
-# Next.js build output
-.next
-out
-
-# Nuxt.js build / generate output
-.nuxt
-dist
-
-# Gatsby files
-.cache/
-public
-
-# Vuepress build output
-.vuepress/dist
 
 # Serverless directories
 .serverless/
@@ -109,16 +88,10 @@ public
 .yarn/install-state.gz
 .pnp.*
 
-# Vite
-dist/
-dist-ssr/
-*.local
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
@@ -126,6 +99,9 @@ dist-ssr/
 *.sw?
 
 # OS generated files
+.DS_Store
+.AppleDouble
+.LSOverride
 Thumbs.db
 ehthumbs.db
 Desktop.ini
@@ -135,109 +111,19 @@ $RECYCLE.BIN/
 logs
 *.log
 
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Coverage directory used by tools like istanbul
-coverage/
-
-# Dependency directories
-node_modules/
-
-# Optional npm cache directory
-.npm
-
-# Optional REPL history
-.node_repl_history
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# dotenv environment variables file
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Build directories
-build/
-dist/
-
-# Temporary folders
+# Temporary files
 tmp/
 temp/
-
-# Database
-*.db
-*.sqlite
-*.sqlite3
-
-# API keys and secrets
-.env
-.env.local
-.env.production
-.env.staging
-secrets.json
-config/secrets.json
-
-# IDE files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# MacOS
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
-# Linux
-*~
-
-# Backup files
+*.tmp
+*.temp
 *.bak
 *.backup
 *.old
 
-# Test files
-test-results/
-coverage/
-
-# Storybook build outputs
-storybook-static/
-
-# Temporary files
-*.tmp
-*.temp
-
-# Vercel
-.vercel
-
-# Turbo
-.turbo
-
-# React Syntax Highlighter
-node_modules/react-syntax-highlighter/
-node_modules/@types/react-syntax-highlighter/
-
-# Framer Motion
-node_modules/framer-motion/
-
-# Lucide React Icons
-node_modules/lucide-react/
+# Database files
+*.db
+*.sqlite
+*.sqlite3
 
 # Deployment artifacts
 .vercel/
@@ -249,44 +135,8 @@ node_modules/lucide-react/
 yarn.lock
 pnpm-lock.yaml
 
-# Build artifacts
-build/
-dist/
-out/
-.next/
-.nuxt/
+# Storybook build outputs
+storybook-static/
 
-# Environment files
-.env*
-!.env.example
-
-# IDE and editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS generated files
-.DS_Store
-Thumbs.db
-Desktop.ini
-
-# Logs
-*.log
-logs/
-
-# Cache directories
-.cache/
-.parcel-cache/
-.eslintcache
-.stylelintcache
-
-# Test coverage
-coverage/
-.nyc_output/
-
-# Temporary files
-tmp/
-temp/
-*.tmp
-*.temp
+# Turbo
+.turbo
