@@ -1,71 +1,23 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Users, AlertCircle, Plus, Trash2, Shield, Search } from 'lucide-react'
+import { Users, AlertCircle, Plus, Shield } from 'lucide-react'
 import { useAdminAuth } from './auth'
-import { ClerkServiceClient, ClerkUser } from '../../services/clerkServiceClient'
 import { allCourses } from '../Dashboard/Courses/coursesData'
-// ClerkUser interface is now imported from clerkService
+import { useUser } from '@clerk/clerk-react'
 // Course interface is imported from coursesData
 // AdminUser interface is imported from auth.tsx
 
 export function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<'students' | 'courses' | 'admins'>('students')
-  const [clerkUsers, setClerkUsers] = useState<ClerkUser[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
   const [showAddAdmin, setShowAddAdmin] = useState(false)
   const [newAdminData, setNewAdminData] = useState({ name: '', email: '', password: '' })
-  const [searchQuery, setSearchQuery] = useState('')
-  const [filteredUsers, setFilteredUsers] = useState<ClerkUser[]>([])
   const [courses] = useState(allCourses)
   
   const { adminUser, adminUsers, addAdmin, removeAdmin } = useAdminAuth()
-
-  // Load users data from Clerk API
-  useEffect(() => {
-    const loadUsers = async () => {
-      try {
-        setIsLoading(true)
-        setError(null)
-        
-        console.log('Loading users from Clerk API...')
-        // Fetch users from Clerk service
-        const users = await ClerkServiceClient.fetchAllUsers()
-        console.log('Loaded users:', users)
-        setClerkUsers(users)
-        setFilteredUsers(users)
-        setIsLoading(false)
-      } catch (err) {
-        console.error('Error loading users:', err)
-        setError(`Failed to load users from Clerk API: ${err instanceof Error ? err.message : 'Unknown error'}`)
-        setIsLoading(false)
-        setClerkUsers([])
-        setFilteredUsers([])
-      }
-    }
-
-    loadUsers()
-  }, [])
-
-  // Courses are managed through hardcoded files - no dummy data loaded
-
-  // Filter users based on search query
-  useEffect(() => {
-    if (!searchQuery) {
-      setFilteredUsers(clerkUsers)
-    } else {
-      const filtered = clerkUsers.filter(user => 
-        user.firstName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        user.lastName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        user.emailAddresses[0]?.emailAddress.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      setFilteredUsers(filtered)
-    }
-  }, [searchQuery, clerkUsers])
+  const { user } = useUser()
 
   const stats = {
-    totalUsers: clerkUsers.length,
     totalCourses: courses.length,
     publishedCourses: courses.length, // All real courses are published
     draftCourses: 0, // No draft courses in real data
@@ -118,15 +70,6 @@ export function AdminDashboard() {
             <p className="text-blue-200">Manage students and admin accounts</p>
           </div>
         </div>
-        
-          {error && (
-            <div className="mt-4 bg-red-500/20 border border-red-500/30 rounded-lg p-3">
-              <div className="flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 text-red-400" />
-                <p className="text-red-200 text-sm">{error}</p>
-              </div>
-            </div>
-          )}
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -138,8 +81,8 @@ export function AdminDashboard() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-blue-200 text-sm">Total Students</p>
-                <p className="text-2xl font-bold text-white">{stats.totalUsers}</p>
+                <p className="text-blue-200 text-sm">Student Management</p>
+                <p className="text-lg font-bold text-white">Clerk Dashboard</p>
               </div>
               <Users className="w-8 h-8 text-blue-400" />
             </div>
@@ -226,120 +169,25 @@ export function AdminDashboard() {
           {activeTab === 'students' && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold text-white">All Students</h2>
-                <div className="text-blue-200 text-sm">
-                  {filteredUsers.length} of {clerkUsers.length} students
-                </div>
+                <h2 className="text-xl font-semibold text-white">Student Management</h2>
               </div>
 
-              {/* Search Bar */}
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Search students by name or email..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-white/10 border border-blue-500/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50 transition-all duration-300"
-                />
+              {/* Clerk Dashboard Redirect */}
+              <div className="text-center py-12">
+                <div className="w-16 h-16 mx-auto mb-4 bg-blue-900/20 rounded-full flex items-center justify-center">
+                  <Users className="w-8 h-8 text-blue-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-2">Manage Students</h3>
+                <p className="text-gray-400 mb-6">
+                  Access the full Clerk Dashboard to manage all student accounts, view detailed analytics, and perform user management tasks.
+                </p>
+                <button
+                  onClick={() => window.open('https://dashboard.clerk.com/apps/app_33uHfr8zqvYDBACBdjJucRm4iSE/instances/ins_33uHfoLxg3FkfYola4aWgVOHkkg/users', '_blank')}
+                  className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl border border-blue-400/30 hover:border-blue-300/50 hover:scale-105"
+                >
+                  Open Clerk Dashboard
+                </button>
               </div>
-
-              {/* Info about user data */}
-              <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
-                <div className="flex items-start gap-3">
-                  <AlertCircle className="w-5 h-5 text-blue-400 mt-0.5" />
-                  <div>
-                    <h3 className="text-white font-medium mb-1">Student Data Integration</h3>
-                    <p className="text-blue-200 text-sm mb-2">
-                      Student data integration requires server-side implementation for security. Currently showing empty list.
-                    </p>
-                    <div className="text-blue-300 text-xs space-y-1">
-                      <p>• Implement /api/admin/students endpoint server-side</p>
-                      <p>• Use Clerk secret key on server-side only</p>
-                      <p>• Search functionality is ready for real data</p>
-                      <p>• Error handling prevents app crashes</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {isLoading ? (
-                <div className="text-center py-12">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-blue-900/20 rounded-full flex items-center justify-center">
-                    <Users className="w-8 h-8 text-blue-400" />
-                  </div>
-                  <p className="text-blue-200">Loading users...</p>
-                </div>
-              ) : filteredUsers.length === 0 ? (
-                <div className="text-center py-12">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-blue-900/20 rounded-full flex items-center justify-center">
-                    <Users className="w-8 h-8 text-blue-400" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">
-                    {searchQuery ? 'No Students Found' : 'No Students Registered'}
-                  </h3>
-                  <p className="text-gray-400">
-                    {searchQuery ? 'Try adjusting your search criteria.' : 'No students have registered yet.'}
-                  </p>
-                </div>
-              ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-blue-500/20">
-                        <th className="text-left text-white/70 py-3 px-4">Avatar</th>
-                        <th className="text-left text-white/70 py-3 px-4">Name</th>
-                        <th className="text-left text-white/70 py-3 px-4">Email</th>
-                        <th className="text-left text-white/70 py-3 px-4">Join Date</th>
-                        <th className="text-left text-white/70 py-3 px-4">Last Sign In</th>
-                        <th className="text-left text-white/70 py-3 px-4">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredUsers.map((clerkUser) => {
-                        const isActive = clerkUser.lastSignInAt && 
-                          new Date(clerkUser.lastSignInAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-                        
-                        return (
-                        <tr key={clerkUser.id} className="border-b border-white/5">
-                          <td className="py-3 px-4">
-                            <img
-                              src={clerkUser.imageUrl}
-                              alt={clerkUser.firstName || 'User'}
-                              className="w-8 h-8 rounded-full"
-                            />
-                          </td>
-                          <td className="py-3 px-4 text-white">
-                            {clerkUser.firstName} {clerkUser.lastName}
-                          </td>
-                          <td className="py-3 px-4 text-blue-200">
-                            {clerkUser.emailAddresses[0]?.emailAddress}
-                          </td>
-                          <td className="py-3 px-4 text-blue-200">
-                            {new Date(clerkUser.createdAt).toLocaleDateString()}
-                          </td>
-                          <td className="py-3 px-4 text-blue-200">
-                            {clerkUser.lastSignInAt 
-                              ? new Date(clerkUser.lastSignInAt).toLocaleDateString()
-                              : 'Never'
-                            }
-                          </td>
-                            <td className="py-3 px-4">
-                              <span className={`px-2 py-1 rounded text-xs ${
-                                isActive 
-                                  ? 'bg-green-500/20 text-green-200' 
-                                  : 'bg-gray-500/20 text-gray-200'
-                              }`}>
-                                {isActive ? 'Active' : 'Inactive'}
-                              </span>
-                            </td>
-                        </tr>
-                        )
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              )}
             </div>
           )}
 
@@ -349,6 +197,19 @@ export function AdminDashboard() {
                 <h2 className="text-xl font-semibold text-white">Course Management</h2>
                 <div className="text-blue-200 text-sm">
                   {courses.length} total courses
+                </div>
+              </div>
+
+              {/* Auto-sync Info */}
+              <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-5 h-5 text-green-400 mt-0.5">✓</div>
+                  <div>
+                    <h3 className="text-white font-medium mb-1">Auto-Sync Enabled</h3>
+                    <p className="text-green-200 text-sm">
+                      Courses are automatically synchronized from the Courses page. Any new courses added will appear here immediately.
+                    </p>
+                  </div>
                 </div>
               </div>
 
@@ -431,17 +292,6 @@ export function AdminDashboard() {
                         <span className="text-green-400 font-semibold">Free</span>
                       </div>
 
-                      <div className="flex space-x-2">
-                        <button
-                          onClick={() => window.open('/courses', '_blank')}
-                          className="flex-1 bg-blue-500/20 text-blue-200 px-3 py-2 rounded text-sm hover:bg-blue-500/30 transition-colors"
-                        >
-                          View Course
-                        </button>
-                        <button className="flex-1 bg-green-500/20 text-green-200 px-3 py-2 rounded text-sm hover:bg-green-500/30 transition-colors">
-                          Edit Content
-                        </button>
-                      </div>
                     </div>
                   ))}
                 </div>
@@ -531,17 +381,51 @@ export function AdminDashboard() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-blue-500/20">
+                      <th className="text-left text-white/70 py-3 px-4">Profile</th>
                       <th className="text-left text-white/70 py-3 px-4">Name</th>
                       <th className="text-left text-white/70 py-3 px-4">Email</th>
                       <th className="text-left text-white/70 py-3 px-4">Role</th>
                       <th className="text-left text-white/70 py-3 px-4">Created</th>
-                      <th className="text-left text-white/70 py-3 px-4">Last Login</th>
-                      <th className="text-left text-white/70 py-3 px-4">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {adminUsers.map((admin) => (
                       <tr key={admin.id} className="border-b border-white/5">
+                        <td className="py-3 px-4">
+                          {admin.email === user?.primaryEmailAddress?.emailAddress ? (
+                            // Current user - use Clerk profile picture
+                            <img
+                              src={user?.imageUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${admin.email}&backgroundColor=3b82f6&textColor=ffffff`}
+                              alt={admin.name}
+                              className="w-10 h-10 rounded-full border-2 border-blue-500/30"
+                              onError={(e) => {
+                                // Fallback to initials if image fails to load
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = 'none';
+                                const parent = target.parentElement;
+                                if (parent) {
+                                  parent.innerHTML = `<div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-sm border-2 border-blue-500/30">${admin.name.split(' ').map(n => n[0]).join('').toUpperCase()}</div>`;
+                                }
+                              }}
+                            />
+                          ) : (
+                            // Other admins - use generated avatar
+                            <img
+                              src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${admin.email}&backgroundColor=3b82f6&textColor=ffffff`}
+                              alt={admin.name}
+                              className="w-10 h-10 rounded-full border-2 border-blue-500/30"
+                              onError={(e) => {
+                                // Fallback to initials if image fails to load
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = 'none';
+                                const parent = target.parentElement;
+                                if (parent) {
+                                  parent.innerHTML = `<div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-sm border-2 border-blue-500/30">${admin.name.split(' ').map(n => n[0]).join('').toUpperCase()}</div>`;
+                                }
+                              }}
+                            />
+                          )}
+                        </td>
                         <td className="py-3 px-4 text-white font-medium">
                           {admin.name}
                         </td>
@@ -559,37 +443,6 @@ export function AdminDashboard() {
                         </td>
                         <td className="py-3 px-4 text-blue-200">
                           {new Date(admin.createdAt).toLocaleDateString()}
-                        </td>
-                        <td className="py-3 px-4 text-blue-200">
-                          {admin.lastLogin 
-                            ? new Date(admin.lastLogin).toLocaleDateString()
-                            : 'Never'
-                          }
-                        </td>
-                        <td className="py-3 px-4">
-                          {adminUser?.role === 'super-admin' && admin.role !== 'super-admin' && (
-                            <button
-                              onClick={() => {
-                                if (confirm(`Are you sure you want to remove ${admin.name}? This action cannot be undone.`)) {
-                                  try {
-                                    const success = removeAdmin(admin.id)
-                                    if (success) {
-                                      alert('Admin removed successfully!')
-                                    } else {
-                                      alert('Failed to remove admin.')
-                                    }
-                                  } catch (error) {
-                                    console.error('Error removing admin:', error)
-                                    alert('Failed to remove admin. Please try again.')
-                                  }
-                                }
-                              }}
-                              className="bg-red-500/20 text-red-200 px-2 py-1 rounded text-sm hover:bg-red-500/30 transition-colors flex items-center gap-1"
-                            >
-                              <Trash2 className="w-3 h-3" />
-                              Remove
-                            </button>
-                          )}
                         </td>
                       </tr>
                     ))}
