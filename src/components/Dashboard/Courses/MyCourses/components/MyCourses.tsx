@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BookOpen, Clock, CheckCircle, PlayCircle } from 'lucide-react';
-import { CourseCard } from '../../BrowseCourses/components/CourseCard';
+import { CourseCard } from '../../BrowseCourses/Courses/CourseCard';
 import { useUser } from '@clerk/clerk-react';
 import { useApp } from '../../../App/contexts/AppContext';
 import { MyCoursesHeader } from './MyCoursesHeader';

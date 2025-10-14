@@ -3,7 +3,7 @@ import { ClerkProvider, SignedIn, SignedOut, useUser } from '@clerk/clerk-react'
 import { AppProvider } from './components/Dashboard/App/contexts/AppContext'
 import LayoutShell from './components/Dashboard/Layout/LayoutShell'
 import { HomePage } from './components/Dashboard/Home/HomePage'
-import { CourseCatalog } from './components/Dashboard/Courses/BrowseCourses/components/CourseCatalog'
+import { BrowseCourses } from './components/Dashboard/Courses/BrowseCourses/BrowseCourses'
 import { MyCourses } from './components/Dashboard/Courses/MyCourses/components/MyCourses'
 import { CourseDetail } from './components/Dashboard/Courses/BrowseCourses/CourseDetail'
 import { ProfileView } from './components/Dashboard/Profile/ProfileView'
@@ -38,14 +38,14 @@ function AppContent() {
       case 'my-courses':
         return <MyCourses onNavigate={handleNavigation} />
       case 'browse':
-        return <CourseCatalog />
+        return <BrowseCourses onNavigate={handleNavigation} />
       case 'updates':
         return <UpdatesMain />
       case 'course-detail':
         return selectedCourseId ? (
           <CourseDetail
             courseId={selectedCourseId}
-            onBack={() => setActiveView('my-courses')}
+            onBack={() => setActiveView('browse')}
           />
         ) : (
           <div className="liquid-glass rounded-professional p-8 text-center hover-lift">
