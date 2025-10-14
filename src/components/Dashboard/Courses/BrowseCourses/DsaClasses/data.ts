@@ -9,37 +9,36 @@ export const dsaClassesData = {
       title: 'Arrays and Linked Lists',
       thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
-      duration: '75 min',
-      completed: false
+      timestamps: [
+        { time: 0, title: 'Introduction' },
+        { time: 20, title: 'Array Operations' },
+        { time: 40, title: 'Linked List Basics' },
+        { time: 60, title: 'Implementation' }
+      ]
     },
     {
       id: 'lesson-2',
       title: 'Stacks and Queues',
       thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
-      duration: '60 min',
-      completed: false
+      timestamps: [
+        { time: 0, title: 'Stack Theory' },
+        { time: 20, title: 'Stack Implementation' },
+        { time: 40, title: 'Queue Theory' },
+        { time: 60, title: 'Queue Implementation' }
+      ]
     },
     {
       id: 'lesson-3',
       title: 'Sorting Algorithms',
       thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
-      duration: '90 min',
-      completed: false
+      timestamps: [
+        { time: 0, title: 'Bubble Sort' },
+        { time: 30, title: 'Quick Sort' },
+        { time: 60, title: 'Merge Sort' },
+        { time: 90, title: 'Comparison' }
+      ]
     }
-  ],
-  whatYouWillLearn: [
-    'Master data structures',
-    'Implement efficient algorithms',
-    'Solve complex problems',
-    'Optimize code performance',
-    'Prepare for technical interviews'
-  ],
-  requirements: [
-    'Programming experience',
-    'Basic math knowledge',
-    'Problem-solving mindset',
-    'Code editor setup'
   ]
 }

@@ -8,12 +8,13 @@ interface Web3CohortUIProps {
 }
 
 export function Web3CohortUI({ onBack }: Web3CohortUIProps) {
-  const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null)
+  const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string; timestamps: any[] } | null>(null)
 
   const handleVideoClick = (lesson: any) => {
     setSelectedVideo({
       src: lesson.videoUrl,
-      title: lesson.title
+      title: lesson.title,
+      timestamps: lesson.timestamps || []
     })
   }
 
@@ -81,6 +82,7 @@ export function Web3CohortUI({ onBack }: Web3CohortUIProps) {
         <VideoPlayer
           src={selectedVideo.src}
           title={selectedVideo.title}
+          timestamps={selectedVideo.timestamps}
           onClose={handleCloseVideo}
         />
       )}

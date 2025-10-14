@@ -9,37 +9,36 @@ export const adhocClassesData = {
       title: 'Advanced Concepts',
       thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
-      duration: '90 min',
-      completed: false
+      timestamps: [
+        { time: 0, title: 'Introduction' },
+        { time: 30, title: 'Core Concepts' },
+        { time: 60, title: 'Advanced Topics' },
+        { time: 90, title: 'Conclusion' }
+      ]
     },
     {
       id: 'lesson-2',
       title: 'Industry Insights',
       thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
-      duration: '60 min',
-      completed: false
+      timestamps: [
+        { time: 0, title: 'Industry Overview' },
+        { time: 25, title: 'Key Trends' },
+        { time: 50, title: 'Best Practices' },
+        { time: 75, title: 'Future Outlook' }
+      ]
     },
     {
       id: 'lesson-3',
       title: 'Real-world Projects',
       thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
-      duration: '120 min',
-      completed: false
+      timestamps: [
+        { time: 0, title: 'Project Setup' },
+        { time: 40, title: 'Implementation' },
+        { time: 80, title: 'Testing' },
+        { time: 120, title: 'Deployment' }
+      ]
     }
-  ],
-  whatYouWillLearn: [
-    'Explore advanced topics',
-    'Gain industry insights',
-    'Work on real projects',
-    'Network with professionals',
-    'Stay updated with trends'
-  ],
-  requirements: [
-    'Basic technical knowledge',
-    'Learning mindset',
-    'Active participation',
-    'Project collaboration'
   ]
 }

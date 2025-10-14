@@ -9,37 +9,36 @@ export const web3CohortData = {
       title: 'Understanding Blockchain',
       thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
-      duration: '60 min',
-      completed: false
+      timestamps: [
+        { time: 0, title: 'Blockchain Basics' },
+        { time: 20, title: 'Consensus Mechanisms' },
+        { time: 40, title: 'Cryptography' },
+        { time: 60, title: 'Applications' }
+      ]
     },
     {
       id: 'lesson-2',
       title: 'Smart Contracts',
       thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
-      duration: '90 min',
-      completed: false
+      timestamps: [
+        { time: 0, title: 'Contract Basics' },
+        { time: 30, title: 'Solidity' },
+        { time: 60, title: 'Deployment' },
+        { time: 90, title: 'Testing' }
+      ]
     },
     {
       id: 'lesson-3',
       title: 'Building DApps',
       thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
-      duration: '120 min',
-      completed: false
+      timestamps: [
+        { time: 0, title: 'DApp Architecture' },
+        { time: 30, title: 'Frontend Integration' },
+        { time: 60, title: 'Backend Services' },
+        { time: 90, title: 'Deployment' }
+      ]
     }
-  ],
-  whatYouWillLearn: [
-    'Build decentralized applications',
-    'Write smart contracts',
-    'Understand DeFi protocols',
-    'Work with Web3 tools',
-    'Deploy on blockchain networks'
-  ],
-  requirements: [
-    'JavaScript/TypeScript knowledge',
-    'Basic blockchain understanding',
-    'Web3 wallet setup',
-    'Development environment'
   ]
 }
