@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BookOpen, Clock, CheckCircle, PlayCircle } from 'lucide-react';
-import { CourseCard } from '../../BrowseCourses/Courses/CourseCard';
+import { CourseCard } from '../../BrowseCourses/CourseCard';
 import { useUser } from '@clerk/clerk-react';
 import { useApp } from '../../../App/contexts/AppContext';
 import { MyCoursesHeader } from './MyCoursesHeader';
@@ -65,8 +65,6 @@ export function MyCourses({ onNavigate }: MyCoursesProps) {
           <CourseCard
             key={course.id}
             course={course}
-            enrolled={true}
-            progress={course.progress || 0}
             onView={(courseId) => onNavigate('course-detail', courseId)}
           />
         ))}

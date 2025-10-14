@@ -1,5 +1,11 @@
 import { Play, MessageCircle } from 'lucide-react'
-import { Course } from './coursesData'
+
+export interface Course {
+  id: string
+  title: string
+  banner: string
+  discordLink?: string
+}
 
 interface CourseCardProps {
   course: Course
@@ -29,13 +35,7 @@ export function CourseCard({ course, onView, onJoinDiscord }: CourseCardProps) {
           alt={course.title}
           className="w-full h-full object-cover"
         />
-        
-        {/* Progress Circle */}
-        <div className="absolute bottom-4 right-4">
-          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border-2 border-gray-300">
-            <span className="text-black text-sm font-semibold">0%</span>
-          </div>
-        </div>
+
 
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
@@ -57,7 +57,7 @@ export function CourseCard({ course, onView, onJoinDiscord }: CourseCardProps) {
             <Play className="w-4 h-4" />
             View Course
           </button>
-          
+
           {course.discordLink && (
             <button
               onClick={handleJoinDiscord}

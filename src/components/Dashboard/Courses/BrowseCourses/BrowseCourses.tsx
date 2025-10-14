@@ -1,5 +1,5 @@
-import { CourseCard } from './Courses/CourseCard'
-import { allCourses } from './Courses/coursesData'
+import { CourseCard } from './CourseCard'
+import { allCourses } from './coursesData'
 
 interface BrowseCoursesProps {
   onNavigate?: (view: string, courseId?: string) => void
