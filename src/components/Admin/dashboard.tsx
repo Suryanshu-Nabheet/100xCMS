@@ -1,19 +1,11 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Users, BookOpen, Eye, Edit, UserCheck, AlertCircle } from 'lucide-react'
-import { useUser } from '@clerk/clerk-react'
+import { Users, BookOpen, Eye, Edit, AlertCircle, Plus, Trash2, Shield, LogOut, Search } from 'lucide-react'
+import { useAdminAuth } from './auth'
+import { ClerkServiceClient, ClerkUser } from '../../services/clerkServiceClient'
 
-interface ClerkUser {
-  id: string
-  firstName: string | null
-  lastName: string | null
-  emailAddresses: Array<{ emailAddress: string }>
-  createdAt: Date
-  lastSignInAt: Date | null
-  imageUrl: string
-  publicMetadata: Record<string, unknown>
-}
+// ClerkUser interface is now imported from clerkService
 
 interface Course {
   id: string
@@ -37,55 +29,58 @@ interface Course {
   enrolledStudents: number
 }
 
+// AdminUser interface is imported from auth.tsx
+
 export function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'courses'>('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'courses' | 'admins'>('overview')
   const [clerkUsers, setClerkUsers] = useState<ClerkUser[]>([])
   const [courses, setCourses] = useState<Course[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [showAddAdmin, setShowAddAdmin] = useState(false)
+  const [newAdminData, setNewAdminData] = useState({ name: '', email: '', password: '' })
+  const [searchQuery, setSearchQuery] = useState('')
+  const [filteredUsers, setFilteredUsers] = useState<ClerkUser[]>([])
   
-  const { user } = useUser()
+  const { adminUser, adminUsers, addAdmin, removeAdmin, logoutAdmin } = useAdminAuth()
 
-  // Load users data
+  // Load users data from Clerk API
   useEffect(() => {
     const loadUsers = async () => {
       try {
         setIsLoading(true)
         setError(null)
         
-        // For now, we'll use the current user as the only user
-        // In a real production environment, you would need to:
-        // 1. Set up a backend API endpoint that uses Clerk's secret key
-        // 2. Fetch all users from that endpoint
-        // 3. Or use Clerk's webhooks to sync user data to your database
-        
-        if (user) {
-          const currentUser: ClerkUser = {
-            id: user.id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            emailAddresses: user.emailAddresses,
-            createdAt: user.createdAt || new Date(),
-            lastSignInAt: user.lastSignInAt || null,
-            imageUrl: user.imageUrl,
-            publicMetadata: user.publicMetadata
-          }
-          setClerkUsers([currentUser])
-        } else {
-          setClerkUsers([])
-        }
-        
+        // Fetch users from Clerk service
+        const users = await ClerkServiceClient.fetchAllUsers()
+        setClerkUsers(users)
+        setFilteredUsers(users)
         setIsLoading(false)
       } catch (err) {
         console.error('Error loading users:', err)
-        setError('Failed to load users')
+        setError('Failed to load users from Clerk API')
         setIsLoading(false)
         setClerkUsers([])
+        setFilteredUsers([])
       }
     }
 
     loadUsers()
-  }, [user])
+  }, [])
+
+  // Filter users based on search query
+  useEffect(() => {
+    if (!searchQuery) {
+      setFilteredUsers(clerkUsers)
+    } else {
+      const filtered = clerkUsers.filter(user => 
+        user.firstName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.lastName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.emailAddresses[0]?.emailAddress.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      setFilteredUsers(filtered)
+    }
+  }, [searchQuery, clerkUsers])
 
   // Load hardcoded courses (these will be managed through code)
   useEffect(() => {
@@ -107,7 +102,45 @@ export function AdminDashboard() {
     totalUsers: clerkUsers.length,
     totalCourses: courses.length,
     publishedCourses: courses.filter(c => c.status === 'published').length,
-    totalEnrollments: courses.reduce((sum, course) => sum + course.enrolledStudents, 0)
+    draftCourses: courses.filter(c => c.status === 'draft').length,
+    totalEnrollments: courses.reduce((sum, course) => sum + course.enrolledStudents, 0),
+    totalAdmins: adminUsers.length
+  }
+
+  const handleAddAdmin = () => {
+    if (!newAdminData.name?.trim()) {
+      alert('Admin name is required')
+      return
+    }
+    if (!newAdminData.email?.trim()) {
+      alert('Admin email is required')
+      return
+    }
+    if (!newAdminData.password?.trim()) {
+      alert('Admin password is required')
+      return
+    }
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(newAdminData.email)) {
+      alert('Please enter a valid email address')
+      return
+    }
+    
+    try {
+      const success = addAdmin(newAdminData.name.trim(), newAdminData.email.trim(), newAdminData.password.trim())
+      if (success) {
+        setNewAdminData({ name: '', email: '', password: '' })
+        setShowAddAdmin(false)
+        alert('Admin added successfully!')
+      } else {
+        alert('Failed to add admin. Email might already exist.')
+      }
+    } catch (error) {
+      console.error('Error adding admin:', error)
+      alert('Failed to add admin. Please try again.')
+    }
   }
 
   return (
@@ -115,8 +148,33 @@ export function AdminDashboard() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Admin Dashboard</h1>
-          <p className="text-blue-200">Manage users, courses, and system settings</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-white mb-2">Admin Dashboard</h1>
+              <p className="text-blue-200">Manage users, courses, and system settings</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="text-right">
+                <p className="text-white font-medium">{adminUser?.name}</p>
+                <p className="text-blue-200 text-sm">{adminUser?.email}</p>
+                <span className={`px-2 py-1 rounded text-xs ${
+                  adminUser?.role === 'super-admin' 
+                    ? 'bg-red-500/20 text-red-200' 
+                    : 'bg-blue-500/20 text-blue-200'
+                }`}>
+                  {adminUser?.role === 'super-admin' ? 'Super Admin' : 'Admin'}
+                </span>
+              </div>
+              <button
+                onClick={logoutAdmin}
+                data-admin-logout="true"
+                className="bg-red-500/20 text-red-200 px-3 py-2 rounded-lg hover:bg-red-500/30 transition-colors flex items-center gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Logout
+              </button>
+            </div>
+          </div>
           {error && (
             <div className="mt-4 bg-red-500/20 border border-red-500/30 rounded-lg p-3">
               <div className="flex items-center gap-2">
@@ -128,7 +186,7 @@ export function AdminDashboard() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -137,7 +195,7 @@ export function AdminDashboard() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-blue-200 text-sm">Total Users</p>
+                <p className="text-blue-200 text-sm">Total Students</p>
                 <p className="text-2xl font-bold text-white">{stats.totalUsers}</p>
               </div>
               <Users className="w-8 h-8 text-blue-400" />
@@ -178,14 +236,29 @@ export function AdminDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-orange-900/20 backdrop-blur-sm rounded-xl p-6 border border-orange-500/30"
+            className="bg-yellow-900/20 backdrop-blur-sm rounded-xl p-6 border border-yellow-500/30"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-orange-200 text-sm">Enrollments</p>
-                <p className="text-2xl font-bold text-white">{stats.totalEnrollments}</p>
+                <p className="text-yellow-200 text-sm">Draft</p>
+                <p className="text-2xl font-bold text-white">{stats.draftCourses}</p>
               </div>
-              <UserCheck className="w-8 h-8 text-orange-400" />
+              <Edit className="w-8 h-8 text-yellow-400" />
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="bg-red-900/20 backdrop-blur-sm rounded-xl p-6 border border-red-500/30"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-red-200 text-sm">Admins</p>
+                <p className="text-2xl font-bold text-white">{stats.totalAdmins}</p>
+              </div>
+              <Shield className="w-8 h-8 text-red-400" />
             </div>
           </motion.div>
         </div>
@@ -195,12 +268,13 @@ export function AdminDashboard() {
           <div className="flex space-x-1 bg-white/5 backdrop-blur-sm rounded-lg p-1 border border-blue-500/20">
             {[
               { id: 'overview', label: 'Overview' },
-              { id: 'users', label: 'Users' },
-              { id: 'courses', label: 'Courses' }
+              { id: 'users', label: 'Students' },
+              { id: 'courses', label: 'Courses' },
+              { id: 'admins', label: 'Admins' }
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as 'overview' | 'users' | 'courses')}
+                onClick={() => setActiveTab(tab.id as 'overview' | 'users' | 'courses' | 'admins')}
                 className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                   activeTab === tab.id
                     ? 'bg-blue-500/20 text-blue-400 shadow-lg'
@@ -313,10 +387,22 @@ export function AdminDashboard() {
           {activeTab === 'users' && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold text-white">All Users</h2>
+                <h2 className="text-xl font-semibold text-white">All Students</h2>
                 <div className="text-blue-200 text-sm">
-                  {clerkUsers.length} total users
+                  {filteredUsers.length} of {clerkUsers.length} students
                 </div>
+              </div>
+
+              {/* Search Bar */}
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search students by name or email..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-white/10 border border-blue-500/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50 transition-all duration-300"
+                />
               </div>
 
               {/* Info about user data */}
@@ -324,14 +410,15 @@ export function AdminDashboard() {
                 <div className="flex items-start gap-3">
                   <AlertCircle className="w-5 h-5 text-blue-400 mt-0.5" />
                   <div>
-                    <h3 className="text-white font-medium mb-1">User Data Limitation</h3>
+                    <h3 className="text-white font-medium mb-1">Student Data Integration</h3>
                     <p className="text-blue-200 text-sm mb-2">
-                      Currently showing only the current admin user. To display all users:
+                      Student data integration requires server-side implementation for security. Currently showing empty list.
                     </p>
                     <div className="text-blue-300 text-xs space-y-1">
-                      <p>• Set up a backend API endpoint with Clerk's secret key</p>
-                      <p>• Use Clerk's webhooks to sync user data to your database</p>
-                      <p>• Or implement a server-side user management system</p>
+                      <p>• Implement /api/admin/students endpoint server-side</p>
+                      <p>• Use Clerk secret key on server-side only</p>
+                      <p>• Search functionality is ready for real data</p>
+                      <p>• Error handling prevents app crashes</p>
                     </div>
                   </div>
                 </div>
@@ -344,13 +431,17 @@ export function AdminDashboard() {
                   </div>
                   <p className="text-blue-200">Loading users...</p>
                 </div>
-              ) : clerkUsers.length === 0 ? (
+              ) : filteredUsers.length === 0 ? (
                 <div className="text-center py-12">
                   <div className="w-16 h-16 mx-auto mb-4 bg-blue-900/20 rounded-full flex items-center justify-center">
                     <Users className="w-8 h-8 text-blue-400" />
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">No Users Found</h3>
-                  <p className="text-gray-400">No users have registered yet.</p>
+                  <h3 className="text-xl font-semibold text-white mb-2">
+                    {searchQuery ? 'No Students Found' : 'No Students Registered'}
+                  </h3>
+                  <p className="text-gray-400">
+                    {searchQuery ? 'Try adjusting your search criteria.' : 'No students have registered yet.'}
+                  </p>
                 </div>
               ) : (
                 <div className="overflow-x-auto">
@@ -360,47 +451,52 @@ export function AdminDashboard() {
                         <th className="text-left text-white/70 py-3 px-4">Avatar</th>
                         <th className="text-left text-white/70 py-3 px-4">Name</th>
                         <th className="text-left text-white/70 py-3 px-4">Email</th>
-                        <th className="text-left text-white/70 py-3 px-4">Role</th>
                         <th className="text-left text-white/70 py-3 px-4">Join Date</th>
                         <th className="text-left text-white/70 py-3 px-4">Last Sign In</th>
+                        <th className="text-left text-white/70 py-3 px-4">Status</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {clerkUsers.map((clerkUser) => (
-                        <tr key={clerkUser.id} className="border-b border-white/5">
-                          <td className="py-3 px-4">
-                            <img
-                              src={clerkUser.imageUrl}
-                              alt={clerkUser.firstName || 'User'}
-                              className="w-8 h-8 rounded-full"
-                            />
-                          </td>
-                          <td className="py-3 px-4 text-white">
-                            {clerkUser.firstName} {clerkUser.lastName}
-                          </td>
-                          <td className="py-3 px-4 text-blue-200">
-                            {clerkUser.emailAddresses[0]?.emailAddress}
-                          </td>
-                          <td className="py-3 px-4">
-                            <span className={`px-2 py-1 rounded text-xs ${
-                              clerkUser.emailAddresses[0]?.emailAddress === 'suryanshunab@gmail.com' 
-                                ? 'bg-red-500/20 text-red-200' 
-                                : 'bg-blue-500/20 text-blue-200'
-                            }`}>
-                              {clerkUser.emailAddresses[0]?.emailAddress === 'suryanshunab@gmail.com' ? 'Admin' : 'Student'}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4 text-blue-200">
-                            {new Date(clerkUser.createdAt).toLocaleDateString()}
-                          </td>
-                          <td className="py-3 px-4 text-blue-200">
-                            {clerkUser.lastSignInAt 
-                              ? new Date(clerkUser.lastSignInAt).toLocaleDateString()
-                              : 'Never'
-                            }
-                          </td>
-                        </tr>
-                      ))}
+                      {filteredUsers.map((clerkUser) => {
+                        const isActive = clerkUser.lastSignInAt && 
+                          new Date(clerkUser.lastSignInAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+                        
+                        return (
+                          <tr key={clerkUser.id} className="border-b border-white/5">
+                            <td className="py-3 px-4">
+                              <img
+                                src={clerkUser.imageUrl}
+                                alt={clerkUser.firstName || 'User'}
+                                className="w-8 h-8 rounded-full"
+                              />
+                            </td>
+                            <td className="py-3 px-4 text-white">
+                              {clerkUser.firstName} {clerkUser.lastName}
+                            </td>
+                            <td className="py-3 px-4 text-blue-200">
+                              {clerkUser.emailAddresses[0]?.emailAddress}
+                            </td>
+                            <td className="py-3 px-4 text-blue-200">
+                              {new Date(clerkUser.createdAt).toLocaleDateString()}
+                            </td>
+                            <td className="py-3 px-4 text-blue-200">
+                              {clerkUser.lastSignInAt 
+                                ? new Date(clerkUser.lastSignInAt).toLocaleDateString()
+                                : 'Never'
+                              }
+                            </td>
+                            <td className="py-3 px-4">
+                              <span className={`px-2 py-1 rounded text-xs ${
+                                isActive 
+                                  ? 'bg-green-500/20 text-green-200' 
+                                  : 'bg-gray-500/20 text-gray-200'
+                              }`}>
+                                {isActive ? 'Active' : 'Inactive'}
+                              </span>
+                            </td>
+                          </tr>
+                        )
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -511,6 +607,156 @@ export function AdminDashboard() {
                   ))}
                 </div>
               )}
+            </div>
+          )}
+
+          {activeTab === 'admins' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold text-white">Admin Management</h2>
+                <div className="flex items-center gap-4">
+                  <div className="text-blue-200 text-sm">
+                    {adminUsers.length} total admins
+                  </div>
+                  {adminUser?.role === 'super-admin' && (
+                    <button
+                      onClick={() => setShowAddAdmin(true)}
+                      className="bg-blue-500/20 text-blue-200 px-3 py-2 rounded-lg hover:bg-blue-500/30 transition-colors flex items-center gap-2"
+                    >
+                      <Plus className="w-4 h-4" />
+                      Add Admin
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Add Admin Modal */}
+              {showAddAdmin && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+                  <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-blue-500/20 max-w-md w-full">
+                    <h3 className="text-xl font-semibold text-white mb-4">Add New Admin</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-white mb-2">Name</label>
+                        <input
+                          type="text"
+                          value={newAdminData.name}
+                          onChange={(e) => setNewAdminData({ ...newAdminData, name: e.target.value })}
+                          className="w-full px-3 py-2 bg-white/10 border border-blue-500/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50"
+                          placeholder="Admin Name"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-white mb-2">Email</label>
+                        <input
+                          type="email"
+                          value={newAdminData.email}
+                          onChange={(e) => setNewAdminData({ ...newAdminData, email: e.target.value })}
+                          className="w-full px-3 py-2 bg-white/10 border border-blue-500/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50"
+                          placeholder="admin@example.com"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-white mb-2">Password</label>
+                        <input
+                          type="password"
+                          value={newAdminData.password}
+                          onChange={(e) => setNewAdminData({ ...newAdminData, password: e.target.value })}
+                          className="w-full px-3 py-2 bg-white/10 border border-blue-500/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50"
+                          placeholder="Password"
+                        />
+                      </div>
+                      <div className="flex gap-3">
+                        <button
+                          onClick={handleAddAdmin}
+                          className="flex-1 bg-blue-500/20 text-blue-200 px-4 py-2 rounded-lg hover:bg-blue-500/30 transition-colors"
+                        >
+                          Add Admin
+                        </button>
+                        <button
+                          onClick={() => {
+                            setShowAddAdmin(false)
+                            setNewAdminData({ name: '', email: '', password: '' })
+                          }}
+                          className="flex-1 bg-gray-500/20 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-500/30 transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-blue-500/20">
+                      <th className="text-left text-white/70 py-3 px-4">Name</th>
+                      <th className="text-left text-white/70 py-3 px-4">Email</th>
+                      <th className="text-left text-white/70 py-3 px-4">Role</th>
+                      <th className="text-left text-white/70 py-3 px-4">Created</th>
+                      <th className="text-left text-white/70 py-3 px-4">Last Login</th>
+                      <th className="text-left text-white/70 py-3 px-4">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {adminUsers.map((admin) => (
+                      <tr key={admin.id} className="border-b border-white/5">
+                        <td className="py-3 px-4 text-white font-medium">
+                          {admin.name}
+                        </td>
+                        <td className="py-3 px-4 text-blue-200">
+                          {admin.email}
+                        </td>
+                        <td className="py-3 px-4">
+                          <span className={`px-2 py-1 rounded text-xs ${
+                            admin.role === 'super-admin' 
+                              ? 'bg-red-500/20 text-red-200' 
+                              : 'bg-blue-500/20 text-blue-200'
+                          }`}>
+                            {admin.role === 'super-admin' ? 'Super Admin' : 'Admin'}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 text-blue-200">
+                          {new Date(admin.createdAt).toLocaleDateString()}
+                        </td>
+                        <td className="py-3 px-4 text-blue-200">
+                          {admin.lastLogin 
+                            ? new Date(admin.lastLogin).toLocaleDateString()
+                            : 'Never'
+                          }
+                        </td>
+                        <td className="py-3 px-4">
+                          {adminUser?.role === 'super-admin' && admin.role !== 'super-admin' && (
+                            <button
+                              onClick={() => {
+                                if (confirm(`Are you sure you want to remove ${admin.name}? This action cannot be undone.`)) {
+                                  try {
+                                    const success = removeAdmin(admin.id)
+                                    if (success) {
+                                      alert('Admin removed successfully!')
+                                    } else {
+                                      alert('Failed to remove admin.')
+                                    }
+                                  } catch (error) {
+                                    console.error('Error removing admin:', error)
+                                    alert('Failed to remove admin. Please try again.')
+                                  }
+                                }
+                              }}
+                              className="bg-red-500/20 text-red-200 px-2 py-1 rounded text-sm hover:bg-red-500/30 transition-colors flex items-center gap-1"
+                            >
+                              <Trash2 className="w-3 h-3" />
+                              Remove
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </motion.div>

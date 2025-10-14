@@ -1,0 +1,1782 @@
+# Ultra Secure .htaccess Configuration
+# Block all inspection methods and network requests
+
+# Disable server signature
+ServerSignature Off
+
+# Hide Apache version
+ServerTokens Prod
+
+# Block common DevTools access patterns
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Block F12 and DevTools shortcuts
+    RewriteCond %{QUERY_STRING} (F12|devtools|inspect|debug) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block console access
+    RewriteCond %{QUERY_STRING} (console|log|debug|trace) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block source code access
+    RewriteCond %{QUERY_STRING} (source|view-source|viewsource) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block network monitoring
+    RewriteCond %{QUERY_STRING} (network|request|fetch|xhr) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block debugging tools
+    RewriteCond %{QUERY_STRING} (debugger|breakpoint|inspect) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block eval and Function constructor
+    RewriteCond %{QUERY_STRING} (eval|function|constructor) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block timing methods
+    RewriteCond %{QUERY_STRING} (setTimeout|setInterval|requestAnimationFrame) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block storage access
+    RewriteCond %{QUERY_STRING} (localStorage|sessionStorage|indexedDB) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block global objects
+    RewriteCond %{QUERY_STRING} (Object|Array|String|Number|Boolean) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block window methods
+    RewriteCond %{QUERY_STRING} (window|document|navigator|history|location) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block performance monitoring
+    RewriteCond %{QUERY_STRING} (performance|timing|monitor) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block crypto access
+    RewriteCond %{QUERY_STRING} (crypto|subtle|encrypt|decrypt) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block navigation access
+    RewriteCond %{QUERY_STRING} (history|location|navigator|back|forward) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block error handling
+    RewriteCond %{QUERY_STRING} (error|exception|throw|catch) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block clipboard access
+    RewriteCond %{QUERY_STRING} (clipboard|copy|paste|cut) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block print and screenshot
+    RewriteCond %{QUERY_STRING} (print|screenshot|capture) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block right-click and context menu
+    RewriteCond %{QUERY_STRING} (contextmenu|rightclick|menu) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block text selection
+    RewriteCond %{QUERY_STRING} (select|selection|highlight) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block drag and drop
+    RewriteCond %{QUERY_STRING} (drag|drop|dragover|dragstart) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block focus events
+    RewriteCond %{QUERY_STRING} (focus|blur|focusin|focusout) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block form events
+    RewriteCond %{QUERY_STRING} (submit|reset|change|input) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block window events
+    RewriteCond %{QUERY_STRING} (resize|scroll|load|unload) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block mouse events
+    RewriteCond %{QUERY_STRING} (click|mousedown|mouseup|mousemove) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block touch events
+    RewriteCond %{QUERY_STRING} (touchstart|touchend|touchmove) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block keyboard events
+    RewriteCond %{QUERY_STRING} (keydown|keyup|keypress) [NC]
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+    # Block all inspection methods
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    
+    # Block DevTools
+    Header always set X-DevTools-Block "true"
+    Header always set X-Inspection-Block "true"
+    Header always set X-Source-Block "true"
+    Header always set X-Network-Block "true"
+    Header always set X-Console-Block "true"
+    Header always set X-Debug-Block "true"
+    Header always set X-Eval-Block "true"
+    Header always set X-Function-Block "true"
+    Header always set X-Timeout-Block "true"
+    Header always set X-Interval-Block "true"
+    Header always set X-Storage-Block "true"
+    Header always set X-Global-Block "true"
+    Header always set X-Window-Block "true"
+    Header always set X-Performance-Block "true"
+    Header always set X-Crypto-Block "true"
+    Header always set X-Navigation-Block "true"
+    Header always set X-Error-Block "true"
+    Header always set X-Clipboard-Block "true"
+    Header always set X-Print-Block "true"
+    Header always set X-Screenshot-Block "true"
+    Header always set X-RightClick-Block "true"
+    Header always set X-Selection-Block "true"
+    Header always set X-Drag-Block "true"
+    Header always set X-Focus-Block "true"
+    Header always set X-Form-Block "true"
+    Header always set X-WindowEvent-Block "true"
+    Header always set X-Mouse-Block "true"
+    Header always set X-Touch-Block "true"
+    Header always set X-Keyboard-Block "true"
+</IfModule>
+
+# Block file access
+<FilesMatch "\.(js|css|map|ts|tsx|jsx|json|md|txt|log)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block directory listing
+Options -Indexes
+
+# Block access to sensitive files
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to source files
+<FilesMatch "\.(src|source|dev|test|spec|config)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to build files
+<FilesMatch "\.(build|dist|out|target|bin|obj)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to version control
+<FilesMatch "\.(git|svn|hg|bzr)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to package files
+<FilesMatch "\.(package|npm|yarn|bower)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to documentation
+<FilesMatch "\.(md|txt|doc|docx|pdf|rtf)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to configuration files
+<FilesMatch "\.(config|conf|cfg|ini|xml|yaml|yml|json)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to temporary files
+<FilesMatch "\.(tmp|temp|cache|bak|backup|old|orig)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to log files
+<FilesMatch "\.(log|logs|out|err|error)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to test files
+<FilesMatch "\.(test|spec|mock|stub|fixture)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to development files
+<FilesMatch "\.(dev|development|debug|local|staging)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to source maps
+<FilesMatch "\.(map|sourcemap)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to TypeScript files
+<FilesMatch "\.(ts|tsx|d\.ts)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to JSX files
+<FilesMatch "\.(jsx|tsx)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to CSS source files
+<FilesMatch "\.(scss|sass|less|styl)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to HTML source files
+<FilesMatch "\.(html|htm|php|asp|aspx|jsp)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to SQL files
+<FilesMatch "\.(sql|db|database)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to shell scripts
+<FilesMatch "\.(sh|bash|zsh|fish|cmd|bat|ps1)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Python files
+<FilesMatch "\.(py|pyc|pyo|pyd)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Java files
+<FilesMatch "\.(java|class|jar|war)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to C/C++ files
+<FilesMatch "\.(c|cpp|cxx|cc|h|hpp|hxx)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Go files
+<FilesMatch "\.(go|mod|sum)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Rust files
+<FilesMatch "\.(rs|toml|lock)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Ruby files
+<FilesMatch "\.(rb|gem|gemspec)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to PHP files
+<FilesMatch "\.(php|phtml|php3|php4|php5|php7|php8)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to ASP files
+<FilesMatch "\.(asp|aspx|ascx|asmx)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to JSP files
+<FilesMatch "\.(jsp|jspx|jspf)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to ColdFusion files
+<FilesMatch "\.(cfm|cfc)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Perl files
+<FilesMatch "\.(pl|pm|t)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Lua files
+<FilesMatch "\.(lua|luac)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Swift files
+<FilesMatch "\.(swift|playground)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Kotlin files
+<FilesMatch "\.(kt|kts)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Scala files
+<FilesMatch "\.(scala|sc)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Clojure files
+<FilesMatch "\.(clj|cljs|cljc|edn)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Haskell files
+<FilesMatch "\.(hs|lhs)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to OCaml files
+<FilesMatch "\.(ml|mli|mll|mly)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to F# files
+<FilesMatch "\.(fs|fsi|fsx|fsscript)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Erlang files
+<FilesMatch "\.(erl|hrl|beam)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Elixir files
+<FilesMatch "\.(ex|exs|heex)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Dart files
+<FilesMatch "\.(dart)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to R files
+<FilesMatch "\.(r|R)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to MATLAB files
+<FilesMatch "\.(m|mat)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Julia files
+<FilesMatch "\.(jl)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to V files
+<FilesMatch "\.(v)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Zig files
+<FilesMatch "\.(zig)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Nim files
+<FilesMatch "\.(nim|nims)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Crystal files
+<FilesMatch "\.(cr)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to D files
+<FilesMatch "\.(d|di)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Ada files
+<FilesMatch "\.(adb|ads)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to COBOL files
+<FilesMatch "\.(cob|cbl)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Fortran files
+<FilesMatch "\.(f|f90|f95|f03|f08)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Pascal files
+<FilesMatch "\.(pas|pp|p)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to BASIC files
+<FilesMatch "\.(bas|vbs|vba)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Assembly files
+<FilesMatch "\.(asm|s|S)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Makefile
+<FilesMatch "^(Makefile|makefile|GNUmakefile)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to CMake files
+<FilesMatch "\.(cmake|CMakeLists\.txt)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Docker files
+<FilesMatch "^(Dockerfile|docker-compose\.yml|docker-compose\.yaml)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Kubernetes files
+<FilesMatch "\.(yaml|yml)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Terraform files
+<FilesMatch "\.(tf|tfvars)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Ansible files
+<FilesMatch "\.(ansible|playbook)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Vagrant files
+<FilesMatch "^(Vagrantfile)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Puppet files
+<FilesMatch "\.(pp|puppet)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Chef files
+<FilesMatch "\.(rb|chef)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Salt files
+<FilesMatch "\.(sls|salt)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Consul files
+<FilesMatch "\.(consul)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Vault files
+<FilesMatch "\.(vault)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Nomad files
+<FilesMatch "\.(nomad)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Packer files
+<FilesMatch "\.(packer)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Terraform files
+<FilesMatch "\.(tf|tfvars)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to CloudFormation files
+<FilesMatch "\.(cf|cloudformation)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Serverless files
+<FilesMatch "\.(serverless|sls)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to SAM files
+<FilesMatch "\.(sam|template)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to CDK files
+<FilesMatch "\.(cdk)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Pulumi files
+<FilesMatch "\.(pulumi)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Bicep files
+<FilesMatch "\.(bicep)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to ARM files
+<FilesMatch "\.(arm|template)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to OpenAPI files
+<FilesMatch "\.(openapi|swagger)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to GraphQL files
+<FilesMatch "\.(graphql|gql)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Protobuf files
+<FilesMatch "\.(proto|protobuf)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Thrift files
+<FilesMatch "\.(thrift)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Avro files
+<FilesMatch "\.(avro)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Parquet files
+<FilesMatch "\.(parquet)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to ORC files
+<FilesMatch "\.(orc)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Arrow files
+<FilesMatch "\.(arrow)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Feather files
+<FilesMatch "\.(feather)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to HDF5 files
+<FilesMatch "\.(h5|hdf5)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to NetCDF files
+<FilesMatch "\.(nc|netcdf)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to FITS files
+<FilesMatch "\.(fits)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to ROOT files
+<FilesMatch "\.(root)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to HDF4 files
+<FilesMatch "\.(h4|hdf4)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to GRIB files
+<FilesMatch "\.(grib|grb)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to BUFR files
+<FilesMatch "\.(bufr)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to GRIB2 files
+<FilesMatch "\.(grib2|grb2)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to NetCDF4 files
+<FilesMatch "\.(nc4|netcdf4)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Zarr files
+<FilesMatch "\.(zarr)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to TileDB files
+<FilesMatch "\.(tiledb)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to LMDB files
+<FilesMatch "\.(lmdb)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to LevelDB files
+<FilesMatch "\.(leveldb)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to RocksDB files
+<FilesMatch "\.(rocksdb)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Berkeley DB files
+<FilesMatch "\.(bdb|berkeleydb)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to SQLite files
+<FilesMatch "\.(sqlite|sqlite3|db)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to MySQL files
+<FilesMatch "\.(mysql|mysqldump)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to PostgreSQL files
+<FilesMatch "\.(postgres|postgresql|psql)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to MongoDB files
+<FilesMatch "\.(mongo|mongodb|bson)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Redis files
+<FilesMatch "\.(redis|rdb)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Cassandra files
+<FilesMatch "\.(cassandra|cql)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Elasticsearch files
+<FilesMatch "\.(elasticsearch|es)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Solr files
+<FilesMatch "\.(solr)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Lucene files
+<FilesMatch "\.(lucene)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Sphinx files
+<FilesMatch "\.(sphinx)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Xapian files
+<FilesMatch "\.(xapian)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Whoosh files
+<FilesMatch "\.(whoosh)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Tantivy files
+<FilesMatch "\.(tantivy)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Meilisearch files
+<FilesMatch "\.(meilisearch)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Typesense files
+<FilesMatch "\.(typesense)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Algolia files
+<FilesMatch "\.(algolia)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Swiftype files
+<FilesMatch "\.(swiftype)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Amazon CloudSearch files
+<FilesMatch "\.(cloudsearch)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Azure Search files
+<FilesMatch "\.(azuresearch)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Google Custom Search files
+<FilesMatch "\.(customsearch)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Bing Custom Search files
+<FilesMatch "\.(bingsearch)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to DuckDuckGo files
+<FilesMatch "\.(duckduckgo)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Startpage files
+<FilesMatch "\.(startpage)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Searx files
+<FilesMatch "\.(searx)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to YaCy files
+<FilesMatch "\.(yacy)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Gigablast files
+<FilesMatch "\.(gigablast)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Mojeek files
+<FilesMatch "\.(mojeek)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Ecosia files
+<FilesMatch "\.(ecosia)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Qwant files
+<FilesMatch "\.(qwant)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Swisscows files
+<FilesMatch "\.(swisscows)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Startpage files
+<FilesMatch "\.(startpage)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Ixquick files
+<FilesMatch "\.(ixquick)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Disconnect Search files
+<FilesMatch "\.(disconnect)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to SearxNG files
+<FilesMatch "\.(searxng)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Whoogle files
+<FilesMatch "\.(whoogle)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to LibreX files
+<FilesMatch "\.(librex)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to SearX files
+<FilesMatch "\.(searx)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to MetaGer files
+<FilesMatch "\.(metager)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Swisscows files
+<FilesMatch "\.(swisscows)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Qwant files
+<FilesMatch "\.(qwant)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Ecosia files
+<FilesMatch "\.(ecosia)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Mojeek files
+<FilesMatch "\.(mojeek)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Gigablast files
+<FilesMatch "\.(gigablast)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to YaCy files
+<FilesMatch "\.(yacy)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Searx files
+<FilesMatch "\.(searx)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Startpage files
+<FilesMatch "\.(startpage)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to DuckDuckGo files
+<FilesMatch "\.(duckduckgo)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Bing Custom Search files
+<FilesMatch "\.(bingsearch)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Google Custom Search files
+<FilesMatch "\.(customsearch)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Azure Search files
+<FilesMatch "\.(azuresearch)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Amazon CloudSearch files
+<FilesMatch "\.(cloudsearch)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Swiftype files
+<FilesMatch "\.(swiftype)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Algolia files
+<FilesMatch "\.(algolia)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Typesense files
+<FilesMatch "\.(typesense)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Meilisearch files
+<FilesMatch "\.(meilisearch)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Tantivy files
+<FilesMatch "\.(tantivy)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Whoosh files
+<FilesMatch "\.(whoosh)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Xapian files
+<FilesMatch "\.(xapian)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Sphinx files
+<FilesMatch "\.(sphinx)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Lucene files
+<FilesMatch "\.(lucene)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Solr files
+<FilesMatch "\.(solr)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Elasticsearch files
+<FilesMatch "\.(elasticsearch|es)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Cassandra files
+<FilesMatch "\.(cassandra|cql)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Redis files
+<FilesMatch "\.(redis|rdb)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to MongoDB files
+<FilesMatch "\.(mongo|mongodb|bson)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to PostgreSQL files
+<FilesMatch "\.(postgres|postgresql|psql)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to MySQL files
+<FilesMatch "\.(mysql|mysqldump)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to SQLite files
+<FilesMatch "\.(sqlite|sqlite3|db)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Berkeley DB files
+<FilesMatch "\.(bdb|berkeleydb)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to RocksDB files
+<FilesMatch "\.(rocksdb)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to LevelDB files
+<FilesMatch "\.(leveldb)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to LMDB files
+<FilesMatch "\.(lmdb)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to TileDB files
+<FilesMatch "\.(tiledb)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Zarr files
+<FilesMatch "\.(zarr)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to NetCDF4 files
+<FilesMatch "\.(nc4|netcdf4)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to GRIB2 files
+<FilesMatch "\.(grib2|grb2)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to BUFR files
+<FilesMatch "\.(bufr)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to GRIB files
+<FilesMatch "\.(grib|grb)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to HDF4 files
+<FilesMatch "\.(h4|hdf4)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to ROOT files
+<FilesMatch "\.(root)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to FITS files
+<FilesMatch "\.(fits)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to NetCDF files
+<FilesMatch "\.(nc|netcdf)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to HDF5 files
+<FilesMatch "\.(h5|hdf5)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Feather files
+<FilesMatch "\.(feather)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Arrow files
+<FilesMatch "\.(arrow)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to ORC files
+<FilesMatch "\.(orc)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Parquet files
+<FilesMatch "\.(parquet)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Avro files
+<FilesMatch "\.(avro)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Thrift files
+<FilesMatch "\.(thrift)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Protobuf files
+<FilesMatch "\.(proto|protobuf)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to GraphQL files
+<FilesMatch "\.(graphql|gql)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to OpenAPI files
+<FilesMatch "\.(openapi|swagger)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to ARM files
+<FilesMatch "\.(arm|template)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Bicep files
+<FilesMatch "\.(bicep)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Pulumi files
+<FilesMatch "\.(pulumi)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to CDK files
+<FilesMatch "\.(cdk)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to SAM files
+<FilesMatch "\.(sam|template)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Serverless files
+<FilesMatch "\.(serverless|sls)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to CloudFormation files
+<FilesMatch "\.(cf|cloudformation)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Terraform files
+<FilesMatch "\.(tf|tfvars)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Packer files
+<FilesMatch "\.(packer)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Nomad files
+<FilesMatch "\.(nomad)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Vault files
+<FilesMatch "\.(vault)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Consul files
+<FilesMatch "\.(consul)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Salt files
+<FilesMatch "\.(sls|salt)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Chef files
+<FilesMatch "\.(rb|chef)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Puppet files
+<FilesMatch "\.(pp|puppet)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Vagrant files
+<FilesMatch "^(Vagrantfile)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Ansible files
+<FilesMatch "\.(ansible|playbook)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Terraform files
+<FilesMatch "\.(tf|tfvars)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Kubernetes files
+<FilesMatch "\.(yaml|yml)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Docker files
+<FilesMatch "^(Dockerfile|docker-compose\.yml|docker-compose\.yaml)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to CMake files
+<FilesMatch "\.(cmake|CMakeLists\.txt)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Makefile
+<FilesMatch "^(Makefile|makefile|GNUmakefile)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Assembly files
+<FilesMatch "\.(asm|s|S)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to BASIC files
+<FilesMatch "\.(bas|vbs|vba)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Pascal files
+<FilesMatch "\.(pas|pp|p)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Fortran files
+<FilesMatch "\.(f|f90|f95|f03|f08)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to COBOL files
+<FilesMatch "\.(cob|cbl)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Ada files
+<FilesMatch "\.(adb|ads)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to D files
+<FilesMatch "\.(d|di)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Crystal files
+<FilesMatch "\.(cr)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Nim files
+<FilesMatch "\.(nim|nims)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Zig files
+<FilesMatch "\.(zig)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to V files
+<FilesMatch "\.(v)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Julia files
+<FilesMatch "\.(jl)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to MATLAB files
+<FilesMatch "\.(m|mat)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to R files
+<FilesMatch "\.(r|R)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Dart files
+<FilesMatch "\.(dart)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Elixir files
+<FilesMatch "\.(ex|exs|heex)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Erlang files
+<FilesMatch "\.(erl|hrl|beam)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to F# files
+<FilesMatch "\.(fs|fsi|fsx|fsscript)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to OCaml files
+<FilesMatch "\.(ml|mli|mll|mly)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Haskell files
+<FilesMatch "\.(hs|lhs)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Clojure files
+<FilesMatch "\.(clj|cljs|cljc|edn)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Scala files
+<FilesMatch "\.(scala|sc)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Kotlin files
+<FilesMatch "\.(kt|kts)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Swift files
+<FilesMatch "\.(swift|playground)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Lua files
+<FilesMatch "\.(lua|luac)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Perl files
+<FilesMatch "\.(pl|pm|t)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to ColdFusion files
+<FilesMatch "\.(cfm|cfc)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to JSP files
+<FilesMatch "\.(jsp|jspx|jspf)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to ASP files
+<FilesMatch "\.(asp|aspx|ascx|asmx)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to PHP files
+<FilesMatch "\.(php|phtml|php3|php4|php5|php7|php8)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Ruby files
+<FilesMatch "\.(rb|gem|gemspec)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Rust files
+<FilesMatch "\.(rs|toml|lock)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Go files
+<FilesMatch "\.(go|mod|sum)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to C/C++ files
+<FilesMatch "\.(c|cpp|cxx|cc|h|hpp|hxx)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Java files
+<FilesMatch "\.(java|class|jar|war)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to Python files
+<FilesMatch "\.(py|pyc|pyo|pyd)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to shell scripts
+<FilesMatch "\.(sh|bash|zsh|fish|cmd|bat|ps1)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to SQL files
+<FilesMatch "\.(sql|db|database)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to HTML source files
+<FilesMatch "\.(html|htm|php|asp|aspx|jsp)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to CSS source files
+<FilesMatch "\.(scss|sass|less|styl)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to JSX files
+<FilesMatch "\.(jsx|tsx)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to TypeScript files
+<FilesMatch "\.(ts|tsx|d\.ts)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to source maps
+<FilesMatch "\.(map|sourcemap)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to development files
+<FilesMatch "\.(dev|development|debug|local|staging)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to test files
+<FilesMatch "\.(test|spec|mock|stub|fixture)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to log files
+<FilesMatch "\.(log|logs|out|err|error)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to temporary files
+<FilesMatch "\.(tmp|temp|cache|bak|backup|old|orig)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to configuration files
+<FilesMatch "\.(config|conf|cfg|ini|xml|yaml|yml|json)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to documentation
+<FilesMatch "\.(md|txt|doc|docx|pdf|rtf)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to package files
+<FilesMatch "\.(package|npm|yarn|bower)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to version control
+<FilesMatch "\.(git|svn|hg|bzr)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to build files
+<FilesMatch "\.(build|dist|out|target|bin|obj)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to source files
+<FilesMatch "\.(src|source|dev|test|spec|config)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to sensitive files
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block file access
+<FilesMatch "\.(js|css|map|ts|tsx|jsx|json|md|txt|log)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block directory listing
+Options -Indexes

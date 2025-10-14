@@ -1,0 +1,254 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ultra Secure Global Styles */
+* {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-user-drag: none !important;
+  -khtml-user-drag: none !important;
+  -moz-user-drag: none !important;
+  -o-user-drag: none !important;
+  user-drag: none !important;
+  -webkit-context-menu: none !important;
+  -moz-context-menu: none !important;
+  context-menu: none !important;
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+/* Disable text selection globally */
+body {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+/* Disable all interactions */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-user-drag: none !important;
+  -khtml-user-drag: none !important;
+  -moz-user-drag: none !important;
+  -o-user-drag: none !important;
+  user-drag: none !important;
+  -webkit-context-menu: none !important;
+  -moz-context-menu: none !important;
+  context-menu: none !important;
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+/* Disable image saving */
+img {
+  -webkit-user-drag: none !important;
+  -khtml-user-drag: none !important;
+  -moz-user-drag: none !important;
+  -o-user-drag: none !important;
+  user-drag: none !important;
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+/* Disable link dragging */
+a {
+  -webkit-user-drag: none !important;
+  -khtml-user-drag: none !important;
+  -moz-user-drag: none !important;
+  -o-user-drag: none !important;
+  user-drag: none !important;
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+/* Disable all form elements */
+input, textarea, select, button {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-user-drag: none !important;
+  -khtml-user-drag: none !important;
+  -moz-user-drag: none !important;
+  -o-user-drag: none !important;
+  user-drag: none !important;
+  -webkit-context-menu: none !important;
+  -moz-context-menu: none !important;
+  context-menu: none !important;
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+/* Security warning styles */
+.security-warning {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000;
+  color: #ff0000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  font-size: 32px;
+  text-align: center;
+  z-index: 999999;
+}
+
+/* Disable scrollbars */
+::-webkit-scrollbar {
+  display: none !important;
+}
+
+html, body {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* Disable focus outlines */
+*:focus {
+  outline: none !important;
+}
+
+/* Disable hover effects */
+*:hover {
+  cursor: default !important;
+}
+
+/* Disable pointer events on security elements */
+.security-blocked {
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+/* Ultra secure - disable all interactions */
+* {
+  pointer-events: none !important;
+  cursor: default !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-user-drag: none !important;
+  -khtml-user-drag: none !important;
+  -moz-user-drag: none !important;
+  -o-user-drag: none !important;
+  user-drag: none !important;
+  -webkit-context-menu: none !important;
+  -moz-context-menu: none !important;
+  context-menu: none !important;
+}
+
+/* Force disable all mouse events */
+* {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-user-drag: none !important;
+  -khtml-user-drag: none !important;
+  -moz-user-drag: none !important;
+  -o-user-drag: none !important;
+  user-drag: none !important;
+  -webkit-context-menu: none !important;
+  -moz-context-menu: none !important;
+  context-menu: none !important;
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+/* Animation for security indicators */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.security-indicator {
+  animation: pulse 2s infinite;
+}
+
+/* Disable all animations for security */
+* {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Force dark theme */
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Disable print styles */
+@media print {
+  * {
+    display: none !important;
+  }
+  
+  body::before {
+    content: "PRINTING BLOCKED - ACCESS DENIED";
+    display: block !important;
+    color: #ff0000;
+    font-size: 32px;
+    text-align: center;
+    padding: 50px;
+  }
+}
+
+/* Disable screen reader access */
+@media screen and (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Disable high contrast mode */
+@media (prefers-contrast: high) {
+  * {
+    filter: none !important;
+  }
+}
+
+/* Disable forced colors */
+@media (forced-colors: active) {
+  * {
+    forced-color-adjust: none !important;
+  }
+}
