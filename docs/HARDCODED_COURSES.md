@@ -1,16 +1,25 @@
-# Hardcoded Course Management System
+# Real Course Management System
 
 ## Overview
 
-The admin dashboard now uses real Clerk user data and a hardcoded course management system. All dummy data has been removed, and courses are managed through hardcoded JSON files in your codebase.
+The admin dashboard now uses real Clerk user data and real course data from the actual course components. All dummy data has been removed, and courses are managed through the real course files in your codebase.
 
 ## File Structure
 
 ```
-src/data/courses/
-├── index.ts              # Course exports and helper functions
-├── course-1.json         # Example course data
-└── course-2.json         # Additional courses (when created)
+src/components/Dashboard/Courses/
+├── coursesData.ts         # Central course data aggregator
+├── Courses.tsx           # Main courses page
+├── CourseCard.tsx       # Course card component
+├── CourseDetail.tsx     # Course detail page
+├── AdhocClasses/        # Individual course folders
+│   ├── data.ts          # Course-specific data
+│   └── AdhocClassesUI.tsx
+├── DevopsCohort/
+├── DsaClasses/
+├── SolanaFellowship/
+├── Web3Cohort/
+└── WebDevCohort/
 ```
 
 ## How It Works
@@ -21,92 +30,94 @@ src/data/courses/
 - **Admin Detection**: Automatically detects admin users based on email
 - **Live Data**: Shows real user avatars, names, emails, and sign-in dates
 
-### 2. Hardcoded Course Management
-- **JSON Files**: Courses are stored as JSON files in `src/data/courses/`
-- **Dynamic Loading**: Courses are loaded dynamically from the files
+### 2. Real Course Management
+- **Real Course Data**: Courses come from actual course components
+- **Dynamic Loading**: Courses are loaded from `coursesData.ts`
 - **Real-time Updates**: Changes to course files reflect immediately in the dashboard
 - **No Database**: No external database required for course storage
 
 ## Adding New Courses
 
-### Step 1: Create Course JSON File
-Create a new file `src/data/courses/course-X.json`:
+### Step 1: Create Course Folder
+Create a new folder `src/components/Dashboard/Courses/[CourseName]/` with:
 
-```json
-{
-  "id": "course-X",
-  "title": "Your Course Title",
-  "description": "Course description...",
-  "thumbnail": "https://example.com/thumbnail.jpg",
-  "price": 0,
-  "category": "web-development",
-  "level": "beginner",
-  "duration": "4 weeks",
-  "lessons": [
+**data.ts:**
+```typescript
+export const [courseName]Data = {
+  id: 'course-name',
+  title: 'Your Course Title',
+  banner: '/path/to/banner.jpg',
+  discordLink: 'https://discord.gg/your-course',
+  lessons: [
     {
-      "id": "lesson-1",
-      "title": "Lesson Title",
-      "description": "Lesson description",
-      "videoUrl": "https://example.com/video.mp4",
-      "duration": "15 minutes",
-      "order": 1
+      id: 'lesson-1',
+      title: 'Lesson 1',
+      thumbnail: '/path/to/thumbnail.jpg',
+      videoUrl: '/path/to/video.mp4',
+      timestamps: [
+        { time: 0, title: 'Introduction' },
+        { time: 30, title: 'Main Content' }
+      ]
     }
-  ],
-  "status": "published",
-  "createdAt": "2024-01-01",
-  "enrolledStudents": 0
+  ]
 }
 ```
 
-### Step 2: Import in index.ts
-Add the import and export in `src/data/courses/index.ts`:
+**[CourseName]UI.tsx:**
+```typescript
+import { useState } from 'react'
+import { ArrowLeft } from 'lucide-react'
+import { [courseName]Data } from './data'
+import { VideoPlayer } from '../../Video/VideoPlayer'
+
+export function [CourseName]UI({ onBack }) {
+  // Course UI implementation
+}
+```
+
+### Step 2: Add to coursesData.ts
+Import and add your course to `src/components/Dashboard/Courses/coursesData.ts`:
 
 ```typescript
-import courseX from './course-X.json'
+import { [courseName]Data } from './[CourseName]/data'
 
-export const courses: Course[] = [
-  course1 as Course,
-  courseX as Course, // Add your new course
+export const allCourses: Course[] = [
+  // ... existing courses
+  [courseName]Data
 ]
 ```
 
 ### Step 3: Test in Admin Dashboard
 - The course will appear in the admin dashboard
-- You can test thumbnails, videos, and content
-- Monitor enrollment and engagement
-- View course details and metadata
+- You can test banners, videos, and content
+- Monitor course details and metadata
+- View real course information
 
 ## Course Properties
 
 ### Required Fields
 - `id`: Unique course identifier
 - `title`: Course title
-- `description`: Course description
-- `thumbnail`: Course thumbnail image URL
-- `price`: Course price (always 0 for free courses)
-- `category`: Course category
-- `level`: Difficulty level (beginner, intermediate, advanced)
-- `duration`: Course duration
+- `banner`: Course banner image path
 - `lessons`: Array of lesson objects
-- `status`: Course status (published, draft)
-- `createdAt`: Creation date
-- `enrolledStudents`: Number of enrolled students
+
+### Optional Fields
+- `discordLink`: Discord community link
 
 ### Lesson Properties
 - `id`: Unique lesson identifier
 - `title`: Lesson title
-- `description`: Lesson description
+- `thumbnail`: Lesson thumbnail image path
 - `videoUrl`: Video URL for the lesson
-- `duration`: Lesson duration
-- `order`: Lesson order in the course
+- `timestamps`: Array of timestamp objects with time and title
 
 ## Admin Dashboard Features
 
 ### Overview Tab
 - **Real User Count**: Shows actual registered users from Clerk
-- **Course Statistics**: Displays hardcoded course data
+- **Course Statistics**: Displays real course data from components
 - **Recent Users**: Shows real user information with avatars
-- **Recent Courses**: Displays course cards with thumbnails
+- **Recent Courses**: Displays course cards with banners
 
 ### Users Tab
 - **Real User Data**: Complete user list from Clerk
@@ -115,11 +126,11 @@ export const courses: Course[] = [
 - **Live Updates**: Real-time user information
 
 ### Courses Tab
-- **Course Management**: View all hardcoded courses
-- **Course Details**: Thumbnails, descriptions, metadata
+- **Course Management**: View all real courses from components
+- **Course Details**: Banners, titles, course IDs
 - **Testing Interface**: Test course functionality
-- **Status Management**: Published/draft status
-- **Enrollment Tracking**: Monitor student enrollment
+- **Real Data**: All courses are published and live
+- **Course Navigation**: Direct links to course pages
 
 ## Benefits
 

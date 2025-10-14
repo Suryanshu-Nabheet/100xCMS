@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { ClerkProvider, SignedIn, SignedOut, useUser } from '@clerk/clerk-react'
-import { AppProvider } from './components/Dashboard/App/contexts/AppContext'
 import LayoutShell from './components/Dashboard/Layout/LayoutShell'
 import { HomePage } from './components/Dashboard/Home/HomePage'
 import { Courses } from './components/Dashboard/Courses/Courses'
@@ -101,9 +100,7 @@ function App() {
 
   return (
     <ClerkProvider publishableKey={clerkPubKey}>
-      <AppProvider>
-        <AppContent />
-      </AppProvider>
+      <AppContent />
     </ClerkProvider>
   )
 }

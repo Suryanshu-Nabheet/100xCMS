@@ -4,9 +4,9 @@ import { motion } from 'framer-motion'
 import { Users, AlertCircle, Plus, Trash2, Shield, Search } from 'lucide-react'
 import { useAdminAuth } from './auth'
 import { ClerkServiceClient, ClerkUser } from '../../services/clerkServiceClient'
-import { courses as hardcodedCourses, Course } from '../../data/courses'
+import { allCourses } from '../Dashboard/Courses/coursesData'
 // ClerkUser interface is now imported from clerkService
-// Course interface is imported from data/courses
+// Course interface is imported from coursesData
 // AdminUser interface is imported from auth.tsx
 
 export function AdminDashboard() {
@@ -18,7 +18,7 @@ export function AdminDashboard() {
   const [newAdminData, setNewAdminData] = useState({ name: '', email: '', password: '' })
   const [searchQuery, setSearchQuery] = useState('')
   const [filteredUsers, setFilteredUsers] = useState<ClerkUser[]>([])
-  const [courses] = useState<Course[]>(hardcodedCourses)
+  const [courses] = useState(allCourses)
   
   const { adminUser, adminUsers, addAdmin, removeAdmin } = useAdminAuth()
 
@@ -67,8 +67,8 @@ export function AdminDashboard() {
   const stats = {
     totalUsers: clerkUsers.length,
     totalCourses: courses.length,
-    publishedCourses: courses.filter(c => c.status === 'published').length,
-    draftCourses: courses.filter(c => c.status === 'draft').length,
+    publishedCourses: courses.length, // All real courses are published
+    draftCourses: 0, // No draft courses in real data
     totalAdmins: adminUsers.length
   }
 
@@ -390,43 +390,43 @@ export function AdminDashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {courses.map((course) => (
                     <div key={course.id} className="bg-white/5 rounded-xl p-6 border border-blue-500/20">
-                      {course.thumbnail && (
+                      {course.banner && (
                         <img
-                          src={course.thumbnail}
+                          src={course.banner}
                           alt={course.title}
                           className="w-full h-32 object-cover rounded-lg mb-4"
                         />
                       )}
 
                       <h3 className="text-lg font-semibold text-white mb-2">{course.title}</h3>
-                      <p className="text-blue-200 text-sm mb-4 line-clamp-2">{course.description}</p>
+                      <p className="text-blue-200 text-sm mb-4 line-clamp-2">
+                        Real course content available - click to view details
+                      </p>
 
                       <div className="space-y-2 mb-4">
                         <div className="flex items-center justify-between">
-                          <span className="text-blue-300 text-xs">Category</span>
-                          <span className="text-white text-xs">{course.category}</span>
+                          <span className="text-blue-300 text-xs">Course ID</span>
+                          <span className="text-white text-xs">{course.id}</span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-blue-300 text-xs">Level</span>
-                          <span className="text-white text-xs capitalize">{course.level}</span>
+                          <span className="text-blue-300 text-xs">Status</span>
+                          <span className="text-white text-xs">Published</span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-blue-300 text-xs">Duration</span>
-                          <span className="text-white text-xs">{course.duration}</span>
+                          <span className="text-blue-300 text-xs">Type</span>
+                          <span className="text-white text-xs">Live Course</span>
                         </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-blue-300 text-xs">Lessons</span>
-                          <span className="text-white text-xs">{course.lessons?.length || 0}</span>
-                        </div>
+                        {course.discordLink && (
+                          <div className="flex items-center justify-between">
+                            <span className="text-blue-300 text-xs">Discord</span>
+                            <span className="text-white text-xs">Available</span>
+                          </div>
+                        )}
                       </div>
 
                       <div className="flex items-center justify-between mb-4">
-                        <span className={`px-2 py-1 rounded text-xs ${
-                          course.status === 'published'
-                            ? 'bg-green-500/20 text-green-200'
-                            : 'bg-yellow-500/20 text-yellow-200'
-                        }`}>
-                          {course.status}
+                        <span className="px-2 py-1 rounded text-xs bg-green-500/20 text-green-200">
+                          Published
                         </span>
                         <span className="text-green-400 font-semibold">Free</span>
                       </div>
@@ -436,10 +436,10 @@ export function AdminDashboard() {
                           onClick={() => window.open('/courses', '_blank')}
                           className="flex-1 bg-blue-500/20 text-blue-200 px-3 py-2 rounded text-sm hover:bg-blue-500/30 transition-colors"
                         >
-                          View Courses
+                          View Course
                         </button>
                         <button className="flex-1 bg-green-500/20 text-green-200 px-3 py-2 rounded text-sm hover:bg-green-500/30 transition-colors">
-                          Edit File
+                          Edit Content
                         </button>
                       </div>
                     </div>

@@ -45,9 +45,6 @@ ClassX/
 │   │   │   └── index.ts            # Auth module exports
 │   │   │
 │   │   ├── 📁 Dashboard/           # Main application dashboard
-│   │   │   ├── 📁 App/             # Application context
-│   │   │   │   └── 📁 contexts/
-│   │   │   │       └── AppContext.tsx
 │   │   │   │
 │   │   │   ├── 📁 Courses/         # Course management
 │   │   │   │   ├── Courses.tsx

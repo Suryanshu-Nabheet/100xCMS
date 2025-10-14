@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { User, Mail, Shield, BookOpen, Clock, CheckCircle } from 'lucide-react';
 import { useUser } from '@clerk/clerk-react';
-import { useApp } from '../App/contexts/AppContext';
 import { useAdminAuth } from '../../Admin';
 
 interface CourseProgress {
@@ -13,48 +12,29 @@ interface CourseProgress {
 
 export function ProfileView() {
   const { user } = useUser();
-  const { getUserEnrolledCourses, getCourseProgress } = useApp();
+  // Mock data for enrolled courses (since we removed the App context)
+  const mockEnrolledCourses = [];
+  const mockCourseProgress = {};
   const { isAdminEmail } = useAdminAuth();
   
   // Check if the current user's email is the admin email
   const userEmail = user?.primaryEmailAddress?.emailAddress
   const isAdminByEmail = userEmail ? isAdminEmail(userEmail) : false
   
-  // Memoize enrolled courses to prevent unnecessary re-renders
+  // Mock enrolled courses data
   const enrolledCourses = useMemo(() => {
-    try {
-      return getUserEnrolledCourses();
-    } catch (error) {
-      console.error('Error fetching enrolled courses:', error);
-      return [];
-    }
-  }, [getUserEnrolledCourses]);
+    return mockEnrolledCourses;
+  }, []);
 
-  // Memoize course progress data for better performance
+  // Mock course progress data
   const courseProgressData = useMemo((): CourseProgress[] => {
-    return enrolledCourses.map(course => {
-      try {
-        const progress = getCourseProgress(course.id);
-        const totalLessons = course.lessons?.length || 0;
-        const completedLessons = Math.floor((progress / 100) * totalLessons);
-        
-        return {
-          courseId: course.id,
-          progress: Math.max(0, Math.min(100, progress)), // Ensure progress is between 0-100
-          completedLessons: Math.max(0, Math.min(totalLessons, completedLessons)),
-          totalLessons
-        };
-      } catch (error) {
-        console.error(`Error calculating progress for course ${course.id}:`, error);
-        return {
-          courseId: course.id,
-          progress: 0,
-          completedLessons: 0,
-          totalLessons: course.lessons?.length || 0
-        };
-      }
-    });
-  }, [enrolledCourses, getCourseProgress]);
+    return enrolledCourses.map(course => ({
+      courseId: course.id,
+      progress: 0,
+      completedLessons: 0,
+      totalLessons: 0
+    }));
+  }, [enrolledCourses]);
 
   // Safe user data extraction
   const userData = useMemo(() => {

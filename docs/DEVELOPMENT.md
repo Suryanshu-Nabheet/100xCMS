@@ -187,27 +187,21 @@ export default Component;
 
 ### Context API Usage
 
-Use React Context for global state management:
+Use React Context for global state management when needed:
 
 ```typescript
-// contexts/AppContext.tsx
-interface AppState {
-  user: User | null;
+// Example context for theme management
+interface ThemeContextType {
   theme: 'light' | 'dark';
-  isLoading: boolean;
+  toggleTheme: () => void;
 }
 
-interface AppContextType {
-  state: AppState;
-  dispatch: React.Dispatch<AppAction>;
-}
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-const AppContext = createContext<AppContextType | undefined>(undefined);
-
-export const useAppContext = () => {
-  const context = useContext(AppContext);
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error('useAppContext must be used within AppProvider');
+    throw new Error('useTheme must be used within ThemeProvider');
   }
   return context;
 };
