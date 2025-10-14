@@ -433,10 +433,10 @@ export function AdminDashboard() {
 
                       <div className="flex space-x-2">
                         <button
-                          onClick={() => window.open('/browse', '_blank')}
+                          onClick={() => window.open('/courses', '_blank')}
                           className="flex-1 bg-blue-500/20 text-blue-200 px-3 py-2 rounded text-sm hover:bg-blue-500/30 transition-colors"
                         >
-                          View in Browse
+                          View Courses
                         </button>
                         <button className="flex-1 bg-green-500/20 text-green-200 px-3 py-2 rounded text-sm hover:bg-green-500/30 transition-colors">
                           Edit File

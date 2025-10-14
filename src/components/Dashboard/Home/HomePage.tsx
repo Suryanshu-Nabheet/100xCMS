@@ -514,7 +514,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             className="flex justify-center items-center relative z-10"
           >
             <button 
-              onClick={() => onNavigate('browse')}
+              onClick={() => onNavigate('courses')}
               className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-10 py-5 rounded-xl text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl border border-blue-400/30 hover:border-blue-300/50 hover:scale-105"
             >
               Explore Courses

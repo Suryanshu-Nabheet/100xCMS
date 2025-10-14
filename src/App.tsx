@@ -3,9 +3,8 @@ import { ClerkProvider, SignedIn, SignedOut, useUser } from '@clerk/clerk-react'
 import { AppProvider } from './components/Dashboard/App/contexts/AppContext'
 import LayoutShell from './components/Dashboard/Layout/LayoutShell'
 import { HomePage } from './components/Dashboard/Home/HomePage'
-import { BrowseCourses } from './components/Dashboard/Courses/BrowseCourses/BrowseCourses'
-import { CourseDetail } from './components/Dashboard/Courses/BrowseCourses/CourseDetail'
-import { MyCourses } from './components/Dashboard/Courses/MyCourses/components/MyCourses'
+import { Courses } from './components/Dashboard/Courses/Courses'
+import { CourseDetail } from './components/Dashboard/Courses/CourseDetail'
 import { ProfileView } from './components/Dashboard/Profile/ProfileView'
 import { UpdatesMain } from './components/Dashboard/Updates'
 import { AdminDashboard, useAdminAuth } from './components/Admin'
@@ -35,17 +34,15 @@ function AppContent() {
     switch (activeView) {
       case 'dashboard':
         return <HomePage onNavigate={handleNavigation} />
-      case 'my-courses':
-        return <MyCourses onNavigate={handleNavigation} />
-      case 'browse':
-        return <BrowseCourses onNavigate={handleNavigation} />
+      case 'courses':
+        return <Courses onNavigate={handleNavigation} />
       case 'updates':
         return <UpdatesMain />
       case 'course-detail':
         return selectedCourseId ? (
           <CourseDetail
             courseId={selectedCourseId}
-            onBack={() => setActiveView('browse')}
+            onBack={() => setActiveView('courses')}
           />
         ) : (
           <div className="liquid-glass rounded-professional p-8 text-center hover-lift">

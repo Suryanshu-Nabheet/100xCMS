@@ -72,8 +72,7 @@ interface MenuItem {
 const getMenuItems = (isAdmin: boolean): MenuItem[] => {
   const baseItems: MenuItem[] = [
     { id: 'dashboard', label: 'Home Page', icon: <IconHome className="h-5 w-5" />, roles: ['student','instructor','admin'] },
-    { id: 'my-courses', label: 'My Courses', icon: <IconBookOpen className="h-5 w-5" />, roles: ['student','instructor','admin'] },
-    { id: 'browse', label: 'Browse Courses', icon: <IconBook className="h-5 w-5" />, roles: ['student','instructor','admin'] },
+    { id: 'courses', label: 'Courses', icon: <IconBook className="h-5 w-5" />, roles: ['student','instructor','admin'] },
     { id: 'updates', label: 'Updates', icon: <IconBell className="h-5 w-5" />, roles: ['student','instructor','admin'] },
     { id: 'profile', label: 'Profile', icon: <IconUser className="h-5 w-5" />, roles: ['student','instructor','admin'] }
   ]

@@ -1,18 +1,18 @@
 import { CourseCard } from './CourseCard'
 import { allCourses } from './coursesData'
 
-interface BrowseCoursesProps {
+interface CoursesProps {
   onNavigate?: (view: string, courseId?: string) => void
 }
 
-export function BrowseCourses({ onNavigate }: BrowseCoursesProps) {
+export function Courses({ onNavigate }: CoursesProps) {
   return (
     <div className="min-h-screen bg-black p-6">
       {/* Header */}
       <div className="max-w-7xl mx-auto mb-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Browse <span className="text-blue-400">Courses</span>
+            <span className="text-blue-400">Courses</span>
           </h1>
           <p className="text-gray-300 text-lg max-w-2xl mx-auto">
             Discover amazing courses and start your learning journey today

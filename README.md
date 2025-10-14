@@ -50,23 +50,17 @@ ClassX/
 │   │   │   │       └── AppContext.tsx
 │   │   │   │
 │   │   │   ├── 📁 Courses/         # Course management
-│   │   │   │   ├── 📁 BrowseCourses/
-│   │   │   │   │   ├── CourseDetail.tsx
-│   │   │   │   │   ├── 📁 components/
-│   │   │   │   │   │   ├── BrowseCoursesHeader.tsx
-│   │   │   │   │   │   ├── CourseCard.tsx
-│   │   │   │   │   │   └── CourseCatalog.tsx
-│   │   │   │   │   └── 📁 data/
-│   │   │   │   │       └── browseCoursesData.ts
+│   │   │   │   ├── Courses.tsx
+│   │   │   │   ├── CourseCard.tsx
+│   │   │   │   ├── CourseDetail.tsx
+│   │   │   │   ├── coursesData.ts
+│   │   │   │   ├── 📁 AdhocClasses/
+│   │   │   │   ├── 📁 DevopsCohort/
+│   │   │   │   ├── 📁 DsaClasses/
+│   │   │   │   ├── 📁 SolanaFellowship/
+│   │   │   │   ├── 📁 Web3Cohort/
+│   │   │   │   └── 📁 WebDevCohort/
 │   │   │   │   │
-│   │   │   │   └── 📁 MyCourses/
-│   │   │   │       ├── 📁 components/
-│   │   │   │       │   ├── MyCourses.tsx
-│   │   │   │       │   ├── MyCoursesEmpty.tsx
-│   │   │   │       │   └── MyCoursesHeader.tsx
-│   │   │   │       └── 📁 data/
-│   │   │   │           └── myCoursesData.ts
-│   │   │   │
 │   │   │   ├── 📁 Home/            # Dashboard home
 │   │   │   │   └── HomePage.tsx
 │   │   │   │
