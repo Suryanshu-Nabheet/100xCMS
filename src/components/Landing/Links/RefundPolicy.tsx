@@ -1,10 +1,21 @@
-import { ArrowLeft, RefreshCw, CreditCard, Clock, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { ArrowLeft, RefreshCw, CreditCard, Clock, CheckCircle, XCircle, AlertCircle, Gift, Heart, BookOpen } from 'lucide-react';
 
 const RefundPolicy = () => {
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-black to-purple-900/10"></div>
+      
+      {/* Back Button - Top Left */}
+      <div className="fixed top-6 left-6 z-50">
+        <button
+          onClick={() => window.history.back()}
+          className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 backdrop-blur-lg border border-white/20 hover:border-white/30 text-white px-4 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back</span>
+        </button>
+      </div>
       
       <div className="relative z-10 max-w-4xl mx-auto px-6 py-12">
         {/* Header */}
@@ -23,14 +34,14 @@ const RefundPolicy = () => {
         </div>
 
         {/* Important Notice */}
-        <div className="bg-orange-500/10 border border-orange-500/20 rounded-2xl p-6 mb-8">
+        <div className="bg-green-500/10 border border-green-500/20 rounded-2xl p-6 mb-8">
           <div className="flex items-start space-x-3">
-            <AlertCircle className="w-6 h-6 text-orange-400 flex-shrink-0 mt-0.5" />
+            <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0 mt-0.5" />
             <div>
-              <h3 className="text-lg font-semibold text-white mb-2">Important Notice</h3>
+              <h3 className="text-lg font-semibold text-white mb-2">Free Learning Platform</h3>
               <p className="text-gray-400">
-                ClassX is currently a <span className="text-orange-400 font-medium">free platform</span>. 
-                All courses and services are provided at no cost to users. This refund policy applies to any future paid services or premium features.
+                ClassX is a <span className="text-green-400 font-medium">completely free platform</span> designed for educational purposes. 
+                All courses, content, and features are provided at no cost to help students learn and grow their programming skills.
               </p>
             </div>
           </div>
@@ -39,6 +50,33 @@ const RefundPolicy = () => {
         {/* Content */}
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 mb-8">
           <div className="prose prose-invert max-w-none">
+            
+            {/* Overview Section */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Gift className="w-8 h-8 text-green-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Free Platform</h3>
+                <p className="text-gray-400 text-sm">All courses and content provided at no cost</p>
+              </div>
+
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <BookOpen className="w-8 h-8 text-blue-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Educational Focus</h3>
+                <p className="text-gray-400 text-sm">Designed for learning and skill development</p>
+              </div>
+
+              <div className="text-center">
+                <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Heart className="w-8 h-8 text-purple-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Community Driven</h3>
+                <p className="text-gray-400 text-sm">Built by developers, for developers</p>
+              </div>
+            </div>
             
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-white mb-4 flex items-center">
@@ -183,16 +221,6 @@ const RefundPolicy = () => {
           </div>
         </div>
 
-        {/* Back Button */}
-        <div className="text-center">
-          <button
-            onClick={() => window.history.back()}
-            className="inline-flex items-center space-x-2 bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Home</span>
-          </button>
-        </div>
       </div>
     </div>
   );

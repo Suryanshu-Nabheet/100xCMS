@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 import FooterCTA from './Components/footer-cta';
 import Footer from './Components/footer';
 import { 
-  QuickLinks, 
   Projects, 
   Documentation, 
   Community, 
@@ -358,9 +357,6 @@ export default function LandingPage() {
         case '/legal':
           setCurrentPage('legal');
           break;
-        case '/quick-links':
-          setCurrentPage('quick-links');
-          break;
         default:
           setCurrentPage('home');
       }
@@ -401,9 +397,6 @@ export default function LandingPage() {
       case '/legal':
         setCurrentPage('legal');
         break;
-      case '/quick-links':
-        setCurrentPage('quick-links');
-        break;
       default:
         setCurrentPage('home');
     }
@@ -426,8 +419,6 @@ export default function LandingPage() {
         return <RefundPolicy />;
       case 'legal':
         return <Legal />;
-      case 'quick-links':
-        return <QuickLinks />;
       default:
         return (
           <>

@@ -1,10 +1,21 @@
-import { ArrowLeft, Shield, Eye, Lock, Database, Users, Calendar } from 'lucide-react';
+import { ArrowLeft, Shield, Eye, Lock, Database, Users, Calendar, CheckCircle, Globe, AlertTriangle } from 'lucide-react';
 
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-black to-purple-900/10"></div>
+      
+      {/* Back Button - Top Left */}
+      <div className="fixed top-6 left-6 z-50">
+        <button
+          onClick={() => window.history.back()}
+          className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 backdrop-blur-lg border border-white/20 hover:border-white/30 text-white px-4 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back</span>
+        </button>
+      </div>
       
       <div className="relative z-10 max-w-4xl mx-auto px-6 py-12">
         {/* Header */}
@@ -25,6 +36,33 @@ const PrivacyPolicy = () => {
         {/* Content */}
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 mb-8">
           <div className="prose prose-invert max-w-none">
+            
+            {/* Overview Section */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Eye className="w-8 h-8 text-blue-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Data Collection</h3>
+                <p className="text-gray-400 text-sm">What information we collect and why</p>
+              </div>
+
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Lock className="w-8 h-8 text-green-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Data Protection</h3>
+                <p className="text-gray-400 text-sm">How we secure and protect your information</p>
+              </div>
+
+              <div className="text-center">
+                <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-purple-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Your Rights</h3>
+                <p className="text-gray-400 text-sm">Control over your personal data</p>
+              </div>
+            </div>
             
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-white mb-4 flex items-center">
@@ -179,16 +217,6 @@ const PrivacyPolicy = () => {
           </div>
         </div>
 
-        {/* Back Button */}
-        <div className="text-center">
-          <button
-            onClick={() => window.history.back()}
-            className="inline-flex items-center space-x-2 bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Home</span>
-          </button>
-        </div>
       </div>
     </div>
   );

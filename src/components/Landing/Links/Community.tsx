@@ -69,6 +69,17 @@ const Community = () => {
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-black to-purple-900/10"></div>
       
+      {/* Back Button - Top Left */}
+      <div className="fixed top-6 left-6 z-50">
+        <button
+          onClick={() => window.history.back()}
+          className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 backdrop-blur-lg border border-white/20 hover:border-white/30 text-white px-4 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back</span>
+        </button>
+      </div>
+      
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
         {/* Header */}
         <div className="text-center mb-12">
@@ -211,16 +222,6 @@ const Community = () => {
           </div>
         </div>
 
-        {/* Back Button */}
-        <div className="text-center">
-          <button
-            onClick={() => window.history.back()}
-            className="inline-flex items-center space-x-2 bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Home</span>
-          </button>
-        </div>
       </div>
     </div>
   );

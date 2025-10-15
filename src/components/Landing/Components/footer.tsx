@@ -60,42 +60,36 @@ const Footer = ({ onNavigate }: FooterProps) => {
             </div>
           </div>
           
-          {/* Quick Links */}
+          {/* Social Links */}
           <div className="flex flex-col space-y-3">
-            <h4 className="text-white font-semibold text-sm">Quick Links</h4>
+            <h4 className="text-white font-semibold text-sm">Social Links</h4>
             <div className="flex flex-col space-y-2">
               <a
-                href="/projects"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate?.('/projects');
-                }}
+                href="https://www.linkedin.com/in/suryanshu-nabheet/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
                 style={{ outline: 'none', border: 'none' }}
               >
-                Projects
+                LinkedIn
               </a>
               <a
-                href="/documentation"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate?.('/documentation');
-                }}
+                href="https://github.com/Suryanshu-Nabheet"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
                 style={{ outline: 'none', border: 'none' }}
               >
-                Documentation
+                GitHub
               </a>
               <a
-                href="/community"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate?.('/community');
-                }}
+                href="https://x.com/suryanshuxdev"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
                 style={{ outline: 'none', border: 'none' }}
               >
-                Community
+                Twitter/X
               </a>
             </div>
           </div>

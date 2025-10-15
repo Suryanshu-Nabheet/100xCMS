@@ -1,4 +1,3 @@
-export { default as QuickLinks } from './QuickLinks'
 export { default as Projects } from './Projects'
 export { default as Documentation } from './Documentation'
 export { default as Community } from './Community'
