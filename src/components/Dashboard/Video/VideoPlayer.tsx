@@ -31,7 +31,6 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
   const [muted, setMuted] = useState(false)
   const [playbackRate, setPlaybackRate] = useState(1)
   const [isFullscreen, setIsFullscreen] = useState(false)
-  const [isPictureInPicture, setIsPictureInPicture] = useState(false)
   
   // UI state
   const [showControls, setShowControls] = useState(true)
@@ -39,7 +38,6 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
   const [showTimestamps, setShowTimestamps] = useState(true)
   const [controlsTimeout, setControlsTimeout] = useState<NodeJS.Timeout | null>(null)
   const [isHoveringProgress, setIsHoveringProgress] = useState(false)
-  const [hoverTime, setHoverTime] = useState(0)
   const [hoverPosition, setHoverPosition] = useState(0)
   
   // Animation state
@@ -91,37 +89,55 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
     switch (e.code) {
       case 'Space':
         e.preventDefault()
-        togglePlayPause()
+        if (playing) {
+          video.pause()
+          setPlaying(false)
+        } else {
+          video.play().then(() => setPlaying(true)).catch(console.error)
+        }
         break
       case 'ArrowLeft':
         e.preventDefault()
-        skip(-10)
+        video.currentTime = Math.max(0, video.currentTime - 10)
         showSkipAnimation('left')
         break
       case 'ArrowRight':
         e.preventDefault()
-        skip(10)
+        video.currentTime = Math.min(video.duration, video.currentTime + 10)
         showSkipAnimation('right')
         break
-      case 'ArrowUp':
+      case 'ArrowUp': {
         e.preventDefault()
-        changeVolume(Math.min(1, volume + 0.1))
+        const newVolumeUp = Math.min(1, volume + 0.1)
+        video.volume = newVolumeUp
+        setVolume(newVolumeUp)
+        setMuted(newVolumeUp === 0)
         break
-      case 'ArrowDown':
+      }
+      case 'ArrowDown': {
         e.preventDefault()
-        changeVolume(Math.max(0, volume - 0.1))
+        const newVolumeDown = Math.max(0, volume - 0.1)
+        video.volume = newVolumeDown
+        setVolume(newVolumeDown)
+        setMuted(newVolumeDown === 0)
         break
+      }
       case 'KeyM':
         e.preventDefault()
-        toggleMute()
+        video.muted = !muted
+        setMuted(!muted)
         break
       case 'KeyF':
         e.preventDefault()
-        toggleFullscreen()
+        if (document.fullscreenElement) {
+          document.exitFullscreen()
+        } else {
+          containerRef.current?.requestFullscreen()
+        }
         break
       case 'Digit0':
         e.preventDefault()
-        seekTo(0)
+        video.currentTime = 0
         break
       case 'Digit1':
       case 'Digit2':
@@ -131,13 +147,14 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
       case 'Digit6':
       case 'Digit7':
       case 'Digit8':
-      case 'Digit9':
+      case 'Digit9': {
         e.preventDefault()
         const percentage = parseInt(e.code.slice(-1)) * 10
-        seekTo((duration * percentage) / 100)
+        video.currentTime = (duration * percentage) / 100
         break
+      }
     }
-  }, [playing, volume, duration])
+  }, [playing, volume, duration, muted])
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress)
@@ -202,7 +219,7 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
     }
 
     const handlePictureInPictureChange = () => {
-      setIsPictureInPicture(!!document.pictureInPictureElement)
+      // Picture-in-picture state change handler
     }
 
     video.addEventListener('timeupdate', handleTimeUpdate)
@@ -327,8 +344,6 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
     const rect = e.currentTarget.getBoundingClientRect()
     const x = e.clientX - rect.left
     const percentage = x / rect.width
-    const time = percentage * duration
-    setHoverTime(time)
     setHoverPosition(percentage * 100)
     setIsHoveringProgress(true)
   }
@@ -705,7 +720,7 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
       </div>
 
       {/* Custom Styles */}
-      <style jsx>{`
+      <style>{`
         .animate-slide-left {
           animation: slideInLeft 0.8s ease-out;
         }
