@@ -128,7 +128,7 @@ If you believe you or your organization should be acknowledged here, please cont
 
 - 📧 Email: acknowledgements@classx.dev
 - 💬 Discord: [Join our community](https://discord.gg/classx)
-- 🐛 GitHub Issues: [Create an issue](https://github.com/suryanshunabheet/classx/issues)
+- 🐛 GitHub Issues: [Create an issue](https://github.com/Suryanshu-Nabheet/ClassX/issues)
 
 ## 📄 License
 

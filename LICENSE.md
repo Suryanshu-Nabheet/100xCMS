@@ -36,7 +36,7 @@ This software is provided "as is" without warranty of any kind. The authors are 
 ### Support
 For support and questions, please contact:
 - Email: support@classx.dev
-- GitHub Issues: [Create an issue](https://github.com/suryanshunabheet/classx/issues)
+- GitHub Issues: [Create an issue](https://github.com/Suryanshu-Nabheet/ClassX/issues)
 
 ### Contributing
 We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for more information.

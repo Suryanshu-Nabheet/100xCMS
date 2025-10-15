@@ -8,7 +8,7 @@ Thank you for your interest in contributing to ClassX! 🎉
 - Click the "Fork" button on the GitHub repository page
 - Clone your fork locally:
   ```bash
-  git clone https://github.com/YOUR_USERNAME/classx.git
+  git clone https://github.com/YOUR_USERNAME/ClassX.git
   cd classx
   ```
 
@@ -146,7 +146,7 @@ For feature requests, include:
 - 📧 Email: suryanshunab@gmail.com
 - 💼 LinkedIn: [Suryanshu Nabheet](https://www.linkedin.com/in/suryanshu-nabheet/)
 - 🐦 X (Twitter): [@SuryanshuXDev](https://x.com/suryanshuxdev)
-- 📖 Documentation: [GitHub Repository](https://github.com/Suryanshu-Nabheet/classx)
+- 📖 Documentation: [GitHub Repository](https://github.com/Suryanshu-Nabheet/ClassX)
 
 ## 🙏 Recognition
 

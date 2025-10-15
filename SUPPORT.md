@@ -17,7 +17,7 @@ This guide will help you get the support you need for ClassX.
 ### Community Support (Recommended)
 
 #### GitHub Discussions
-- **Link**: [GitHub Discussions](https://github.com/Suryanshu-Nabheet/classx/discussions)
+- **Link**: [GitHub Discussions](https://github.com/Suryanshu-Nabheet/ClassX/discussions)
 - **Best for**: Technical discussions, feature requests, project updates
 - **Response time**: Within 1-2 days
 - **Available**: Public discussions and Q&A
@@ -33,8 +33,8 @@ This guide will help you get the support you need for ClassX.
 - **Available**: Monday-Friday, 9 AM - 6 PM EST
 
 #### GitHub Issues
-- **Bug Reports**: [Create an issue](https://github.com/Suryanshu-Nabheet/classx/issues/new?template=bug_report.md)
-- **Feature Requests**: [Create an issue](https://github.com/Suryanshu-Nabheet/classx/issues/new?template=feature_request.md)
+- **Bug Reports**: [Create an issue](https://github.com/Suryanshu-Nabheet/ClassX/issues/new?template=bug_report.md)
+- **Feature Requests**: [Create an issue](https://github.com/Suryanshu-Nabheet/ClassX/issues/new?template=feature_request.md)
 - **Response time**: Within 2-3 days
 - **Available**: Public issue tracking
 

@@ -24,7 +24,7 @@ git --version
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/suryanshunabheet/classx.git
+git clone https://github.com/Suryanshu-Nabheet/ClassX.git
 cd classx
 ```
 
@@ -168,7 +168,7 @@ npm run type-check
 If you encounter issues:
 
 1. Check the [FAQ](FAQ.md)
-2. Search existing [GitHub Issues](https://github.com/suryanshunabheet/classx/issues)
+2. Search existing [GitHub Issues](https://github.com/Suryanshu-Nabheet/ClassX/issues)
 3. Create a new issue with:
    - Your OS and Node.js version
    - Error messages

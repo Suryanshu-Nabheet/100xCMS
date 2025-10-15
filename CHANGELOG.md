@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed image loading issues
 - Resolved navigation bugs
 
-## [1.0.0] - 2024-01-01
+## [1.0.0] - 2025-01-01
 
 ### Added
 - Initial release of ClassX
@@ -128,4 +128,4 @@ We use [Semantic Versioning](https://semver.org/) for version numbering:
 
 ---
 
-**For more information, see our [GitHub repository](https://github.com/suryanshunabheet/classx).**
+**For more information, see our [GitHub repository](https://github.com/Suryanshu-Nabheet/ClassX).**

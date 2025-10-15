@@ -370,9 +370,9 @@ import { formatDate } from '../../src/utils/formatDate';
 
 describe('formatDate', () => {
   it('should format date correctly', () => {
-    const date = new Date('2024-01-15T10:30:00Z');
+    const date = new Date('2025-01-15T10:30:00Z');
     const result = formatDate(date);
-    expect(result).toBe('Jan 15, 2024');
+    expect(result).toBe('Jan 15, 2025');
   });
 
   it('should handle invalid dates', () => {

@@ -98,8 +98,8 @@ Yes! You'll receive certificates upon completing courses and projects.
 - 📧 Email: suryanshunab@gmail.com
 - 💼 LinkedIn: [Suryanshu Nabheet](https://www.linkedin.com/in/suryanshu-nabheet/)
 - 🐦 X (Twitter): [@SuryanshuXDev](https://x.com/suryanshuxdev)
-- 📖 Documentation: [GitHub Repository](https://github.com/Suryanshu-Nabheet/classx)
-- 🐛 Bug Reports: [GitHub Issues](https://github.com/Suryanshu-Nabheet/classx/issues)
+- 📖 Documentation: [GitHub Repository](https://github.com/Suryanshu-Nabheet/ClassX)
+- 🐛 Bug Reports: [GitHub Issues](https://github.com/Suryanshu-Nabheet/ClassX/issues)
 
 ### Can I contribute to ClassX?
 Absolutely! We welcome contributions. See our [Contributing Guidelines](../CONTRIBUTING.md) for more information.
@@ -164,7 +164,7 @@ If you don't see your question here:
 
 - 📧 Email us: support@classx.dev
 - 💬 Join our Discord: [discord.gg/classx](https://discord.gg/classx)
-- 🐛 Create a GitHub issue: [github.com/suryanshunabheet/classx/issues](https://github.com/suryanshunabheet/classx/issues)
+- 🐛 Create a GitHub issue: [github.com/Suryanshu-Nabheet/ClassX/issues](https://github.com/Suryanshu-Nabheet/ClassX/issues)
 
 ---
 

@@ -61,7 +61,7 @@ const Footer = () => {
             <h4 className="text-white font-semibold text-sm">Quick Links</h4>
             <div className="flex flex-col space-y-2">
               <a
-                href="https://github.com/Suryanshu-Nabheet/classx/blob/main/README.md"
+                href="https://github.com/Suryanshu-Nabheet/ClassX/blob/main/README.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
@@ -70,7 +70,7 @@ const Footer = () => {
                 Projects
               </a>
               <a
-                href="https://github.com/Suryanshu-Nabheet/classx/blob/main/docs/INSTALL.md"
+                href="https://github.com/Suryanshu-Nabheet/ClassX/blob/main/docs/INSTALL.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
@@ -79,7 +79,7 @@ const Footer = () => {
                 Documentation
               </a>
               <a
-                href="https://github.com/Suryanshu-Nabheet/classx/blob/main/CODE_OF_CONDUCT.md"
+                href="https://github.com/Suryanshu-Nabheet/ClassX/blob/main/CODE_OF_CONDUCT.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
@@ -95,7 +95,7 @@ const Footer = () => {
             <h4 className="text-white font-semibold text-sm">Legal</h4>
             <div className="flex flex-col space-y-2">
               <a
-                href="https://github.com/Suryanshu-Nabheet/classx/blob/main/LICENSE.md"
+                href="https://github.com/Suryanshu-Nabheet/ClassX/blob/main/LICENSE.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
@@ -104,7 +104,7 @@ const Footer = () => {
                 Terms & Conditions
               </a>
               <a
-                href="https://github.com/Suryanshu-Nabheet/classx/blob/main/SECURITY.md"
+                href="https://github.com/Suryanshu-Nabheet/ClassX/blob/main/SECURITY.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
@@ -113,7 +113,7 @@ const Footer = () => {
                 Privacy Policy
               </a>
               <a
-                href="https://github.com/Suryanshu-Nabheet/classx/blob/main/FAQ.md"
+                href="https://github.com/Suryanshu-Nabheet/ClassX/blob/main/FAQ.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
@@ -130,7 +130,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
             <div className="text-center md:text-left">
               <p className="text-white/60 text-xs">
-                &copy; 2024 ClassX. Open source project by Suryanshu Nabheet.
+                &copy; 2025 ClassX. Open source project by Suryanshu Nabheet.
               </p>
             </div>
             <div className="flex items-center space-x-2">

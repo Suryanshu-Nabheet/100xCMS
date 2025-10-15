@@ -1325,4 +1325,4 @@ describe('Security Tests', () => {
 
 ---
 
-**Security is everyone's responsibility.** For security concerns, contact us at security@classx.com or check our [Security Policy](../SECURITY.md).
+**Security is everyone's responsibility.** For security concerns, contact us at suryanshunab@gmail.com or check our [Security Policy](../SECURITY.md).

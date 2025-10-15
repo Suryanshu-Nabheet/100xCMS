@@ -6,7 +6,7 @@ This document outlines the future plans and milestones for ClassX.
 
 To become the leading AI-powered learning platform that makes programming education accessible, engaging, and effective for everyone.
 
-## 🚀 Short Term (Q1 2024)
+## 🚀 Short Term (Q1 2025)
 
 ### Core Features
 - [ ] **User Authentication System**
@@ -40,7 +40,7 @@ To become the leading AI-powered learning platform that makes programming educat
   - WCAG compliance
   - Screen reader support
 
-## 📈 Medium Term (Q2-Q3 2024)
+## 📈 Medium Term (Q2-Q3 2025)
 
 ### AI Integration
 - [ ] **AI Tutor**
@@ -81,7 +81,7 @@ To become the leading AI-powered learning platform that makes programming educat
   - Data science
   - DevOps and cloud
 
-## 🌟 Long Term (Q4 2024 & Beyond)
+## 🌟 Long Term (Q4 2025 & Beyond)
 
 ### Platform Expansion
 - [ ] **Mobile Applications**
@@ -186,25 +186,25 @@ To become the leading AI-powered learning platform that makes programming educat
 
 ## 📅 Timeline
 
-### Phase 1: Foundation (Q1 2024)
+### Phase 1: Foundation (Q1 2025)
 - User authentication
 - Basic dashboard
 - Course management
 - Performance optimization
 
-### Phase 2: Intelligence (Q2 2024)
+### Phase 2: Intelligence (Q2 2025)
 - AI tutor integration
 - Smart recommendations
 - Community features
 - Content expansion
 
-### Phase 3: Scale (Q3 2024)
+### Phase 3: Scale (Q3 2025)
 - Mobile applications
 - Enterprise solutions
 - Advanced AI features
 - Global expansion
 
-### Phase 4: Innovation (Q4 2024+)
+### Phase 4: Innovation (Q4 2025+)
 - Cutting-edge features
 - Industry partnerships
 - Research initiatives
@@ -226,8 +226,8 @@ To become the leading AI-powered learning platform that makes programming educat
 We value community input! Share your ideas:
 
 - 💬 Discord: [Join our community](https://discord.gg/classx)
-- 📧 Email: roadmap@classx.dev
-- 🐛 GitHub Issues: [Create an issue](https://github.com/suryanshunabheet/classx/issues)
+- 📧 Email: suryanshunab@gmail.com
+- 🐛 GitHub Issues: [Create an issue](https://github.com/Suryanshu-Nabheet/ClassX/issues)
 - 📖 Documentation: [docs.classx.dev](https://docs.classx.dev)
 
 ---

@@ -150,15 +150,15 @@ import { formatDate, formatRelativeTime, isValidDate } from '../formatDate';
 
 describe('formatDate', () => {
   it('should format date correctly', () => {
-    const date = new Date('2024-01-15T10:30:00Z');
+    const date = new Date('2025-01-15T10:30:00Z');
     const result = formatDate(date);
-    expect(result).toBe('Jan 15, 2024');
+    expect(result).toBe('Jan 15, 2025');
   });
 
   it('should handle different locales', () => {
-    const date = new Date('2024-01-15T10:30:00Z');
+    const date = new Date('2025-01-15T10:30:00Z');
     const result = formatDate(date, 'en-GB');
-    expect(result).toBe('15 Jan 2024');
+    expect(result).toBe('15 Jan 2025');
   });
 
   it('should handle invalid dates', () => {
@@ -169,8 +169,8 @@ describe('formatDate', () => {
 
 describe('formatRelativeTime', () => {
   it('should format relative time correctly', () => {
-    const now = new Date('2024-01-15T12:00:00Z');
-    const past = new Date('2024-01-15T11:00:00Z');
+    const now = new Date('2025-01-15T12:00:00Z');
+    const past = new Date('2025-01-15T11:00:00Z');
     const result = formatRelativeTime(past, now);
     expect(result).toBe('1 hour ago');
   });
@@ -993,10 +993,10 @@ expect(screen.getByText('Loading...')).toBeInTheDocument();
 ❌ **Don't test third-party libraries**
 ```typescript
 // Bad
-expect(moment().format('YYYY-MM-DD')).toBe('2024-01-15');
+expect(moment().format('YYYY-MM-DD')).toBe('2025-01-15');
 
 // Good - test your own code that uses moment
-expect(formatDate(new Date('2024-01-15'))).toBe('Jan 15, 2024');
+expect(formatDate(new Date('2025-01-15'))).toBe('Jan 15, 2025');
 ```
 
 ❌ **Don't make tests too complex**
@@ -1014,4 +1014,4 @@ it('should validate email format', () => {
 
 ---
 
-**Need help with testing?** Check out our [Development Guide](DEVELOPMENT.md) or contact us at testing@classx.com.
+**Need help with testing?** Check out our [Development Guide](DEVELOPMENT.md) or contact us at suryanshunab@gmail.com.

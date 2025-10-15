@@ -17,7 +17,7 @@ We take security seriously. If you discover a security vulnerability, please fol
 Security vulnerabilities should be reported privately to prevent exploitation.
 
 ### 2. Email us directly
-Send an email to: **security@classx.dev**
+Send an email to: **suryanshunab@gmail.com**
 
 Include the following information:
 - Description of the vulnerability
@@ -108,7 +108,7 @@ We appreciate security researchers who help us improve our security. While we do
 
 - **Security Email**: security@classx.dev
 - **General Support**: support@classx.dev
-- **GitHub**: [Create a private security advisory](https://github.com/suryanshunabheet/classx/security/advisories/new)
+- **GitHub**: [Create a private security advisory](https://github.com/Suryanshu-Nabheet/ClassX/security/advisories/new)
 
 ## Security Changelog
 

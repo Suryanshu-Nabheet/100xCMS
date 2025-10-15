@@ -108,8 +108,8 @@ Authorization: Bearer <token>
     "name": "John Doe",
     "role": "student",
     "avatar": "https://api.classx.com/avatars/user_123.jpg",
-    "createdAt": "2024-01-15T10:30:00Z",
-    "lastLogin": "2024-01-20T14:22:00Z",
+    "createdAt": "2025-01-15T10:30:00Z",
+    "lastLogin": "2025-01-20T14:22:00Z",
     "preferences": {
       "theme": "dark",
       "notifications": true,
@@ -163,8 +163,8 @@ Query Parameters:
         "description": "Learn React from scratch",
         "status": "in-progress",
         "progress": 65,
-        "enrolledAt": "2024-01-15T10:30:00Z",
-        "lastAccessed": "2024-01-20T14:22:00Z",
+        "enrolledAt": "2025-01-15T10:30:00Z",
+        "lastAccessed": "2025-01-20T14:22:00Z",
         "instructor": {
           "id": "instructor_456",
           "name": "Sarah Johnson"
@@ -219,8 +219,8 @@ Query Parameters:
         },
         "thumbnail": "https://api.classx.com/thumbnails/course_123.jpg",
         "tags": ["react", "javascript", "frontend"],
-        "createdAt": "2024-01-01T00:00:00Z",
-        "updatedAt": "2024-01-15T10:30:00Z"
+        "createdAt": "2025-01-01T00:00:00Z",
+        "updatedAt": "2025-01-15T10:30:00Z"
       }
     ],
     "pagination": {
@@ -291,8 +291,8 @@ Authorization: Bearer <token> (optional)
     ],
     "isEnrolled": false,
     "progress": 0,
-    "createdAt": "2024-01-01T00:00:00Z",
-    "updatedAt": "2024-01-15T10:30:00Z"
+    "createdAt": "2025-01-01T00:00:00Z",
+    "updatedAt": "2025-01-15T10:30:00Z"
   }
 }
 ```
@@ -330,7 +330,7 @@ Authorization: Bearer <token>
         "moduleId": "module_1",
         "title": "Introduction to React",
         "progress": 100,
-        "completedAt": "2024-01-16T10:30:00Z"
+        "completedAt": "2025-01-16T10:30:00Z"
       },
       {
         "moduleId": "module_2",
@@ -339,7 +339,7 @@ Authorization: Bearer <token>
         "completedAt": null
       }
     ],
-    "lastAccessed": "2024-01-20T14:22:00Z",
+    "lastAccessed": "2025-01-20T14:22:00Z",
     "totalTimeSpent": "2h 30m",
     "certificateEligible": false
   }
@@ -450,7 +450,7 @@ Query Parameters:
         "userAvatar": "https://api.classx.com/avatars/user_123.jpg",
         "rating": 5,
         "comment": "Excellent course! Very well structured.",
-        "createdAt": "2024-01-15T10:30:00Z",
+        "createdAt": "2025-01-15T10:30:00Z",
         "helpful": 12
       }
     ],
@@ -484,8 +484,8 @@ GET /analytics/user
 Authorization: Bearer <token>
 Query Parameters:
 - period: 7d | 30d | 90d | 1y
-- startDate: 2024-01-01
-- endDate: 2024-01-31
+- startDate: 2025-01-01
+- endDate: 2025-01-31
 ```
 
 **Response:**
@@ -497,7 +497,7 @@ Query Parameters:
       "total": "45h 30m",
       "daily": [
         {
-          "date": "2024-01-20",
+          "date": "2025-01-20",
           "time": "2h 15m"
         }
       ]
@@ -512,7 +512,7 @@ Query Parameters:
         "id": "achievement_1",
         "title": "First Course Completed",
         "description": "Completed your first course",
-        "earnedAt": "2024-01-15T10:30:00Z"
+        "earnedAt": "2025-01-15T10:30:00Z"
       }
     ],
     "streak": {
@@ -540,7 +540,7 @@ Authorization: Bearer <token>
       "total": 1250,
       "monthly": [
         {
-          "month": "2024-01",
+          "month": "2025-01",
           "count": 150
         }
       ]
@@ -563,7 +563,7 @@ Authorization: Bearer <token>
       "total": 125000,
       "monthly": [
         {
-          "month": "2024-01",
+          "month": "2025-01",
           "amount": 15000
         }
       ]
@@ -630,11 +630,11 @@ ClassX sends webhooks for the following events:
 {
   "id": "evt_123",
   "type": "course.completed",
-  "created": "2024-01-20T14:22:00Z",
+  "created": "2025-01-20T14:22:00Z",
   "data": {
     "courseId": "course_123",
     "userId": "user_123",
-    "completedAt": "2024-01-20T14:22:00Z",
+    "completedAt": "2025-01-20T14:22:00Z",
     "certificateUrl": "https://api.classx.com/certificates/cert_123.pdf"
   }
 }
@@ -824,4 +824,4 @@ curl -X POST https://api.classx.com/v1/courses/course_123/enroll \
 
 ---
 
-**Need help?** Check out our [Support Guide](SUPPORT.md) or contact us at api-support@classx.com.
+**Need help?** Check out our [Support Guide](SUPPORT.md) or contact us at suryanshunab@gmail.com.
