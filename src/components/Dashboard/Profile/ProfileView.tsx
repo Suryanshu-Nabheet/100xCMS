@@ -1,57 +1,58 @@
 import { useMemo } from 'react';
-import { User, Mail, Shield, BookOpen, Clock, CheckCircle } from 'lucide-react';
-import { useUser } from '@clerk/clerk-react';
+import { User, Mail, Shield, LogOut, Calendar, Globe } from 'lucide-react';
+import { useUser, useClerk } from '@clerk/clerk-react';
 import { useAdminAuth } from '../../Admin';
-
-interface CourseProgress {
-  courseId: string;
-  progress: number;
-  completedLessons: number;
-  totalLessons: number;
-}
 
 export function ProfileView() {
   const { user } = useUser();
-  // Mock data for enrolled courses (since we removed the App context)
-  const mockEnrolledCourses = [];
-  const mockCourseProgress = {};
+  const { signOut } = useClerk();
   const { isAdminEmail } = useAdminAuth();
   
   // Check if the current user's email is the admin email
   const userEmail = user?.primaryEmailAddress?.emailAddress
   const isAdminByEmail = userEmail ? isAdminEmail(userEmail) : false
   
-  // Mock enrolled courses data
-  const enrolledCourses = useMemo(() => {
-    return mockEnrolledCourses;
-  }, []);
-
-  // Mock course progress data
-  const courseProgressData = useMemo((): CourseProgress[] => {
-    return enrolledCourses.map(course => ({
-      courseId: course.id,
-      progress: 0,
-      completedLessons: 0,
-      totalLessons: 0
-    }));
-  }, [enrolledCourses]);
-
   // Safe user data extraction
   const userData = useMemo(() => {
     if (!user) {
       return {
         fullName: 'Guest User',
         email: 'Not logged in',
-        role: 'Guest'
+        role: 'Guest',
+        firstName: 'Guest',
+        lastName: 'User',
+        createdAt: null,
+        lastSignInAt: null,
+        imageUrl: null
       };
     }
     
     return {
-      fullName: user.fullName || user.firstName + ' ' + user.lastName || 'Unknown User',
+      fullName: user.fullName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Unknown User',
       email: user.primaryEmailAddress?.emailAddress || 'No email provided',
-      role: isAdminByEmail ? 'Admin' : 'Student'
+      role: isAdminByEmail ? 'Admin' : 'Student',
+      firstName: user.firstName || 'Not provided',
+      lastName: user.lastName || 'Not provided',
+      createdAt: user.createdAt,
+      lastSignInAt: user.lastSignInAt,
+      imageUrl: user.imageUrl
     };
   }, [user, isAdminByEmail]);
+
+  const handleSignOut = () => {
+    signOut();
+  };
+
+  const formatDate = (date: Date | null) => {
+    if (!date) return 'Not available';
+    return new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(new Date(date));
+  };
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
@@ -70,21 +71,42 @@ export function ProfileView() {
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Profile</h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Manage your account information and track your learning progress
+            View and manage your account information and settings
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {/* Login Credentials */}
+          {/* Account Information */}
           <div className="bg-black/80 backdrop-blur-2xl border border-white/15 rounded-3xl p-8 shadow-2xl">
             <div className="flex items-center mb-8">
               <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mr-4">
-                <Shield className="w-6 h-6 text-blue-400" />
+                <User className="w-6 h-6 text-blue-400" />
               </div>
               <h2 className="text-2xl font-bold text-white">Account Information</h2>
             </div>
             
             <div className="space-y-6">
+              {/* Profile Picture */}
+              <div className="flex items-center space-x-4">
+                <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white/20">
+                  {userData.imageUrl ? (
+                    <img 
+                      src={userData.imageUrl} 
+                      alt="Profile" 
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-white/10 flex items-center justify-center">
+                      <User className="w-8 h-8 text-white" />
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <div className="text-white text-xl font-bold">{userData.fullName}</div>
+                  <div className="text-gray-400 text-sm">{userData.email}</div>
+                </div>
+              </div>
+
               {/* Full Name */}
               <div className="flex items-start space-x-4">
                 <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -94,7 +116,29 @@ export function ProfileView() {
                   <label className="block text-sm font-medium text-gray-300 mb-1">Full Name</label>
                   <div className="text-white text-lg font-medium">{userData.fullName}</div>
                 </div>
-                  </div>
+              </div>
+
+              {/* First Name */}
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <User className="w-5 h-5 text-gray-400" />
+                </div>
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">First Name</label>
+                  <div className="text-white text-lg font-medium">{userData.firstName}</div>
+                </div>
+              </div>
+
+              {/* Last Name */}
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <User className="w-5 h-5 text-gray-400" />
+                </div>
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Last Name</label>
+                  <div className="text-white text-lg font-medium">{userData.lastName}</div>
+                </div>
+              </div>
 
               {/* Email */}
               <div className="flex items-start space-x-4">
@@ -120,134 +164,63 @@ export function ProfileView() {
             </div>
           </div>
 
-          {/* Course Statistics */}
+          {/* Account Details */}
           <div className="bg-black/80 backdrop-blur-2xl border border-white/15 rounded-3xl p-8 shadow-2xl">
             <div className="flex items-center mb-8">
               <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mr-4">
-                <BookOpen className="w-6 h-6 text-green-400" />
+                <Calendar className="w-6 h-6 text-green-400" />
               </div>
-              <h2 className="text-2xl font-bold text-white">Learning Statistics</h2>
+              <h2 className="text-2xl font-bold text-white">Account Details</h2>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white mb-2">{enrolledCourses.length}</div>
-                <div className="text-gray-400 text-sm">Courses Enrolled</div>
+            <div className="space-y-6">
+              {/* Account Created */}
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Calendar className="w-5 h-5 text-gray-400" />
+                </div>
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Account Created</label>
+                  <div className="text-white text-lg font-medium">{formatDate(userData.createdAt)}</div>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white mb-2">
-                  {courseProgressData.reduce((acc, course) => acc + course.completedLessons, 0)}
-                  </div>
-                <div className="text-gray-400 text-sm">Lessons Completed</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white mb-2">
-                  {enrolledCourses.length > 0 
-                    ? Math.round(courseProgressData.reduce((acc, course) => acc + course.progress, 0) / enrolledCourses.length)
-                    : 0}%
-                  </div>
-                <div className="text-gray-400 text-sm">Average Progress</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white mb-2">
-                  {courseProgressData.reduce((acc, course) => acc + course.totalLessons, 0)}
-                  </div>
-                <div className="text-gray-400 text-sm">Total Lessons</div>
-              </div>
-            </div>
-              </div>
-            </div>
 
-        {/* Enrolled Courses */}
-        <div className="bg-white/3 backdrop-blur-2xl border border-white/10 rounded-3xl p-8">
-          <div className="flex items-center mb-8">
-            <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mr-4">
-              <BookOpen className="w-6 h-6 text-purple-400" />
-            </div>
-            <h2 className="text-2xl font-bold text-white">Enrolled Courses</h2>
-            <div className="ml-auto bg-white/5 rounded-full px-4 py-2">
-              <span className="text-white font-medium">{enrolledCourses.length}</span>
+              {/* Last Sign In */}
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Globe className="w-5 h-5 text-gray-400" />
                 </div>
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Last Sign In</label>
+                  <div className="text-white text-lg font-medium">{formatDate(userData.lastSignInAt)}</div>
                 </div>
-          
-          {enrolledCourses.length === 0 ? (
-            <div className="text-center py-16">
-              <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6">
-                <BookOpen className="w-12 h-12 text-gray-400" />
+              </div>
+
+              {/* User ID */}
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-5 h-5 text-gray-400" />
                 </div>
-              <h3 className="text-2xl font-semibold text-white mb-4">No Courses Enrolled</h3>
-              <p className="text-gray-400 text-lg max-w-md mx-auto">
-                You haven't enrolled in any courses yet. Browse our course catalog to get started with your learning journey.
-              </p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {enrolledCourses.map((course, index) => {
-                const progressData = courseProgressData.find(p => p.courseId === course.id);
-                const progress = progressData?.progress || 0;
-                const completedLessons = progressData?.completedLessons || 0;
-                const totalLessons = progressData?.totalLessons || 0;
-                
-                return (
-                  <div
-                    key={course.id}
-                    className="bg-white/2 backdrop-blur-sm border border-white/10 rounded-2xl p-6"
-                  >
-                    {/* Course Header */}
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl flex items-center justify-center">
-                        <BookOpen className="w-8 h-8 text-blue-400" />
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm text-gray-400">Course #{index + 1}</div>
-                        <div className="text-lg font-bold text-white">{progress}%</div>
-                      </div>
-                    </div>
-                    
-                    {/* Course Info */}
-            <div className="space-y-4">
-                  <div>
-                        <h3 className="font-bold text-white text-lg mb-2 line-clamp-2">{course.title}</h3>
-                        <p className="text-gray-400 text-sm line-clamp-3">{course.description}</p>
-                      </div>
-                      
-                      {/* Progress Bar */}
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-gray-400">Progress</span>
-                          <span className="text-white font-medium">{progress}%</span>
-                        </div>
-                        <div className="w-full bg-white/10 rounded-full h-3">
-                          <div 
-                            className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full"
-                            style={{ width: `${progress}%` }}
-                          ></div>
-                        </div>
-                      </div>
-                      
-                      {/* Course Stats */}
-                      <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
-                        <div className="text-center">
-                          <div className="flex items-center justify-center space-x-1 text-gray-400 mb-1">
-                            <Clock className="w-4 h-4" />
-                            <span className="text-sm">Total</span>
-                          </div>
-                          <div className="text-white font-semibold">{totalLessons}</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="flex items-center justify-center space-x-1 text-gray-400 mb-1">
-                            <CheckCircle className="w-4 h-4" />
-                            <span className="text-sm">Done</span>
-                          </div>
-                          <div className="text-white font-semibold">{completedLessons}</div>
-                        </div>
-                      </div>
-                    </div>
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">User ID</label>
+                  <div className="text-white text-sm font-mono bg-white/5 px-3 py-2 rounded-lg">
+                    {user?.id || 'Not available'}
                   </div>
-                );
-              })}
+                </div>
+              </div>
             </div>
-          )}
+          </div>
+        </div>
+
+        {/* Sign Out Button */}
+        <div className="flex justify-center">
+          <button
+            onClick={handleSignOut}
+            className="flex items-center space-x-3 bg-red-600/20 hover:bg-red-600/30 border border-red-500/30 hover:border-red-500/50 text-red-400 hover:text-red-300 px-8 py-4 rounded-2xl font-semibold transition-all duration-300 backdrop-blur-sm"
+          >
+            <LogOut className="w-5 h-5" />
+            <span>Sign Out</span>
+          </button>
         </div>
       </div>
     </div>
