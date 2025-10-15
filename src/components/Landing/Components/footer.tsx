@@ -1,4 +1,5 @@
 import { Github, Twitter, Linkedin } from 'lucide-react';
+import { QuickLinks, Projects, Documentation, Community, Legal, TermsConditions, PrivacyPolicy, RefundPolicy } from '../Links';
 
 const Footer = () => {
   return (
@@ -8,7 +9,7 @@ const Footer = () => {
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Main footer content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           
           {/* Brand Section */}
           <div className="flex flex-col space-y-3">
@@ -57,72 +58,28 @@ const Footer = () => {
           </div>
           
           {/* Quick Links */}
-          <div className="flex flex-col space-y-3">
-            <h4 className="text-white font-semibold text-sm">Quick Links</h4>
-            <div className="flex flex-col space-y-2">
-              <a
-                href="https://github.com/Suryanshu-Nabheet/ClassX/blob/main/README.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
-                style={{ outline: 'none', border: 'none' }}
-              >
-                Projects
-              </a>
-              <a
-                href="https://github.com/Suryanshu-Nabheet/ClassX/blob/main/docs/INSTALL.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
-                style={{ outline: 'none', border: 'none' }}
-              >
-                Documentation
-              </a>
-              <a
-                href="https://github.com/Suryanshu-Nabheet/ClassX/blob/main/CODE_OF_CONDUCT.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
-                style={{ outline: 'none', border: 'none' }}
-              >
-                Community
-              </a>
-            </div>
-          </div>
+          <QuickLinks />
           
-          {/* Legal Links */}
-          <div className="flex flex-col space-y-3">
-            <h4 className="text-white font-semibold text-sm">Legal</h4>
-            <div className="flex flex-col space-y-2">
-              <a
-                href="https://github.com/Suryanshu-Nabheet/ClassX/blob/main/LICENSE.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
-                style={{ outline: 'none', border: 'none' }}
-              >
-                Terms & Conditions
-              </a>
-              <a
-                href="https://github.com/Suryanshu-Nabheet/ClassX/blob/main/SECURITY.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
-                style={{ outline: 'none', border: 'none' }}
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="https://github.com/Suryanshu-Nabheet/ClassX/blob/main/FAQ.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
-                style={{ outline: 'none', border: 'none' }}
-              >
-                Refund Policy
-              </a>
-            </div>
-          </div>
+          {/* Projects */}
+          <Projects />
+          
+          {/* Documentation */}
+          <Documentation />
+          
+          {/* Community */}
+          <Community />
+          
+          {/* Legal */}
+          <Legal />
+          
+          {/* Terms & Conditions */}
+          <TermsConditions />
+          
+          {/* Privacy Policy */}
+          <PrivacyPolicy />
+          
+          {/* Refund Policy */}
+          <RefundPolicy />
         </div>
         
         {/* Bottom section */}

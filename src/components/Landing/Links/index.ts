@@ -1,0 +1,8 @@
+export { QuickLinks } from './QuickLinks'
+export { Projects } from './Projects'
+export { Documentation } from './Documentation'
+export { Community } from './Community'
+export { Legal } from './Legal'
+export { TermsConditions } from './TermsConditions'
+export { PrivacyPolicy } from './PrivacyPolicy'
+export { RefundPolicy } from './RefundPolicy'
