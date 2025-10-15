@@ -1,10 +1,20 @@
 'use client';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { SignIn, SignUp } from '../Auth';
 import { motion } from 'framer-motion';
 import FooterCTA from './Components/footer-cta';
 import Footer from './Components/footer';
+import { 
+  QuickLinks, 
+  Projects, 
+  Documentation, 
+  Community, 
+  Legal, 
+  TermsConditions, 
+  PrivacyPolicy, 
+  RefundPolicy 
+} from './Links';
 import { SiReact, SiNodedotjs, SiPython, SiJavascript, SiTypescript, SiHtml5, SiCss3, SiTailwindcss, SiMongodb, SiPostgresql, SiDocker, SiKubernetes, SiAmazon, SiGit, SiFigma, SiGraphql, SiRedis, SiExpress, SiNextdotjs, SiVim } from "react-icons/si";
 
 const heroItems = [
@@ -320,162 +330,264 @@ const TechSkills = React.memo(() => {
 export default function LandingPage() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState('home');
 
-  return (
-    <>
-      <style>{`
-        @keyframes slide-left-slow {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        
-        @keyframes slide-right-slow {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0); }
-        }
-        
-        .group:hover .image-slider,
-        .group:hover .skills-slider-row1,
-        .group:hover .skills-slider-row2,
-        .group:hover .skills-slider-row3 {
-          animation-play-state: paused !important;
-        }
-        
-        .image-slider {
-          animation: slide-left-slow 60s linear infinite;
-        }
-        
-        .skills-slider-row1 {
-          animation: slide-right-slow 50s linear infinite;
-        }
-        
-        .skills-slider-row2 {
-          animation: slide-left-slow 45s linear infinite;
-        }
-        
-        .skills-slider-row3 {
-          animation: slide-right-slow 55s linear infinite;
-        }
-      `}</style>
-      <div className="flex min-h-screen flex-col bg-black relative overflow-x-hidden">
-      {/* Left and Right Side Shadows */}
-      <div className="fixed inset-0 pointer-events-none z-30">
-        {/* Left shadow */}
-        <div 
-          className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black via-black/80 to-transparent"
-          style={{ 
-            background: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0) 100%)'
-          }}
-        ></div>
-        {/* Right shadow */}
-        <div 
-          className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-black via-black/80 to-transparent"
-          style={{ 
-            background: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0) 100%)'
-          }}
-        ></div>
-      </div>
+  // Handle URL changes for routing
+  useEffect(() => {
+    const handleRouteChange = () => {
+      const path = window.location.pathname;
+      switch (path) {
+        case '/projects':
+          setCurrentPage('projects');
+          break;
+        case '/documentation':
+          setCurrentPage('documentation');
+          break;
+        case '/community':
+          setCurrentPage('community');
+          break;
+        case '/terms-conditions':
+          setCurrentPage('terms-conditions');
+          break;
+        case '/privacy-policy':
+          setCurrentPage('privacy-policy');
+          break;
+        case '/refund-policy':
+          setCurrentPage('refund-policy');
+          break;
+        case '/legal':
+          setCurrentPage('legal');
+          break;
+        case '/quick-links':
+          setCurrentPage('quick-links');
+          break;
+        default:
+          setCurrentPage('home');
+      }
+    };
 
-      <Navigation />
-      
-      <main className="flex h-full flex-col items-center justify-center gap-4">
-        {/* Hero */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.5,
-            delay: 0.25,
-            type: 'spring',
-            damping: 10,
-            stiffness: 100,
-          }}
-          className="flex max-w-7xl flex-col items-center justify-center gap-2 px-4"
-        >
-          <h1 className="max-w-2xl py-2 pt-36 text-center text-5xl font-extrabold tracking-tighter md:text-6xl xl:text-7xl">
-            <span className="w-fit bg-gradient-to-b from-blue-400 to-blue-700 bg-clip-text pr-1.5 text-center text-transparent md:mb-4">
-              ClassX,
-            </span>{' '}
-            <span className="bg-gradient-to-b from-white/90 to-white/60 bg-clip-text py-1 text-transparent">
-              because learning ain&apos;t enough!
-            </span>
-          </h1>
+    // Listen for URL changes
+    window.addEventListener('popstate', handleRouteChange);
+    handleRouteChange(); // Check initial route
 
-          <p className="mx-auto text-center text-lg font-medium tracking-tight text-white/80 md:text-xl">
-            A beginner-friendly platform for mastering programming skills.
-          </p>
-        </motion.div>
-        
-        {/* Get Started Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.5,
-            delay: 0.625,
-            type: 'spring',
-            damping: 10,
-            stiffness: 100,
-          }}
-          className="flex items-center justify-center py-6"
-        >
-          <button 
-            onClick={() => setIsSignUpOpen(true)}
-            className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 text-lg font-medium transition-all duration-200 transform hover:scale-105 rounded-xl shadow-lg hover:shadow-xl"
-            aria-label="Get started with ClassX"
-          >
-            Get Started
-          </button>
-        </motion.div>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.5,
-            delay: 0.75,
-            type: 'spring',
-            damping: 10,
-            stiffness: 100,
-          }}
-          className="relative mx-auto my-2 md:my-3 flex w-full flex-col items-center justify-center overflow-hidden antialiased"
-        >
-          <InfiniteMovingCards items={heroItems} />
-        </motion.div>
-        
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            duration: 1,
-            delay: 1,
-          }}
-          className="absolute bottom-0 -z-[20] size-[24rem] overflow-hidden rounded-full bg-gradient-to-t from-blue-400 to-blue-700 blur-[16em]"
-        />
-      </main>
-      
-      <TechSkills />
-        <FooterCTA setIsSignUpOpen={setIsSignUpOpen} />
-      <Footer />
-      
-      {/* Auth Modals */}
-      <SignIn 
-        isOpen={isSignInOpen} 
-        onClose={() => setIsSignInOpen(false)}
-        onSwitchToSignUp={() => {
-          setIsSignInOpen(false);
-          setIsSignUpOpen(true);
-        }}
-      />
-      <SignUp 
-        isOpen={isSignUpOpen} 
-        onClose={() => setIsSignUpOpen(false)}
-        onSwitchToSignIn={() => {
-          setIsSignUpOpen(false);
-          setIsSignInOpen(true);
-        }}
-      />
-      </div>
-    </>
-  );
+    return () => {
+      window.removeEventListener('popstate', handleRouteChange);
+    };
+  }, []);
+
+  // Handle navigation
+  const handleNavigation = (path: string) => {
+    window.history.pushState({}, '', path);
+    const pathname = window.location.pathname;
+    switch (pathname) {
+      case '/projects':
+        setCurrentPage('projects');
+        break;
+      case '/documentation':
+        setCurrentPage('documentation');
+        break;
+      case '/community':
+        setCurrentPage('community');
+        break;
+      case '/terms-conditions':
+        setCurrentPage('terms-conditions');
+        break;
+      case '/privacy-policy':
+        setCurrentPage('privacy-policy');
+        break;
+      case '/refund-policy':
+        setCurrentPage('refund-policy');
+        break;
+      case '/legal':
+        setCurrentPage('legal');
+        break;
+      case '/quick-links':
+        setCurrentPage('quick-links');
+        break;
+      default:
+        setCurrentPage('home');
+    }
+  };
+
+  // Render the appropriate page based on current route
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'projects':
+        return <Projects />;
+      case 'documentation':
+        return <Documentation />;
+      case 'community':
+        return <Community />;
+      case 'terms-conditions':
+        return <TermsConditions />;
+      case 'privacy-policy':
+        return <PrivacyPolicy />;
+      case 'refund-policy':
+        return <RefundPolicy />;
+      case 'legal':
+        return <Legal />;
+      case 'quick-links':
+        return <QuickLinks />;
+      default:
+        return (
+          <>
+            <style>{`
+              @keyframes slide-left-slow {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+              }
+              
+              @keyframes slide-right-slow {
+                0% { transform: translateX(-50%); }
+                100% { transform: translateX(0); }
+              }
+              
+              .group:hover .image-slider,
+              .group:hover .skills-slider-row1,
+              .group:hover .skills-slider-row2,
+              .group:hover .skills-slider-row3 {
+                animation-play-state: paused !important;
+              }
+              
+              .image-slider {
+                animation: slide-left-slow 60s linear infinite;
+              }
+              
+              .skills-slider-row1 {
+                animation: slide-right-slow 50s linear infinite;
+              }
+              
+              .skills-slider-row2 {
+                animation: slide-left-slow 45s linear infinite;
+              }
+              
+              .skills-slider-row3 {
+                animation: slide-right-slow 55s linear infinite;
+              }
+            `}</style>
+            <div className="flex min-h-screen flex-col bg-black relative overflow-x-hidden">
+            {/* Left and Right Side Shadows */}
+            <div className="fixed inset-0 pointer-events-none z-30">
+              {/* Left shadow */}
+              <div 
+                className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black via-black/80 to-transparent"
+                style={{ 
+                  background: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0) 100%)'
+                }}
+              ></div>
+              {/* Right shadow */}
+              <div 
+                className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-black via-black/80 to-transparent"
+                style={{ 
+                  background: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0) 100%)'
+                }}
+              ></div>
+            </div>
+
+            <Navigation />
+            
+            <main className="flex h-full flex-col items-center justify-center gap-4">
+              {/* Hero */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.25,
+                  type: 'spring',
+                  damping: 10,
+                  stiffness: 100,
+                }}
+                className="flex max-w-7xl flex-col items-center justify-center gap-2 px-4"
+              >
+                <h1 className="max-w-2xl py-2 pt-36 text-center text-5xl font-extrabold tracking-tighter md:text-6xl xl:text-7xl">
+                  <span className="w-fit bg-gradient-to-b from-blue-400 to-blue-700 bg-clip-text pr-1.5 text-center text-transparent md:mb-4">
+                    ClassX,
+                  </span>{' '}
+                  <span className="bg-gradient-to-b from-white/90 to-white/60 bg-clip-text py-1 text-transparent">
+                    because learning ain&apos;t enough!
+                  </span>
+                </h1>
+
+                <p className="mx-auto text-center text-lg font-medium tracking-tight text-white/80 md:text-xl">
+                  A beginner-friendly platform for mastering programming skills.
+                </p>
+              </motion.div>
+              
+              {/* Get Started Button */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.625,
+                  type: 'spring',
+                  damping: 10,
+                  stiffness: 100,
+                }}
+                className="flex items-center justify-center py-6"
+              >
+                <button 
+                  onClick={() => setIsSignUpOpen(true)}
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 text-lg font-medium transition-all duration-200 transform hover:scale-105 rounded-xl shadow-lg hover:shadow-xl"
+                  aria-label="Get started with ClassX"
+                >
+                  Get Started
+                </button>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.75,
+                  type: 'spring',
+                  damping: 10,
+                  stiffness: 100,
+                }}
+                className="relative mx-auto my-2 md:my-3 flex w-full flex-col items-center justify-center overflow-hidden antialiased"
+              >
+                <InfiniteMovingCards items={heroItems} />
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{
+                  duration: 1,
+                  delay: 1,
+                }}
+                className="absolute bottom-0 -z-[20] size-[24rem] overflow-hidden rounded-full bg-gradient-to-t from-blue-400 to-blue-700 blur-[16em]"
+              />
+            </main>
+            
+            <TechSkills />
+              <FooterCTA setIsSignUpOpen={setIsSignUpOpen} />
+            <Footer onNavigate={handleNavigation} />
+            
+            {/* Auth Modals */}
+            <SignIn 
+              isOpen={isSignInOpen} 
+              onClose={() => setIsSignInOpen(false)}
+              onSwitchToSignUp={() => {
+                setIsSignInOpen(false);
+                setIsSignUpOpen(true);
+              }}
+            />
+            <SignUp 
+              isOpen={isSignUpOpen} 
+              onClose={() => setIsSignUpOpen(false)}
+              onSwitchToSignIn={() => {
+                setIsSignUpOpen(false);
+                setIsSignInOpen(true);
+              }}
+            />
+            </div>
+          </>
+        );
+    }
+  };
+
+  return renderPage();
 }

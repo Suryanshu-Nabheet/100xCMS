@@ -1,6 +1,10 @@
 import { Github, Twitter, Linkedin } from 'lucide-react';
 
-const Footer = () => {
+interface FooterProps {
+  onNavigate?: (path: string) => void;
+}
+
+const Footer = ({ onNavigate }: FooterProps) => {
   return (
     <footer className="bg-black relative">
       {/* Background gradient */}
@@ -62,6 +66,10 @@ const Footer = () => {
             <div className="flex flex-col space-y-2">
               <a
                 href="/projects"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate?.('/projects');
+                }}
                 className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
                 style={{ outline: 'none', border: 'none' }}
               >
@@ -69,6 +77,10 @@ const Footer = () => {
               </a>
               <a
                 href="/documentation"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate?.('/documentation');
+                }}
                 className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
                 style={{ outline: 'none', border: 'none' }}
               >
@@ -76,6 +88,10 @@ const Footer = () => {
               </a>
               <a
                 href="/community"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate?.('/community');
+                }}
                 className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
                 style={{ outline: 'none', border: 'none' }}
               >
@@ -90,6 +106,10 @@ const Footer = () => {
             <div className="flex flex-col space-y-2">
               <a
                 href="/terms-conditions"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate?.('/terms-conditions');
+                }}
                 className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
                 style={{ outline: 'none', border: 'none' }}
               >
@@ -97,6 +117,10 @@ const Footer = () => {
               </a>
               <a
                 href="/privacy-policy"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate?.('/privacy-policy');
+                }}
                 className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
                 style={{ outline: 'none', border: 'none' }}
               >
@@ -104,6 +128,10 @@ const Footer = () => {
               </a>
               <a
                 href="/refund-policy"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate?.('/refund-policy');
+                }}
                 className="text-white hover:text-blue-400 active:text-blue-400 transition-colors duration-200 text-sm w-fit focus:outline-none focus:ring-0 focus:border-0 outline-none"
                 style={{ outline: 'none', border: 'none' }}
               >
