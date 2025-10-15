@@ -5,6 +5,9 @@ import { DevopsCohortUI } from './DevopsCohort/DevopsCohortUI'
 import { Web3CohortUI } from './Web3Cohort/Web3CohortUI'
 import { SolanaFellowshipUI } from './SolanaFellowship/SolanaFellowshipUI'
 import { AdhocClassesUI } from './AdhocClasses/AdhocClassesUI'
+import { EthicalHackingUI } from './EthicalHacking/EthicalHackingUI'
+import { IosDevelopmentUI } from './IosDevelopment/IosDevelopmentUI'
+import { AndroidDevelopmentUI } from './AndroidDevelopment/AndroidDevelopmentUI'
 
 interface CourseDetailProps {
   courseId: string
@@ -45,6 +48,12 @@ export function CourseDetail({ courseId, onBack }: CourseDetailProps) {
       return <SolanaFellowshipUI onBack={onBack} />
     case 'adhoc-classes':
       return <AdhocClassesUI onBack={onBack} />
+    case 'ethical-hacking':
+      return <EthicalHackingUI onBack={onBack} />
+    case 'ios-development':
+      return <IosDevelopmentUI onBack={onBack} />
+    case 'android-development':
+      return <AndroidDevelopmentUI onBack={onBack} />
     default:
       return (
         <div className="min-h-screen bg-black flex items-center justify-center">

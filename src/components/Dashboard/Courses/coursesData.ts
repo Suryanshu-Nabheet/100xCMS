@@ -4,6 +4,9 @@ import { devopsCohortData } from './DevopsCohort/data'
 import { web3CohortData } from './Web3Cohort/data'
 import { solanaFellowshipData } from './SolanaFellowship/data'
 import { adhocClassesData } from './AdhocClasses/data'
+import { ethicalHackingData } from './EthicalHacking/data'
+import { iosDevelopmentData } from './IosDevelopment/data'
+import { androidDevelopmentData } from './AndroidDevelopment/data'
 
 export interface Course {
   id: string
@@ -39,7 +42,10 @@ export const allCourses: Course[] = [
   devopsCohortData,
   web3CohortData,
   solanaFellowshipData,
-  adhocClassesData
+  adhocClassesData,
+  ethicalHackingData,
+  iosDevelopmentData,
+  androidDevelopmentData
 ]
 
 // Export detailed course data
@@ -49,7 +55,10 @@ export const courseDetails: Record<string, CourseDetail> = {
   'devops-cohort': devopsCohortData,
   'web3-cohort': web3CohortData,
   'solana-fellowship': solanaFellowshipData,
-  'adhoc-classes': adhocClassesData
+  'adhoc-classes': adhocClassesData,
+  'ethical-hacking': ethicalHackingData,
+  'ios-development': iosDevelopmentData,
+  'android-development': androidDevelopmentData
 }
 
 // Helper function to get course detail
