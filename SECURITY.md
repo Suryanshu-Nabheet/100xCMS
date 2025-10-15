@@ -106,8 +106,8 @@ We appreciate security researchers who help us improve our security. While we do
 
 ## Contact Information
 
-- **Security Email**: security@classx.dev
-- **General Support**: support@classx.dev
+- **Security Email**: suryanshunab@gmail.com
+- **General Support**: suryanshunab@gmail.com
 - **GitHub**: [Create a private security advisory](https://github.com/Suryanshu-Nabheet/ClassX/security/advisories/new)
 
 ## Security Changelog

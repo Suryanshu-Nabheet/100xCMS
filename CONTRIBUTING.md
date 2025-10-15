@@ -8,7 +8,7 @@ Thank you for your interest in contributing to ClassX! 🎉
 - Click the "Fork" button on the GitHub repository page
 - Clone your fork locally:
   ```bash
-  git clone https://github.com/YOUR_USERNAME/ClassX.git
+  git clone https://github.com/Suryanshu-Nabheet/ClassX.git
   cd classx
   ```
 

@@ -342,7 +342,7 @@ export function AdminDashboard() {
                           value={newAdminData.email}
                           onChange={(e) => setNewAdminData({ ...newAdminData, email: e.target.value })}
                           className="w-full px-3 py-2 bg-white/10 border border-blue-500/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50"
-                          placeholder="admin@example.com"
+                          placeholder="suryanshunab@gmail.com"
                         />
                       </div>
                       <div>

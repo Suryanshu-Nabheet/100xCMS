@@ -281,7 +281,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
                 value={emailAddress}
                 onChange={(e) => setEmailAddress(e.target.value)}
                 className="w-full px-4 py-3 bg-black/60 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200"
-                placeholder="john.doe@example.com"
+                placeholder="suryanshunab@gmail.com"
                 required
                 autoComplete="email"
                 disabled={isLoading}

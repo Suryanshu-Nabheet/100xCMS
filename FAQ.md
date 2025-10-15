@@ -131,7 +131,7 @@ Yes, you can export your learning progress and data at any time.
 ## Business & Partnerships
 
 ### Can I use ClassX for my company?
-Yes! ClassX can be used for corporate training. Contact us at business@classx.dev for enterprise solutions.
+Yes! ClassX can be used for corporate training. Contact us at suryanshunab@gmail.com for enterprise solutions.
 
 ### Do you offer custom courses?
 We're working on custom course creation tools. Stay tuned!
@@ -162,7 +162,7 @@ We're planning to open instructor applications soon. Follow our updates!
 
 If you don't see your question here:
 
-- 📧 Email us: support@classx.dev
+- 📧 Email us: suryanshunab@gmail.com
 - 💬 Join our Discord: [discord.gg/classx](https://discord.gg/classx)
 - 🐛 Create a GitHub issue: [github.com/Suryanshu-Nabheet/ClassX/issues](https://github.com/Suryanshu-Nabheet/ClassX/issues)
 

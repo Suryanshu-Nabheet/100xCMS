@@ -163,7 +163,7 @@ Add any other context or screenshots about the feature request.
 ## 🏢 Enterprise Support
 
 ### Business Support
-- **Email**: business@classx.dev
+- **Email**: suryanshunab@gmail.com
 - **Phone**: +1 (555) 123-4567
 - **Response time**: Within 4 hours
 - **Available**: Monday-Friday, 9 AM - 6 PM EST
@@ -178,7 +178,7 @@ Add any other context or screenshots about the feature request.
 ## 🎓 Educational Support
 
 ### For Educators
-- **Email**: educators@classx.dev
+- **Email**: suryanshunab@gmail.com
 - **Resources**: [GitHub Repository](https://github.com/Suryanshu-Nabheet/ClassX)
 - **Training**: Free training sessions
 - **Support**: Dedicated educator support
@@ -192,7 +192,7 @@ Add any other context or screenshots about the feature request.
 ## 🔒 Security Support
 
 ### Security Issues
-- **Email**: security@classx.dev
+- **Email**: suryanshunab@gmail.com
 - **Response time**: Within 24 hours
 - **Process**: See [Security Policy](SECURITY.md)
 - **Confidentiality**: All reports kept confidential

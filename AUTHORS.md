@@ -6,8 +6,8 @@ This file lists the contributors to ClassX.
 
 ### Suryanshu Nabheet
 - **Role**: Founder & Lead Developer
-- **GitHub**: [@suryanshunabheet](https://github.com/suryanshunabheet)
-- **Email**: suryanshu@classx.dev
+- **GitHub**: [@Suryanshu-Nabheet](https://github.com/Suryanshu-Nabheet)
+- **Email**: suryanshunab@gmail.com
 - **Contributions**: 
   - Project architecture and design
   - Frontend development (React, TypeScript)
@@ -70,7 +70,7 @@ See our [Contributing Guidelines](CONTRIBUTING.md) for more information.
 
 If you'd like to contribute or have questions:
 
-- 📧 Email: contributors@classx.dev
+- 📧 Email: suryanshunab@gmail.com
 - 💬 Discord: [Join our community](https://discord.gg/classx)
 - 🐛 GitHub Issues: [Create an issue](https://github.com/Suryanshu-Nabheet/ClassX/issues)
 - 📖 Documentation: [GitHub Repository](https://github.com/Suryanshu-Nabheet/ClassX)

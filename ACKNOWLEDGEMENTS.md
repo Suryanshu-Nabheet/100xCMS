@@ -126,7 +126,7 @@ As ClassX grows, we will continue to acknowledge:
 
 If you believe you or your organization should be acknowledged here, please contact us:
 
-- 📧 Email: acknowledgements@classx.dev
+- 📧 Email: suryanshunab@gmail.com
 - 💬 Discord: [Join our community](https://discord.gg/classx)
 - 🐛 GitHub Issues: [Create an issue](https://github.com/Suryanshu-Nabheet/ClassX/issues)
 
