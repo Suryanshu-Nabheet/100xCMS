@@ -1,2 +1,2 @@
 export { iosDevelopmentData } from './data'
-export { IosDevelopmentUI } from './IosDevelopmentUI'
+export { IOSDevelopmentUI } from './IOSDevelopmentUI'

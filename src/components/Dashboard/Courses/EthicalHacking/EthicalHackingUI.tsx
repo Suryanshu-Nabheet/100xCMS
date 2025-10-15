@@ -8,9 +8,9 @@ interface EthicalHackingUIProps {
 }
 
 export function EthicalHackingUI({ onBack }: EthicalHackingUIProps) {
-  const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string; timestamps: any[] } | null>(null)
+  const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string; timestamps: Array<{ time: number; title: string }> } | null>(null)
 
-  const handleVideoClick = (lesson: any) => {
+  const handleVideoClick = (lesson: { videoUrl: string; title: string; timestamps: Array<{ time: number; title: string }> }) => {
     setSelectedVideo({
       src: lesson.videoUrl,
       title: lesson.title,
@@ -48,30 +48,28 @@ export function EthicalHackingUI({ onBack }: EthicalHackingUIProps) {
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-white mb-8 text-center">Course Content</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {/* All Lessons in One Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {ethicalHackingData.lessons.map((lesson) => (
               <div
                 key={lesson.id}
+                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-200 group cursor-pointer"
                 onClick={() => handleVideoClick(lesson)}
-                className="group cursor-pointer bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20"
               >
-                <div className="relative h-48 bg-gradient-to-br from-green-500/20 to-green-600/20">
+                {/* Lesson Thumbnail */}
+                <div className="relative h-48 overflow-hidden">
                   <img
                     src={lesson.thumbnail}
                     alt={lesson.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300"></div>
+                  
+                  {/* Centered Title Overlay */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-white/30 transition-all duration-300">
-                      <div className="w-0 h-0 border-l-[12px] border-l-white border-y-[8px] border-y-transparent ml-1"></div>
-                    </div>
+                    <h4 className="text-white font-bold text-lg text-center px-4 line-clamp-3 drop-shadow-2xl">
+                      {lesson.title}
+                    </h4>
                   </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="text-lg font-bold text-white text-center group-hover:text-green-400 transition-colors duration-300 drop-shadow-2xl">
-                    {lesson.title}
-                  </h3>
                 </div>
               </div>
             ))}

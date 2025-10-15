@@ -3,11 +3,11 @@ import { ArrowLeft } from 'lucide-react'
 import { iosDevelopmentData } from './data'
 import { VideoPlayer } from '../../Video/VideoPlayer'
 
-interface IosDevelopmentUIProps {
+interface IOSDevelopmentUIProps {
   onBack: () => void
 }
 
-export function IosDevelopmentUI({ onBack }: IosDevelopmentUIProps) {
+export function IOSDevelopmentUI({ onBack }: IOSDevelopmentUIProps) {
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string; timestamps: any[] } | null>(null)
 
   const handleVideoClick = (lesson: any) => {
