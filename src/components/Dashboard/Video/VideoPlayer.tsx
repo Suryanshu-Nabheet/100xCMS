@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { 
   Play, Pause, Volume2, VolumeX, Maximize, Minimize, 
   Settings, SkipBack, SkipForward, ArrowLeft, Clock,
-  ChevronUp, ChevronDown
+  ChevronUp, ChevronDown, Captions, PictureInPicture
 } from 'lucide-react'
 
 interface Timestamp {
@@ -31,12 +31,16 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
   const [muted, setMuted] = useState(false)
   const [playbackRate, setPlaybackRate] = useState(1)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isPictureInPicture, setIsPictureInPicture] = useState(false)
   
   // UI state
   const [showControls, setShowControls] = useState(true)
   const [showSettings, setShowSettings] = useState(false)
   const [showTimestamps, setShowTimestamps] = useState(true)
   const [controlsTimeout, setControlsTimeout] = useState<NodeJS.Timeout | null>(null)
+  const [isHoveringProgress, setIsHoveringProgress] = useState(false)
+  const [hoverTime, setHoverTime] = useState(0)
+  const [hoverPosition, setHoverPosition] = useState(0)
   
   // Animation state
   const [skipAnimation, setSkipAnimation] = useState<{ show: boolean; direction: 'left' | 'right' }>({ show: false, direction: 'right' })
@@ -197,11 +201,17 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
       setIsFullscreen(!!document.fullscreenElement)
     }
 
+    const handlePictureInPictureChange = () => {
+      setIsPictureInPicture(!!document.pictureInPictureElement)
+    }
+
     video.addEventListener('timeupdate', handleTimeUpdate)
     video.addEventListener('loadedmetadata', handleLoadedMetadata)
     video.addEventListener('error', handleError)
     video.addEventListener('ended', handleEnded)
     document.addEventListener('fullscreenchange', handleFullscreenChange)
+    document.addEventListener('enterpictureinpicture', handlePictureInPictureChange)
+    document.addEventListener('leavepictureinpicture', handlePictureInPictureChange)
 
     return () => {
       video.removeEventListener('timeupdate', handleTimeUpdate)
@@ -209,6 +219,8 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
       video.removeEventListener('error', handleError)
       video.removeEventListener('ended', handleEnded)
       document.removeEventListener('fullscreenchange', handleFullscreenChange)
+      document.removeEventListener('enterpictureinpicture', handlePictureInPictureChange)
+      document.removeEventListener('leavepictureinpicture', handlePictureInPictureChange)
     }
   }, [onProgress, onComplete, duration, videoSources, currentSourceIndex])
 
@@ -283,6 +295,21 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
     }
   }
 
+  const togglePictureInPicture = async () => {
+    const video = videoRef.current
+    if (!video) return
+
+    try {
+      if (document.pictureInPictureElement) {
+        await document.exitPictureInPicture()
+      } else {
+        await video.requestPictureInPicture()
+      }
+    } catch (error) {
+      console.error('Picture-in-picture error:', error)
+    }
+  }
+
   const handleTimestampClick = (timestamp: Timestamp) => {
     seekTo(timestamp.time)
   }
@@ -294,6 +321,20 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
 
   const handleMouseMove = () => {
     resetControlsTimeout()
+  }
+
+  const handleProgressHover = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const percentage = x / rect.width
+    const time = percentage * duration
+    setHoverTime(time)
+    setHoverPosition(percentage * 100)
+    setIsHoveringProgress(true)
+  }
+
+  const handleProgressLeave = () => {
+    setIsHoveringProgress(false)
   }
 
   const formatTime = (time: number) => {
@@ -421,8 +462,8 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
               </div>
             )}
 
-            {/* Controls Overlay */}
-            <div className={`absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent transition-opacity duration-300 ${
+            {/* YouTube-style Controls Overlay */}
+            <div className={`absolute inset-0 transition-opacity duration-300 ${
               showControls ? 'opacity-100' : 'opacity-0'
             }`}>
               {/* Center Play Button */}
@@ -437,116 +478,163 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
                 </div>
               )}
 
-              {/* Bottom Controls */}
-              <div className="absolute bottom-0 left-0 right-0 p-4">
-                {/* Progress Bar */}
-                <div className="mb-3">
-                  <input
-                    type="range"
-                    min="0"
-                    max={duration || 0}
-                    value={currentTime}
-                    onChange={(e) => seekTo(parseFloat(e.target.value))}
-                    className="w-full h-1 bg-gray-600/50 rounded-full appearance-none cursor-pointer progress-slider"
+              {/* YouTube-style Bottom Controls */}
+              <div className="absolute bottom-0 left-0 right-0">
+                {/* Progress Bar Container */}
+                <div 
+                  className="relative h-1 bg-gray-600/30 cursor-pointer group"
+                  onMouseMove={handleProgressHover}
+                  onMouseLeave={handleProgressLeave}
+                  onClick={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect()
+                    const x = e.clientX - rect.left
+                    const percentage = x / rect.width
+                    seekTo(percentage * duration)
+                  }}
+                >
+                  {/* Progress Bar */}
+                  <div 
+                    className="absolute top-0 left-0 h-full bg-blue-500 transition-all duration-100"
+                    style={{ width: `${(currentTime / duration) * 100}%` }}
                   />
+                  
+                  {/* Progress Handle */}
+                  <div 
+                    className="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg"
+                    style={{ left: `${(currentTime / duration) * 100}%`, marginLeft: '-8px' }}
+                  />
+                  
+                  {/* Hover Preview */}
+                  {isHoveringProgress && (
+                    <div 
+                      className="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-lg"
+                      style={{ left: `${hoverPosition}%`, marginLeft: '-8px' }}
+                    />
+                  )}
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    {/* Play/Pause */}
-                    <button
-                      onClick={handleVideoClick}
-                      className="text-white hover:text-gray-300 transition-colors p-1 rounded hover:bg-white/10"
-                    >
-                      {playing ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                    </button>
-
-                    {/* Skip Buttons */}
-                    <button
-                      onClick={() => {
-                        skip(-10)
-                        showSkipAnimation('left')
-                      }}
-                      className="text-white hover:text-gray-300 transition-colors p-1 rounded hover:bg-white/10"
-                      title="Rewind 10s"
-                    >
-                      <SkipBack className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => {
-                        skip(10)
-                        showSkipAnimation('right')
-                      }}
-                      className="text-white hover:text-gray-300 transition-colors p-1 rounded hover:bg-white/10"
-                      title="Forward 10s"
-                    >
-                      <SkipForward className="w-4 h-4" />
-                    </button>
-
-                    {/* Volume */}
-                    <div className="flex items-center space-x-2">
+                {/* Control Bar */}
+                <div className="bg-gradient-to-t from-black/90 to-transparent px-4 py-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      {/* Play/Pause */}
                       <button
-                        onClick={toggleMute}
-                        className="text-white hover:text-gray-300 transition-colors p-1 rounded hover:bg-white/10"
+                        onClick={handleVideoClick}
+                        className="text-white hover:text-gray-300 transition-colors p-2 rounded-full hover:bg-white/10"
                       >
-                        {muted || volume === 0 ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                      </button>
-                      <input
-                        type="range"
-                        min="0"
-                        max="1"
-                        step="0.1"
-                        value={muted ? 0 : volume}
-                        onChange={(e) => changeVolume(parseFloat(e.target.value))}
-                        className="w-16 h-1 bg-gray-600/50 rounded-full appearance-none cursor-pointer volume-slider"
-                      />
-                    </div>
-
-                    {/* Time Display */}
-                    <div className="text-white text-xs font-mono bg-black/60 backdrop-blur-sm px-2 py-1 rounded border border-gray-800">
-                      {formatTime(currentTime)} / {formatTime(duration)}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    {/* Playback Speed */}
-                    <div className="relative">
-                      <button
-                        onClick={() => setShowSettings(!showSettings)}
-                        className="text-white hover:text-gray-300 transition-colors p-1 rounded hover:bg-white/10"
-                        title="Settings"
-                      >
-                        <Settings className="w-4 h-4" />
+                        {playing ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
                       </button>
 
-                      {showSettings && (
-                        <div className="absolute bottom-8 right-0 bg-black/95 backdrop-blur-sm rounded-lg border border-gray-700 p-2 min-w-[120px] shadow-2xl">
-                          <div className="text-white text-xs font-medium mb-2">Speed</div>
-                          {[0.5, 0.75, 1, 1.25, 1.5, 2].map(rate => (
-                            <button
-                              key={rate}
-                              onClick={() => changePlaybackRate(rate)}
-                              className={`block w-full text-left px-2 py-1 text-xs rounded transition-colors ${
-                                playbackRate === rate
-                                  ? 'bg-blue-600 text-white'
-                                  : 'text-white/80 hover:bg-gray-700'
-                              }`}
-                            >
-                              {rate}x
-                            </button>
-                          ))}
+                      {/* Skip Buttons */}
+                      <button
+                        onClick={() => {
+                          skip(-10)
+                          showSkipAnimation('left')
+                        }}
+                        className="text-white hover:text-gray-300 transition-colors p-2 rounded-full hover:bg-white/10"
+                        title="Rewind 10s"
+                      >
+                        <SkipBack className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={() => {
+                          skip(10)
+                          showSkipAnimation('right')
+                        }}
+                        className="text-white hover:text-gray-300 transition-colors p-2 rounded-full hover:bg-white/10"
+                        title="Forward 10s"
+                      >
+                        <SkipForward className="w-5 h-5" />
+                      </button>
+
+                      {/* Volume */}
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={toggleMute}
+                          className="text-white hover:text-gray-300 transition-colors p-2 rounded-full hover:bg-white/10"
+                        >
+                          {muted || volume === 0 ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                        </button>
+                        <div className="w-20 h-1 bg-gray-600/50 rounded-full relative group">
+                          <div 
+                            className="absolute top-0 left-0 h-full bg-white rounded-full"
+                            style={{ width: `${muted ? 0 : volume * 100}%` }}
+                          />
+                          <input
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.1"
+                            value={muted ? 0 : volume}
+                            onChange={(e) => changeVolume(parseFloat(e.target.value))}
+                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                          />
                         </div>
-                      )}
+                      </div>
+
+                      {/* Time Display */}
+                      <div className="text-white text-sm font-mono bg-black/60 backdrop-blur-sm px-3 py-1 rounded border border-gray-800">
+                        {formatTime(currentTime)} / {formatTime(duration)}
+                      </div>
                     </div>
 
-                    {/* Fullscreen */}
-                    <button
-                      onClick={toggleFullscreen}
-                      className="text-white hover:text-gray-300 transition-colors p-1 rounded hover:bg-white/10"
-                      title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
-                    >
-                      {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
-                    </button>
+                    <div className="flex items-center space-x-2">
+                      {/* Captions */}
+                      <button
+                        className="text-white hover:text-gray-300 transition-colors p-2 rounded-full hover:bg-white/10"
+                        title="Captions"
+                      >
+                        <Captions className="w-5 h-5" />
+                      </button>
+
+                      {/* Settings */}
+                      <div className="relative">
+                        <button
+                          onClick={() => setShowSettings(!showSettings)}
+                          className="text-white hover:text-gray-300 transition-colors p-2 rounded-full hover:bg-white/10"
+                          title="Settings"
+                        >
+                          <Settings className="w-5 h-5" />
+                        </button>
+
+                        {showSettings && (
+                          <div className="absolute bottom-12 right-0 bg-black/95 backdrop-blur-sm rounded-lg border border-gray-700 p-3 min-w-[140px] shadow-2xl">
+                            <div className="text-white text-sm font-medium mb-3">Playback Speed</div>
+                            {[0.5, 0.75, 1, 1.25, 1.5, 2].map(rate => (
+                              <button
+                                key={rate}
+                                onClick={() => changePlaybackRate(rate)}
+                                className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
+                                  playbackRate === rate
+                                    ? 'bg-blue-600 text-white'
+                                    : 'text-white/80 hover:bg-gray-700'
+                                }`}
+                              >
+                                {rate}x
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Picture-in-Picture */}
+                      <button
+                        onClick={togglePictureInPicture}
+                        className="text-white hover:text-gray-300 transition-colors p-2 rounded-full hover:bg-white/10"
+                        title="Picture-in-picture"
+                      >
+                        <PictureInPicture className="w-5 h-5" />
+                      </button>
+
+                      {/* Fullscreen */}
+                      <button
+                        onClick={toggleFullscreen}
+                        className="text-white hover:text-gray-300 transition-colors p-2 rounded-full hover:bg-white/10"
+                        title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+                      >
+                        {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -618,40 +706,6 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
 
       {/* Custom Styles */}
       <style jsx>{`
-        .progress-slider::-webkit-slider-thumb {
-          appearance: none;
-          width: 12px;
-          height: 12px;
-          background: #3b82f6;
-          border-radius: 50%;
-          cursor: pointer;
-          border: 2px solid #ffffff;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-          transition: all 0.2s ease;
-        }
-        
-        .progress-slider::-webkit-slider-thumb:hover {
-          background: #2563eb;
-          transform: scale(1.1);
-          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-        }
-        
-        .volume-slider::-webkit-slider-thumb {
-          appearance: none;
-          width: 10px;
-          height: 10px;
-          background: #3b82f6;
-          border-radius: 50%;
-          cursor: pointer;
-          border: 1px solid #ffffff;
-          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-        
-        .volume-slider::-webkit-slider-thumb:hover {
-          background: #2563eb;
-          transform: scale(1.1);
-        }
-        
         .animate-slide-left {
           animation: slideInLeft 0.8s ease-out;
         }
