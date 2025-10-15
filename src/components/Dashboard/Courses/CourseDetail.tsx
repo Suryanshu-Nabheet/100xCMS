@@ -6,7 +6,7 @@ import { Web3CohortUI } from './Web3Cohort/Web3CohortUI'
 import { SolanaFellowshipUI } from './SolanaFellowship/SolanaFellowshipUI'
 import { AdhocClassesUI } from './AdhocClasses/AdhocClassesUI'
 import { EthicalHackingUI } from './EthicalHacking/EthicalHackingUI'
-import { IosDevelopmentUI } from './IosDevelopment/IosDevelopmentUI'
+import { IOSDevelopmentUI } from './IOSDevelopment/IOSDevelopmentUI'
 import { AndroidDevelopmentUI } from './AndroidDevelopment/AndroidDevelopmentUI'
 
 interface CourseDetailProps {
@@ -51,7 +51,7 @@ export function CourseDetail({ courseId, onBack }: CourseDetailProps) {
     case 'ethical-hacking':
       return <EthicalHackingUI onBack={onBack} />
     case 'ios-development':
-      return <IosDevelopmentUI onBack={onBack} />
+      return <IOSDevelopmentUI onBack={onBack} />
     case 'android-development':
       return <AndroidDevelopmentUI onBack={onBack} />
     default:

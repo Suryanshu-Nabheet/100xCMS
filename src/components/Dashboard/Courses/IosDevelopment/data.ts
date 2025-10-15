@@ -7,7 +7,7 @@ export const iosDevelopmentData = {
     {
       id: 'lesson-1',
       title: 'Introduction to iOS Development',
-      thumbnail: '/public/IOS.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'Course Introduction' },
@@ -19,7 +19,7 @@ export const iosDevelopmentData = {
     {
       id: 'lesson-2',
       title: 'Swift Programming Fundamentals',
-      thumbnail: '/public/IOS.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'Swift Syntax Basics' },
@@ -31,7 +31,7 @@ export const iosDevelopmentData = {
     {
       id: 'lesson-3',
       title: 'UIKit and Interface Builder',
-      thumbnail: '/public/IOS.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'UIKit Framework' },
@@ -43,7 +43,7 @@ export const iosDevelopmentData = {
     {
       id: 'lesson-4',
       title: 'SwiftUI Modern Development',
-      thumbnail: '/public/IOS.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'SwiftUI Introduction' },
@@ -55,7 +55,7 @@ export const iosDevelopmentData = {
     {
       id: 'lesson-5',
       title: 'Data Management and Networking',
-      thumbnail: '/public/IOS.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'Core Data' },
@@ -67,7 +67,7 @@ export const iosDevelopmentData = {
     {
       id: 'lesson-6',
       title: 'App Store Deployment',
-      thumbnail: '/public/IOS.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'App Store Guidelines' },

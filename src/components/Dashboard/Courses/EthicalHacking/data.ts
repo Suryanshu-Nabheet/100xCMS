@@ -7,7 +7,7 @@ export const ethicalHackingData = {
     {
       id: 'lesson-1',
       title: 'Introduction to Ethical Hacking',
-      thumbnail: '/public/HACKING.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'Course Introduction' },
@@ -19,7 +19,7 @@ export const ethicalHackingData = {
     {
       id: 'lesson-2',
       title: 'Reconnaissance and Information Gathering',
-      thumbnail: '/public/HACKING.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'OSINT Techniques' },
@@ -31,7 +31,7 @@ export const ethicalHackingData = {
     {
       id: 'lesson-3',
       title: 'Penetration Testing Fundamentals',
-      thumbnail: '/public/HACKING.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'Penetration Testing Methodology' },
@@ -43,7 +43,7 @@ export const ethicalHackingData = {
     {
       id: 'lesson-4',
       title: 'Web Application Security',
-      thumbnail: '/public/HACKING.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'OWASP Top 10' },
@@ -55,7 +55,7 @@ export const ethicalHackingData = {
     {
       id: 'lesson-5',
       title: 'Network Security Testing',
-      thumbnail: '/public/HACKING.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'Network Protocols' },
@@ -67,7 +67,7 @@ export const ethicalHackingData = {
     {
       id: 'lesson-6',
       title: 'Cryptography and Encryption',
-      thumbnail: '/public/HACKING.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'Cryptographic Concepts' },

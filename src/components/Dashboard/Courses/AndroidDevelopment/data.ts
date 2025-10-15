@@ -7,7 +7,7 @@ export const androidDevelopmentData = {
     {
       id: 'lesson-1',
       title: 'Introduction to Android Development',
-      thumbnail: '/public/ANDROID.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'Course Introduction' },
@@ -19,7 +19,7 @@ export const androidDevelopmentData = {
     {
       id: 'lesson-2',
       title: 'Kotlin Programming Fundamentals',
-      thumbnail: '/public/ANDROID.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'Kotlin Syntax Basics' },
@@ -31,7 +31,7 @@ export const androidDevelopmentData = {
     {
       id: 'lesson-3',
       title: 'Android UI and Layouts',
-      thumbnail: '/public/ANDROID.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'XML Layouts' },
@@ -43,7 +43,7 @@ export const androidDevelopmentData = {
     {
       id: 'lesson-4',
       title: 'Jetpack Compose Modern UI',
-      thumbnail: '/public/ANDROID.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'Compose Introduction' },
@@ -55,7 +55,7 @@ export const androidDevelopmentData = {
     {
       id: 'lesson-5',
       title: 'Data Management and Networking',
-      thumbnail: '/public/ANDROID.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'Room Database' },
@@ -67,7 +67,7 @@ export const androidDevelopmentData = {
     {
       id: 'lesson-6',
       title: 'Google Play Store Deployment',
-      thumbnail: '/public/ANDROID.png',
+      thumbnail: '/public/Content-Cover.png',
       videoUrl: '/CodeDemo.mp4',
       timestamps: [
         { time: 0, title: 'Play Store Guidelines' },

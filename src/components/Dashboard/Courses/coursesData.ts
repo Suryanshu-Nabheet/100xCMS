@@ -5,7 +5,7 @@ import { web3CohortData } from './Web3Cohort/data'
 import { solanaFellowshipData } from './SolanaFellowship/data'
 import { adhocClassesData } from './AdhocClasses/data'
 import { ethicalHackingData } from './EthicalHacking/data'
-import { iosDevelopmentData } from './IosDevelopment/data'
+import { iosDevelopmentData } from './IOSDevelopment/data'
 import { androidDevelopmentData } from './AndroidDevelopment/data'
 
 export interface Course {
