@@ -228,7 +228,7 @@ We value community input! Share your ideas:
 - 💬 Discord: [Join our community](https://discord.gg/classx)
 - 📧 Email: suryanshunab@gmail.com
 - 🐛 GitHub Issues: [Create an issue](https://github.com/Suryanshu-Nabheet/ClassX/issues)
-- 📖 Documentation: [docs.classx.dev](https://docs.classx.dev)
+- 📖 Documentation: [GitHub Repository](https://github.com/Suryanshu-Nabheet/ClassX)
 
 ---
 

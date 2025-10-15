@@ -73,7 +73,7 @@ If you'd like to contribute or have questions:
 - 📧 Email: contributors@classx.dev
 - 💬 Discord: [Join our community](https://discord.gg/classx)
 - 🐛 GitHub Issues: [Create an issue](https://github.com/Suryanshu-Nabheet/ClassX/issues)
-- 📖 Documentation: [docs.classx.dev](https://docs.classx.dev)
+- 📖 Documentation: [GitHub Repository](https://github.com/Suryanshu-Nabheet/ClassX)
 
 ## Code of Conduct
 

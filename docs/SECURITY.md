@@ -74,7 +74,7 @@ export class JWTService {
   static generateAccessToken(payload: Omit<JWTPayload, 'iat' | 'exp'>): string {
     return jwt.sign(payload, JWT_SECRET, {
       expiresIn: JWT_EXPIRES_IN,
-      issuer: 'classx.com',
+      issuer: 'example.com',
       audience: 'classx-users',
     });
   }
@@ -83,7 +83,7 @@ export class JWTService {
     const payload = { userId, type: 'refresh' };
     return jwt.sign(payload, JWT_SECRET, {
       expiresIn: REFRESH_TOKEN_EXPIRES_IN,
-      issuer: 'classx.com',
+      issuer: 'example.com',
       audience: 'classx-users',
     });
   }
@@ -91,7 +91,7 @@ export class JWTService {
   static verifyToken(token: string): JWTPayload {
     try {
       return jwt.verify(token, JWT_SECRET, {
-        issuer: 'classx.com',
+        issuer: 'example.com',
         audience: 'classx-users',
       }) as JWTPayload;
     } catch (error) {
@@ -604,9 +604,9 @@ import cors from 'cors';
 const corsOptions = {
   origin: (origin: string | undefined, callback: Function) => {
     const allowedOrigins = [
-      'https://classx.com',
-      'https://www.classx.com',
-      'https://staging.classx.com',
+      'https://example.com',
+      'https://www.example.com',
+      'https://staging.example.com',
     ];
 
     // Allow requests with no origin (mobile apps, Postman, etc.)
@@ -648,7 +648,7 @@ export const securityHeaders = helmet({
       fontSrc: ["'self'", 'https://fonts.gstatic.com'],
       imgSrc: ["'self'", 'data:', 'https:'],
       scriptSrc: ["'self'"],
-      connectSrc: ["'self'", 'https://api.classx.com'],
+      connectSrc: ["'self'", 'https://example.com'],
       frameSrc: ["'none'"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: [],

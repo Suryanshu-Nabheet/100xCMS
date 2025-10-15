@@ -104,7 +104,7 @@ Add any other context or screenshots about the feature request.
 2. Try refreshing the page
 3. Clear browser cache and cookies
 4. Try a different browser
-5. Check if the site is down: [status.classx.dev](https://status.classx.dev)
+5. Check if the site is down: [GitHub Issues](https://github.com/Suryanshu-Nabheet/ClassX/issues)
 
 #### Login Issues
 1. Verify your email and password
@@ -179,7 +179,7 @@ Add any other context or screenshots about the feature request.
 
 ### For Educators
 - **Email**: educators@classx.dev
-- **Resources**: [Educator Portal](https://educators.classx.dev)
+- **Resources**: [GitHub Repository](https://github.com/Suryanshu-Nabheet/ClassX)
 - **Training**: Free training sessions
 - **Support**: Dedicated educator support
 
@@ -207,8 +207,8 @@ Add any other context or screenshots about the feature request.
 ## 📊 Status Updates
 
 ### Service Status
-- **Website**: [status.classx.dev](https://status.classx.dev)
-- **API**: [api-status.classx.dev](https://api-status.classx.dev)
+- **Website**: [GitHub Issues](https://github.com/Suryanshu-Nabheet/ClassX/issues)
+- **API**: [GitHub Issues](https://github.com/Suryanshu-Nabheet/ClassX/issues)
 - **Updates**: [@ClassXStatus](https://twitter.com/ClassXStatus)
 
 ### Maintenance Windows

@@ -18,8 +18,8 @@ Complete API reference for ClassX platform integration and development.
 ## Base URL
 
 ```
-Production: https://api.classx.com/v1
-Staging: https://staging-api.classx.com/v1
+Production: `https://api.example.com/v1` (Coming Soon)
+Staging: `https://staging-api.example.com/v1` (Coming Soon)
 Development: http://localhost:3000/api/v1
 ```
 
@@ -55,7 +55,7 @@ Content-Type: application/json
       "email": "user@example.com",
       "name": "John Doe",
       "role": "student",
-      "avatar": "https://api.classx.com/avatars/user_123.jpg"
+      "avatar": "https://example.com/avatars/user_123.jpg"
     },
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
     "refreshToken": "refresh_token_here",
@@ -107,7 +107,7 @@ Authorization: Bearer <token>
     "email": "user@example.com",
     "name": "John Doe",
     "role": "student",
-    "avatar": "https://api.classx.com/avatars/user_123.jpg",
+    "avatar": "https://example.com/avatars/user_123.jpg",
     "createdAt": "2025-01-15T10:30:00Z",
     "lastLogin": "2025-01-20T14:22:00Z",
     "preferences": {
@@ -215,9 +215,9 @@ Query Parameters:
         "instructor": {
           "id": "instructor_456",
           "name": "Sarah Johnson",
-          "avatar": "https://api.classx.com/avatars/instructor_456.jpg"
+          "avatar": "https://example.com/avatars/instructor_456.jpg"
         },
-        "thumbnail": "https://api.classx.com/thumbnails/course_123.jpg",
+        "thumbnail": "https://example.com/thumbnails/course_123.jpg",
         "tags": ["react", "javascript", "frontend"],
         "createdAt": "2025-01-01T00:00:00Z",
         "updatedAt": "2025-01-15T10:30:00Z"
@@ -257,11 +257,11 @@ Authorization: Bearer <token> (optional)
     "instructor": {
       "id": "instructor_456",
       "name": "Sarah Johnson",
-      "avatar": "https://api.classx.com/avatars/instructor_456.jpg",
+      "avatar": "https://example.com/avatars/instructor_456.jpg",
       "bio": "Senior React Developer with 8 years experience",
       "rating": 4.9
     },
-    "thumbnail": "https://api.classx.com/thumbnails/course_123.jpg",
+    "thumbnail": "https://example.com/thumbnails/course_123.jpg",
     "tags": ["react", "javascript", "frontend"],
     "modules": [
       {
@@ -364,13 +364,13 @@ Authorization: Bearer <token>
     "title": "What is React?",
     "type": "video",
     "content": {
-      "videoUrl": "https://api.classx.com/videos/lesson_1.mp4",
+      "videoUrl": "https://example.com/videos/lesson_1.mp4",
       "duration": "15 minutes",
       "transcript": "Welcome to React fundamentals...",
       "subtitles": [
         {
           "language": "en",
-          "url": "https://api.classx.com/subtitles/lesson_1_en.vtt"
+          "url": "https://example.com/subtitles/lesson_1_en.vtt"
         }
       ]
     },
@@ -385,7 +385,7 @@ Authorization: Bearer <token>
         "id": "resource_2",
         "title": "Code Examples",
         "type": "file",
-        "url": "https://api.classx.com/files/examples.zip"
+        "url": "https://example.com/files/examples.zip"
       }
     ],
     "quiz": {
@@ -447,7 +447,7 @@ Query Parameters:
         "id": "review_1",
         "userId": "user_123",
         "userName": "John Doe",
-        "userAvatar": "https://api.classx.com/avatars/user_123.jpg",
+        "userAvatar": "https://example.com/avatars/user_123.jpg",
         "rating": 5,
         "comment": "Excellent course! Very well structured.",
         "createdAt": "2025-01-15T10:30:00Z",
@@ -591,7 +591,7 @@ Form Data:
 {
   "success": true,
   "data": {
-    "url": "https://api.classx.com/avatars/user_123.jpg",
+    "url": "https://example.com/avatars/user_123.jpg",
     "filename": "avatar_123.jpg",
     "size": 45678,
     "mimeType": "image/jpeg"
@@ -635,7 +635,7 @@ ClassX sends webhooks for the following events:
     "courseId": "course_123",
     "userId": "user_123",
     "completedAt": "2025-01-20T14:22:00Z",
-    "certificateUrl": "https://api.classx.com/certificates/cert_123.pdf"
+    "certificateUrl": "https://example.com/certificates/cert_123.pdf"
   }
 }
 ```
@@ -722,7 +722,7 @@ import { ClassXClient } from '@classx/sdk';
 
 const client = new ClassXClient({
   apiKey: 'your-api-key',
-  baseUrl: 'https://api.classx.com/v1'
+  baseUrl: 'https://example.com/v1'
 });
 
 // Get courses
@@ -747,7 +747,7 @@ from classx import ClassXClient
 
 client = ClassXClient(
     api_key='your-api-key',
-    base_url='https://api.classx.com/v1'
+    base_url='https://example.com/v1'
 )
 
 # Get courses
@@ -794,7 +794,7 @@ const CourseComponent = () => {
 
 Download our Postman collection for easy API testing:
 
-[ClassX API Collection](https://api.classx.com/postman/collection.json)
+[ClassX API Collection](https://example.com/postman/collection.json)
 
 ### API Testing Tools
 
@@ -807,16 +807,16 @@ Download our Postman collection for easy API testing:
 
 ```bash
 # Login
-curl -X POST https://api.classx.com/v1/auth/login \
+curl -X POST https://example.com/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"user@example.com","password":"password123"}'
 
 # Get courses
-curl -X GET https://api.classx.com/v1/courses \
+curl -X GET https://example.com/v1/courses \
   -H "Authorization: Bearer YOUR_TOKEN"
 
 # Enroll in course
-curl -X POST https://api.classx.com/v1/courses/course_123/enroll \
+curl -X POST https://example.com/v1/courses/course_123/enroll \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"paymentMethod":"stripe"}'
