@@ -3,7 +3,7 @@ import {
   Play, Pause, Volume2, VolumeX, Maximize, Minimize, 
   Settings, SkipBack, SkipForward, ArrowLeft, Clock,
   ChevronUp, ChevronDown, Captions, PictureInPicture,
-  ExternalLink, BookOpen, ChevronRight, Info
+  ExternalLink, BookOpen, ChevronRight
 } from 'lucide-react'
 
 interface Timestamp {
@@ -48,7 +48,6 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
   const [showControls, setShowControls] = useState(true)
   const [showSettings, setShowSettings] = useState(false)
   const [showTimestamps, setShowTimestamps] = useState(true)
-  const [showKeyboardHelp, setShowKeyboardHelp] = useState(false)
   const [controlsTimeout, setControlsTimeout] = useState<NodeJS.Timeout | null>(null)
   const [isHoveringProgress, setIsHoveringProgress] = useState(false)
   const [hoverPosition, setHoverPosition] = useState(0)
@@ -151,45 +150,9 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
           containerRef.current?.requestFullscreen()
         }
         break
-      case 'KeyP':
-        e.preventDefault()
-        togglePictureInPicture()
-        break
-      case 'KeyC':
-        e.preventDefault()
-        setShowTimestamps(!showTimestamps)
-        break
-      case 'KeyS':
-        e.preventDefault()
-        setShowSettings(!showSettings)
-        break
-      case 'Escape':
-        if (showSettings) {
-          setShowSettings(false)
-        } else if (document.fullscreenElement) {
-          document.exitFullscreen()
-        } else if (onClose) {
-          onClose()
-        }
-        break
-      case 'Equal':
-      case 'NumpadAdd':
-        e.preventDefault()
-        const newRateUp = Math.min(2, playbackRate + 0.25)
-        video.playbackRate = newRateUp
-        setPlaybackRate(newRateUp)
-        break
-      case 'Minus':
-      case 'NumpadSubtract':
-        e.preventDefault()
-        const newRateDown = Math.max(0.5, playbackRate - 0.25)
-        video.playbackRate = newRateDown
-        setPlaybackRate(newRateDown)
-        break
       case 'Digit0':
         e.preventDefault()
         video.currentTime = 0
-        resetControlsTimeout()
         break
       case 'Digit1':
       case 'Digit2':
@@ -203,11 +166,10 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
         e.preventDefault()
         const percentage = parseInt(e.code.slice(-1)) * 10
         video.currentTime = (duration * percentage) / 100
-        resetControlsTimeout()
         break
       }
     }
-  }, [playing, volume, duration, muted, playbackRate, showTimestamps, showSettings, onClose])
+  }, [playing, volume, duration, muted])
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress)
@@ -425,74 +387,55 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
 
   return (
     <div className="fixed inset-0 bg-black z-50 flex flex-col">
-      {/* Header - 8% */}
-      <div className="h-[8%] flex items-center justify-between px-8 bg-black/98 backdrop-blur-md border-b border-gray-700/50">
-        {onClose && (
-          <button
-            onClick={onClose}
-            className="flex items-center gap-3 px-5 py-3 bg-gray-900/80 backdrop-blur-sm rounded-xl hover:bg-gray-800/90 transition-all duration-200 text-white font-medium shadow-xl border border-gray-600/50 hover:border-gray-500/70"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span className="text-sm">Back</span>
-          </button>
-        )}
-        
-        {title && (
-          <div className="flex-1 flex justify-center">
-            <h1 className="text-white text-xl font-bold bg-gray-900/80 backdrop-blur-sm px-8 py-3 rounded-xl shadow-xl border border-gray-600/50 max-w-md truncate">
-              {title}
-            </h1>
-          </div>
-        )}
-        
-        <div className="flex items-center gap-4">
-          {/* Keyboard Shortcuts Help */}
-          <button
-            onClick={() => setShowKeyboardHelp(!showKeyboardHelp)}
-            className="flex items-center gap-2 px-4 py-3 bg-gray-900/80 backdrop-blur-sm rounded-xl hover:bg-gray-800/90 transition-all duration-200 text-white font-medium shadow-xl border border-gray-600/50 hover:border-gray-500/70"
-            title="Keyboard Shortcuts"
-          >
-            <Info className="w-5 h-5" />
-            <span className="text-sm">Help</span>
-          </button>
-        </div>
-      </div>
+            {/* Header - 10% */}
+            <div className="h-[10%] flex items-center justify-between px-4 bg-black/95 backdrop-blur-sm border-b border-gray-800">
+              {onClose && (
+                <button
+                  onClick={onClose}
+                  className="flex items-center gap-2 px-3 py-2 bg-black/80 backdrop-blur-sm rounded-lg hover:bg-gray-900/90 transition-all duration-200 text-white font-medium shadow-lg border border-gray-800"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back
+                </button>
+              )}
+              
+              {title && (
+                <div className="flex-1 flex justify-center">
+                  <h1 className="text-white text-base font-semibold bg-black/80 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg border border-gray-800">
+                    {title}
+                  </h1>
+                </div>
+              )}
+              
+              <div className="w-20"></div>
+            </div>
 
-      {/* Main Content - 92% */}
-      <div className="h-[92%] flex">
-        {/* Left Sidebar - Description (22%) */}
-        <div className="w-[22%] bg-gray-900/95 backdrop-blur-md border-r border-gray-700/50 flex flex-col">
-          <div className="p-8 border-b border-gray-700/50">
-            <h3 className="text-white font-bold text-xl mb-3 flex items-center gap-3">
-              <BookOpen className="w-6 h-6 text-blue-400" />
-              Description
-            </h3>
+      {/* Main Content - 90% */}
+      <div className="h-[90%] flex">
+        {/* Left Sidebar - Description (20%) */}
+        <div className="w-[20%] bg-black/95 backdrop-blur-sm border-r border-gray-800 flex flex-col">
+          <div className="p-4 border-b border-gray-800">
+            <h3 className="text-white font-semibold text-base mb-3">Description</h3>
             {author && (
-              <p className="text-gray-300 text-sm mb-4 font-medium">By {author}</p>
+              <p className="text-gray-300 text-sm mb-4">By {author}</p>
             )}
           </div>
 
           {/* Scrollable Description Content */}
-          <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
-            <div className="p-8">
-              <div className="text-gray-300 text-sm leading-relaxed space-y-8">
+          <div className="flex-1 overflow-y-auto">
+            <div className="p-4">
+              <div className="text-gray-300 text-sm leading-relaxed space-y-4">
                 {description && (
-                  <div className="mb-8">
-                    <h4 className="text-white font-bold mb-4 text-lg flex items-center gap-2">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                      About this lesson
-                    </h4>
-                    <p className="text-gray-300 leading-relaxed text-base">{description}</p>
+                  <div className="mb-4">
+                    <h4 className="text-white font-semibold mb-2 text-sm">About this lesson</h4>
+                    <p className="text-gray-300 leading-relaxed text-sm">{description}</p>
                   </div>
                 )}
                 
                 {content?.notes && (
-                  <div className="mb-8">
-                    <h4 className="text-white font-bold mb-4 text-lg flex items-center gap-2">
-                      <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                      Notes
-                    </h4>
-                    <div className="bg-gray-800/60 p-6 rounded-xl text-gray-300 leading-relaxed border border-gray-600/40 shadow-lg">
+                  <div className="mb-4">
+                    <h4 className="text-white font-semibold mb-2 text-sm">Notes</h4>
+                    <div className="bg-gray-800/50 p-3 rounded-lg text-gray-300 leading-relaxed border border-gray-700/30 text-sm">
                       {content.notes}
                     </div>
                   </div>
@@ -500,21 +443,18 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
                 
                 {content?.links && content.links.length > 0 && (
                   <div>
-                    <h4 className="text-white font-bold mb-4 text-lg flex items-center gap-2">
-                      <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                      Useful Links
-                    </h4>
-                    <div className="space-y-4">
+                    <h4 className="text-white font-semibold mb-2 text-sm">Useful Links</h4>
+                    <div className="space-y-2">
                       {content.links.map((link, index) => (
                         <a
                           key={index}
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-4 text-blue-400 hover:text-blue-300 transition-all duration-200 text-sm p-4 rounded-xl hover:bg-gray-800/40 border border-gray-600/40 hover:border-blue-500/60 shadow-md hover:shadow-lg"
+                          className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors text-sm p-2 rounded-lg hover:bg-gray-800/30 border border-gray-700/30 hover:border-blue-500/50"
                         >
-                          <ExternalLink className="w-5 h-5 flex-shrink-0" />
-                          <span className="truncate">{link.title}</span>
+                          <ExternalLink className="w-3 h-3" />
+                          {link.title}
                         </a>
                       ))}
                     </div>
@@ -525,8 +465,8 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
           </div>
         </div>
 
-        {/* Center - Video Player (56%) */}
-        <div className="w-[56%] relative bg-black">
+        {/* Center - Video Player (60%) */}
+        <div className="w-[60%] relative bg-black">
           <div
             ref={containerRef}
             className="relative w-full h-full group"
@@ -607,23 +547,23 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
             <div className={`absolute inset-0 transition-opacity duration-300 ${
               showControls ? 'opacity-100' : 'opacity-0'
             }`}>
-              {/* Center Play Button */}
-              {!playing && duration > 0 && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <button
-                    onClick={handleVideoClick}
-                    className="w-28 h-28 bg-black/90 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-black/95 transition-all duration-300 hover:scale-110 shadow-2xl border-2 border-white/40 hover:border-white/60"
-                  >
-                    <Play className="w-14 h-14 text-white ml-1 drop-shadow-lg" />
-                  </button>
-                </div>
-              )}
+                    {/* Center Play Button */}
+                    {!playing && duration > 0 && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <button
+                          onClick={handleVideoClick}
+                          className="w-20 h-20 bg-black/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/90 transition-all duration-200 hover:scale-110 shadow-2xl border-2 border-white/30"
+                        >
+                          <Play className="w-10 h-10 text-white ml-1 drop-shadow-lg" />
+                        </button>
+                      </div>
+                    )}
 
               {/* YouTube-style Bottom Controls */}
               <div className="absolute bottom-0 left-0 right-0">
                 {/* Progress Bar Container */}
                 <div 
-                  className="relative h-2 bg-gray-600/40 cursor-pointer group hover:h-3 transition-all duration-200"
+                  className="relative h-1 bg-gray-600/30 cursor-pointer group"
                   onMouseMove={handleProgressHover}
                   onMouseLeave={handleProgressLeave}
                   onClick={(e) => {
@@ -635,35 +575,35 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
                 >
                   {/* Progress Bar */}
                   <div 
-                    className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 to-blue-400 transition-all duration-100 rounded-full"
+                    className="absolute top-0 left-0 h-full bg-blue-500 transition-all duration-100"
                     style={{ width: `${(currentTime / duration) * 100}%` }}
                   />
                   
                   {/* Progress Handle */}
                   <div 
-                    className="absolute top-1/2 transform -translate-y-1/2 w-5 h-5 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-xl border-2 border-blue-500"
-                    style={{ left: `${(currentTime / duration) * 100}%`, marginLeft: '-10px' }}
+                    className="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg"
+                    style={{ left: `${(currentTime / duration) * 100}%`, marginLeft: '-8px' }}
                   />
                   
                   {/* Hover Preview */}
                   {isHoveringProgress && (
                     <div 
-                      className="absolute top-1/2 transform -translate-y-1/2 w-5 h-5 bg-blue-400 rounded-full shadow-xl border-2 border-white"
-                      style={{ left: `${hoverPosition}%`, marginLeft: '-10px' }}
+                      className="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-lg"
+                      style={{ left: `${hoverPosition}%`, marginLeft: '-8px' }}
                     />
                   )}
                 </div>
 
                 {/* Control Bar */}
-                <div className="bg-gradient-to-t from-black/95 to-transparent px-8 py-6">
+                <div className="bg-gradient-to-t from-black/90 to-transparent px-4 py-3">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-8">
+                    <div className="flex items-center space-x-4">
                       {/* Play/Pause */}
                       <button
                         onClick={handleVideoClick}
-                        className="text-white hover:text-gray-300 transition-all duration-200 p-3 rounded-full hover:bg-white/15 hover:scale-110"
+                        className="text-white hover:text-gray-300 transition-colors p-1.5 rounded-full hover:bg-white/10"
                       >
-                        {playing ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
+                        {playing ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                       </button>
 
                       {/* Skip Buttons */}
@@ -672,33 +612,33 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
                           skip(-10)
                           showSkipAnimation('left')
                         }}
-                        className="text-white hover:text-gray-300 transition-all duration-200 p-3 rounded-full hover:bg-white/15 hover:scale-110"
+                        className="text-white hover:text-gray-300 transition-colors p-1.5 rounded-full hover:bg-white/10"
                         title="Rewind 10s"
                       >
-                        <SkipBack className="w-6 h-6" />
+                        <SkipBack className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => {
                           skip(10)
                           showSkipAnimation('right')
                         }}
-                        className="text-white hover:text-gray-300 transition-all duration-200 p-3 rounded-full hover:bg-white/15 hover:scale-110"
+                        className="text-white hover:text-gray-300 transition-colors p-1.5 rounded-full hover:bg-white/10"
                         title="Forward 10s"
                       >
-                        <SkipForward className="w-6 h-6" />
+                        <SkipForward className="w-4 h-4" />
                       </button>
 
                       {/* Volume */}
-                      <div className="flex items-center space-x-4">
+                      <div className="flex items-center space-x-2">
                         <button
                           onClick={toggleMute}
-                          className="text-white hover:text-gray-300 transition-all duration-200 p-3 rounded-full hover:bg-white/15 hover:scale-110"
+                          className="text-white hover:text-gray-300 transition-colors p-1.5 rounded-full hover:bg-white/10"
                         >
-                          {muted || volume === 0 ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
+                          {muted || volume === 0 ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                         </button>
-                        <div className="w-32 h-2 bg-gray-600/50 rounded-full relative group hover:h-3 transition-all duration-200">
+                        <div className="w-20 h-1.5 bg-gray-600/50 rounded-full relative group">
                           <div 
-                            className="absolute top-0 left-0 h-full bg-gradient-to-r from-white to-gray-200 rounded-full"
+                            className="absolute top-0 left-0 h-full bg-white rounded-full"
                             style={{ width: `${muted ? 0 : volume * 100}%` }}
                           />
                           <input
@@ -714,41 +654,41 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
                       </div>
 
                       {/* Time Display */}
-                      <div className="text-white text-sm font-mono bg-black/70 backdrop-blur-sm px-5 py-3 rounded-xl border border-gray-600/50 shadow-lg">
+                      <div className="text-white text-xs font-mono bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded border border-gray-800">
                         {formatTime(currentTime)} / {formatTime(duration)}
                       </div>
                     </div>
 
-                    <div className="flex items-center space-x-3">
+                    <div className="flex items-center space-x-1">
                       {/* Captions */}
                       <button
-                        className="text-white hover:text-gray-300 transition-all duration-200 p-3 rounded-full hover:bg-white/15 hover:scale-110"
+                        className="text-white hover:text-gray-300 transition-colors p-1.5 rounded-full hover:bg-white/10"
                         title="Captions"
                       >
-                        <Captions className="w-6 h-6" />
+                        <Captions className="w-4 h-4" />
                       </button>
 
                       {/* Settings */}
                       <div className="relative">
                         <button
                           onClick={() => setShowSettings(!showSettings)}
-                          className="text-white hover:text-gray-300 transition-all duration-200 p-3 rounded-full hover:bg-white/15 hover:scale-110"
+                          className="text-white hover:text-gray-300 transition-colors p-1.5 rounded-full hover:bg-white/10"
                           title="Settings"
                         >
-                          <Settings className="w-6 h-6" />
+                          <Settings className="w-4 h-4" />
                         </button>
 
                         {showSettings && (
-                          <div className="absolute bottom-16 right-0 bg-black/98 backdrop-blur-md rounded-xl border border-gray-600/50 p-4 min-w-[160px] shadow-2xl">
-                            <div className="text-white text-sm font-bold mb-4">Playback Speed</div>
+                          <div className="absolute bottom-10 right-0 bg-black/95 backdrop-blur-sm rounded-lg border border-gray-700 p-2 min-w-[120px] shadow-2xl">
+                            <div className="text-white text-xs font-medium mb-2">Playback Speed</div>
                             {[0.5, 0.75, 1, 1.25, 1.5, 2].map(rate => (
                               <button
                                 key={rate}
                                 onClick={() => changePlaybackRate(rate)}
-                                className={`block w-full text-left px-4 py-3 text-sm rounded-lg transition-all duration-200 ${
+                                className={`block w-full text-left px-2 py-1.5 text-xs rounded transition-colors ${
                                   playbackRate === rate
-                                    ? 'bg-blue-600 text-white shadow-lg'
-                                    : 'text-white/80 hover:bg-gray-700/50 hover:text-white'
+                                    ? 'bg-blue-600 text-white'
+                                    : 'text-white/80 hover:bg-gray-700'
                                 }`}
                               >
                                 {rate}x
@@ -761,19 +701,19 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
                       {/* Picture-in-Picture */}
                       <button
                         onClick={togglePictureInPicture}
-                        className="text-white hover:text-gray-300 transition-all duration-200 p-3 rounded-full hover:bg-white/15 hover:scale-110"
+                        className="text-white hover:text-gray-300 transition-colors p-1.5 rounded-full hover:bg-white/10"
                         title="Picture-in-picture"
                       >
-                        <PictureInPicture className="w-6 h-6" />
+                        <PictureInPicture className="w-4 h-4" />
                       </button>
 
                       {/* Fullscreen */}
                       <button
                         onClick={toggleFullscreen}
-                        className="text-white hover:text-gray-300 transition-all duration-200 p-3 rounded-full hover:bg-white/15 hover:scale-110"
+                        className="text-white hover:text-gray-300 transition-colors p-1.5 rounded-full hover:bg-white/10"
                         title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
                       >
-                        {isFullscreen ? <Minimize className="w-6 h-6" /> : <Maximize className="w-6 h-6" />}
+                        {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
                       </button>
                     </div>
                   </div>
@@ -783,27 +723,27 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
           </div>
         </div>
 
-        {/* Right Sidebar - Timestamps (22%) */}
-        <div className="w-[22%] bg-gray-900/95 backdrop-blur-md border-l border-gray-700/50 flex flex-col">
-          <div className="p-8 border-b border-gray-700/50">
+        {/* Right Sidebar - Timestamps (20%) */}
+        <div className="w-[20%] bg-black/95 backdrop-blur-sm border-l border-gray-800 flex flex-col">
+          <div className="p-4 border-b border-gray-800">
             <div className="flex items-center justify-between">
-              <h3 className="text-white font-bold flex items-center gap-3 text-xl">
-                <Clock className="w-6 h-6 text-green-400" />
+              <h3 className="text-white font-semibold flex items-center gap-2 text-base">
+                <Clock className="w-4 h-4" />
                 Chapters
               </h3>
               <button
                 onClick={() => setShowTimestamps(!showTimestamps)}
-                className="text-gray-400 hover:text-white transition-all duration-200 p-3 rounded-xl hover:bg-white/10 hover:scale-110"
+                className="text-gray-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/10"
               >
-                {showTimestamps ? <ChevronUp className="w-6 h-6" /> : <ChevronDown className="w-6 h-6" />}
+                {showTimestamps ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </button>
             </div>
           </div>
 
           {/* Scrollable Timestamps List */}
           {showTimestamps && (
-            <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
-              <div className="p-8 space-y-4">
+            <div className="flex-1 overflow-y-auto">
+              <div className="p-4 space-y-2">
                 {timestamps.map((timestamp, index) => {
                   const isActive = getCurrentTimestamp()?.time === timestamp.time
                   const isPassed = currentTime > timestamp.time
@@ -812,25 +752,25 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
                     <button
                       key={index}
                       onClick={() => handleTimestampClick(timestamp)}
-                      className={`w-full text-left p-5 rounded-xl transition-all duration-300 backdrop-blur-sm hover:scale-[1.02] ${
+                      className={`w-full text-left p-3 rounded-lg transition-all duration-200 backdrop-blur-sm ${
                         isActive
-                          ? 'bg-gradient-to-r from-blue-600/90 to-blue-500/90 text-white shadow-xl border border-blue-400/70'
+                          ? 'bg-blue-600/80 text-white shadow-lg border border-blue-500/50'
                           : isPassed
-                          ? 'bg-white/8 text-gray-300 hover:bg-white/15 border border-gray-600/50 hover:border-gray-500/70'
-                          : 'text-gray-400 hover:bg-white/8 hover:text-white border border-gray-700/50 hover:border-gray-600/70'
+                          ? 'bg-white/5 text-gray-300 hover:bg-white/10 border border-gray-700/50'
+                          : 'text-gray-400 hover:bg-white/5 hover:text-white border border-gray-800/50'
                       }`}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
-                          <div className="text-sm font-bold truncate mb-2">
+                          <div className="text-xs font-semibold truncate mb-1">
                             {timestamp.title}
                           </div>
-                          <div className="text-xs opacity-80 font-mono">
+                          <div className="text-xs opacity-75">
                             {formatTime(timestamp.time)}
                           </div>
                         </div>
                         {isActive && (
-                          <div className="w-4 h-4 bg-white rounded-full animate-pulse shadow-lg"></div>
+                          <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
                         )}
                       </div>
                     </button>
@@ -842,84 +782,6 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
         </div>
       </div>
 
-      {/* Keyboard Shortcuts Help Panel */}
-      {showKeyboardHelp && (
-        <div className="absolute top-20 right-8 bg-black/98 backdrop-blur-md rounded-2xl p-6 text-white text-sm shadow-2xl border border-gray-600/50 z-50 min-w-[320px]">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="font-bold text-white text-lg flex items-center gap-3">
-              <Info className="w-6 h-6 text-blue-400" />
-              Keyboard Shortcuts
-            </h3>
-            <button
-              onClick={() => setShowKeyboardHelp(false)}
-              className="text-gray-300 hover:text-white transition-all duration-200 p-2 rounded-lg hover:bg-gray-700/50 text-xl font-bold"
-              title="Close"
-            >
-              ×
-            </button>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <kbd className="bg-gray-700 px-3 py-1 rounded text-xs font-mono">Space</kbd>
-                <span>Play/Pause</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <kbd className="bg-gray-700 px-3 py-1 rounded text-xs font-mono">←</kbd>
-                <span>Rewind 10s</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <kbd className="bg-gray-700 px-3 py-1 rounded text-xs font-mono">→</kbd>
-                <span>Forward 10s</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <kbd className="bg-gray-700 px-3 py-1 rounded text-xs font-mono">↑</kbd>
-                <span>Volume Up</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <kbd className="bg-gray-700 px-3 py-1 rounded text-xs font-mono">↓</kbd>
-                <span>Volume Down</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <kbd className="bg-gray-700 px-3 py-1 rounded text-xs font-mono">M</kbd>
-                <span>Mute/Unmute</span>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <kbd className="bg-gray-700 px-3 py-1 rounded text-xs font-mono">F</kbd>
-                <span>Fullscreen</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <kbd className="bg-gray-700 px-3 py-1 rounded text-xs font-mono">P</kbd>
-                <span>Picture-in-Picture</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <kbd className="bg-gray-700 px-3 py-1 rounded text-xs font-mono">C</kbd>
-                <span>Toggle Chapters</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <kbd className="bg-gray-700 px-3 py-1 rounded text-xs font-mono">S</kbd>
-                <span>Settings</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <kbd className="bg-gray-700 px-3 py-1 rounded text-xs font-mono">+/-</kbd>
-                <span>Speed Up/Down</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <kbd className="bg-gray-700 px-3 py-1 rounded text-xs font-mono">0-9</kbd>
-                <span>Jump to %</span>
-              </div>
-            </div>
-          </div>
-          <div className="mt-4 pt-4 border-t border-gray-600/50">
-            <div className="flex items-center gap-3">
-              <kbd className="bg-gray-700 px-3 py-1 rounded text-xs font-mono">Esc</kbd>
-              <span>Close/Exit Fullscreen</span>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Custom Styles */}
       <style>{`
@@ -967,29 +829,6 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
             transform: translateX(-100px) scale(0.8); 
             opacity: 0; 
           }
-        }
-
-        /* Custom Scrollbar Styles */
-        .scrollbar-thin {
-          scrollbar-width: thin;
-        }
-        
-        .scrollbar-thin::-webkit-scrollbar {
-          width: 6px;
-        }
-        
-        .scrollbar-thin::-webkit-scrollbar-track {
-          background: rgba(55, 65, 81, 0.3);
-          border-radius: 3px;
-        }
-        
-        .scrollbar-thin::-webkit-scrollbar-thumb {
-          background: rgba(75, 85, 99, 0.6);
-          border-radius: 3px;
-        }
-        
-        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-          background: rgba(107, 114, 128, 0.8);
         }
       `}</style>
     </div>
