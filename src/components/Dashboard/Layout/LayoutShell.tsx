@@ -216,18 +216,22 @@ export default function LayoutShell({ activeItem, onItemClick, children, onNavig
   const menuItems = getMenuItems(isAdminByEmail)
   const visibleMenu = menuItems.filter(m => !m.roles || m.roles.includes(role as 'student' | 'instructor' | 'admin') || role === 'admin')
 
-  // Search functionality
+  // Search functionality with debouncing for better performance
   useEffect(() => {
-    if (searchQuery.trim()) {
-      const results = searchContent(searchQuery)
-      setSearchResults(results)
-      setShowSearchResults(true)
-      setSelectedResultIndex(-1)
-    } else {
-      setSearchResults([])
-      setShowSearchResults(false)
-      setSelectedResultIndex(-1)
-    }
+    const timeoutId = setTimeout(() => {
+      if (searchQuery.trim()) {
+        const results = searchContent(searchQuery)
+        setSearchResults(results)
+        setShowSearchResults(true)
+        setSelectedResultIndex(-1)
+      } else {
+        setSearchResults([])
+        setShowSearchResults(false)
+        setSelectedResultIndex(-1)
+      }
+    }, 150) // Debounce search for better performance
+
+    return () => clearTimeout(timeoutId)
   }, [searchQuery])
 
   // Handle search result click
@@ -253,7 +257,8 @@ export default function LayoutShell({ activeItem, onItemClick, children, onNavig
     // Fallback to DOM-based navigation - navigate to course detail first
     onItemClick('course-detail', result.courseId)
     
-    setTimeout(() => {
+    // Immediate navigation without delays
+    requestAnimationFrame(() => {
       if (result.type === 'course') {
         // Just navigate to the course detail page
         const courseElement = document.querySelector(`[data-course-id="${result.courseId}"]`)
@@ -265,36 +270,36 @@ export default function LayoutShell({ activeItem, onItemClick, children, onNavig
         const courseElement = document.querySelector(`[data-course-id="${result.courseId}"]`)
         if (courseElement) {
           courseElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
-          // Trigger module click
-          setTimeout(() => {
+          // Immediate module click
+          requestAnimationFrame(() => {
             const moduleElement = courseElement.querySelector(`[data-module-id="${result.moduleId}"]`)
             if (moduleElement) {
               (moduleElement as HTMLElement).click()
             }
-          }, 300)
+          })
         }
       } else if (result.type === 'lesson') {
         // Navigate to specific course, module, and lesson
         const courseElement = document.querySelector(`[data-course-id="${result.courseId}"]`)
         if (courseElement) {
           courseElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
-          // Trigger module click first
-          setTimeout(() => {
+          // Immediate module click
+          requestAnimationFrame(() => {
             const moduleElement = courseElement.querySelector(`[data-module-id="${result.moduleId}"]`)
             if (moduleElement) {
               (moduleElement as HTMLElement).click()
-              // Then trigger lesson click
-              setTimeout(() => {
+              // Immediate lesson click
+              requestAnimationFrame(() => {
                 const lessonElement = document.querySelector(`[data-lesson-id="${result.id}"]`)
                 if (lessonElement) {
                   (lessonElement as HTMLElement).click()
                 }
-              }, 500)
+              })
             }
-          }, 300)
+          })
         }
       }
-    }, 500) // Increased timeout to allow course detail to load
+    })
   }
 
   // Keyboard navigation for search results

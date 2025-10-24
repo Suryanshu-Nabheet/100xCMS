@@ -40,28 +40,40 @@ function AppContent() {
     }
   }, []);
 
-  // Scroll position tracking
+  // Scroll position tracking with debouncing
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout
+    
     const handleScroll = () => {
-      const scrollY = window.scrollY
-      setScrollPositions(prev => ({
-        ...prev,
-        [activeView]: scrollY
-      }))
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => {
+        const scrollY = window.scrollY
+        setScrollPositions(prev => ({
+          ...prev,
+          [activeView]: scrollY
+        }))
+      }, 100) // Debounce scroll events
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      clearTimeout(timeoutId)
+    }
   }, [activeView])
 
-  // Restore scroll position when view changes
+  // Restore scroll position when view changes (with delay to ensure DOM is ready)
   useEffect(() => {
     const savedPosition = scrollPositions[activeView]
-    if (savedPosition !== undefined) {
-      window.scrollTo(0, savedPosition)
-    } else {
-      window.scrollTo(0, 0)
-    }
+    
+    // Use requestAnimationFrame to ensure DOM is ready
+    requestAnimationFrame(() => {
+      if (savedPosition !== undefined && savedPosition > 0) {
+        window.scrollTo({ top: savedPosition, behavior: 'instant' })
+      } else {
+        window.scrollTo({ top: 0, behavior: 'instant' })
+      }
+    })
   }, [activeView, scrollPositions])
   
   // Check if the current user's email is the admin email
@@ -87,46 +99,40 @@ function AppContent() {
   }
 
   const handleNavigateToCourse = (courseId: string, moduleId?: string, lessonId?: string) => {
-    // Always reset the course state first to ensure clean navigation
-    setSelectedCourseId(null)
+    // Navigate immediately without delays
+    setActiveView('course-detail')
+    setSelectedCourseId(courseId)
     
-    // Small delay to ensure state reset
-    setTimeout(() => {
-      // Navigate directly to course detail page
-      setActiveView('course-detail')
-      setSelectedCourseId(courseId)
-      
-      // If we need to navigate to a specific module or lesson, we'll handle it after the course loads
-      if (moduleId || lessonId) {
-        setTimeout(() => {
-          // Find the course element and trigger the appropriate clicks
-          const courseElement = document.querySelector(`[data-course-id="${courseId}"]`)
-          if (courseElement) {
-            courseElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
-            
-            if (moduleId) {
-              // Click on the module
-              setTimeout(() => {
-                const moduleElement = courseElement.querySelector(`[data-module-id="${moduleId}"]`)
-                if (moduleElement) {
-                  (moduleElement as HTMLElement).click()
-                  
-                  if (lessonId) {
-                    // Click on the lesson after module is opened
-                    setTimeout(() => {
-                      const lessonElement = document.querySelector(`[data-lesson-id="${lessonId}"]`)
-                      if (lessonElement) {
-                        (lessonElement as HTMLElement).click()
-                      }
-                    }, 500)
-                  }
+    // Handle module/lesson navigation immediately after state update
+    if (moduleId || lessonId) {
+      // Use requestAnimationFrame for immediate execution after DOM update
+      requestAnimationFrame(() => {
+        const courseElement = document.querySelector(`[data-course-id="${courseId}"]`)
+        if (courseElement) {
+          courseElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          
+          if (moduleId) {
+            // Immediate module click
+            requestAnimationFrame(() => {
+              const moduleElement = courseElement.querySelector(`[data-module-id="${moduleId}"]`)
+              if (moduleElement) {
+                (moduleElement as HTMLElement).click()
+                
+                if (lessonId) {
+                  // Immediate lesson click
+                  requestAnimationFrame(() => {
+                    const lessonElement = document.querySelector(`[data-lesson-id="${lessonId}"]`)
+                    if (lessonElement) {
+                      (lessonElement as HTMLElement).click()
+                    }
+                  })
                 }
-              }, 300)
-            }
+              }
+            })
           }
-        }, 500) // Increased timeout to allow course detail to load
-      }
-    }, 50) // Small delay to ensure state reset
+        }
+      })
+    }
   }
 
   const renderContent = () => {

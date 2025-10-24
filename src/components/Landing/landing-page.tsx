@@ -372,28 +372,40 @@ export default function LandingPage() {
     };
   }, []);
 
-  // Scroll position tracking
+  // Scroll position tracking with debouncing
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout
+    
     const handleScroll = () => {
-      const scrollY = window.scrollY
-      setScrollPositions(prev => ({
-        ...prev,
-        [currentPage]: scrollY
-      }))
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => {
+        const scrollY = window.scrollY
+        setScrollPositions(prev => ({
+          ...prev,
+          [currentPage]: scrollY
+        }))
+      }, 100) // Debounce scroll events
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      clearTimeout(timeoutId)
+    }
   }, [currentPage])
 
-  // Restore scroll position when page changes
+  // Restore scroll position when page changes (with delay to ensure DOM is ready)
   useEffect(() => {
     const savedPosition = scrollPositions[currentPage]
-    if (savedPosition !== undefined) {
-      window.scrollTo(0, savedPosition)
-    } else {
-      window.scrollTo(0, 0)
-    }
+    
+    // Use requestAnimationFrame to ensure DOM is ready
+    requestAnimationFrame(() => {
+      if (savedPosition !== undefined && savedPosition > 0) {
+        window.scrollTo({ top: savedPosition, behavior: 'instant' })
+      } else {
+        window.scrollTo({ top: 0, behavior: 'instant' })
+      }
+    })
   }, [currentPage, scrollPositions])
 
   // Handle navigation
