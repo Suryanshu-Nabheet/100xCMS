@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { 
   Play, Pause, Volume2, VolumeX, Maximize, Minimize, 
   Settings, SkipBack, SkipForward, ArrowLeft, Clock,
-  ChevronUp, ChevronDown, Captions, PictureInPicture
+  ChevronUp, ChevronDown, Captions, PictureInPicture,
+  ExternalLink, BookOpen, ChevronRight
 } from 'lucide-react'
 
 interface Timestamp {
@@ -10,16 +11,27 @@ interface Timestamp {
   title: string
 }
 
+interface CourseContent {
+  notes?: string
+  links?: Array<{
+    title: string
+    url: string
+  }>
+}
+
 interface VideoPlayerProps {
   src: string
   title?: string
   timestamps?: Timestamp[]
+  description?: string
+  author?: string
+  content?: CourseContent
   onClose?: () => void
   onProgress?: (progress: number) => void
   onComplete?: () => void
 }
 
-export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, onComplete }: VideoPlayerProps) {
+export function VideoPlayer({ src, title, timestamps = [], description, author, content, onClose, onProgress, onComplete }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   
@@ -47,6 +59,9 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
   const [videoError, setVideoError] = useState<string | null>(null)
   const [videoSources, setVideoSources] = useState<string[]>([])
   const [currentSourceIndex, setCurrentSourceIndex] = useState(0)
+  
+  // Content viewer state
+  const [showDescription, setShowDescription] = useState(false)
 
   // Set up fallback video sources
   useEffect(() => {
@@ -371,36 +386,87 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
   }
 
   return (
-    <div className="fixed inset-0 bg-black z-50 flex">
-      {/* Header */}
-      <div className="absolute top-0 left-0 right-0 z-20 p-4">
-        <div className="flex items-center justify-between">
-          {onClose && (
-            <button
-              onClick={onClose}
-              className="flex items-center gap-2 px-4 py-2 bg-black/80 backdrop-blur-sm rounded-lg hover:bg-gray-900/90 transition-all duration-200 text-white font-medium shadow-lg border border-gray-800"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back
-            </button>
-          )}
-          
-          {title && (
-            <div className="flex-1 flex justify-center">
-              <h1 className="text-white text-lg font-semibold bg-black/80 backdrop-blur-sm px-6 py-2 rounded-lg shadow-lg border border-gray-800">
-                {title}
-              </h1>
-            </div>
-          )}
-          
-          <div className="w-24"></div>
-        </div>
+    <div className="fixed inset-0 bg-black z-50 flex flex-col">
+      {/* Header - 10% */}
+      <div className="h-[10%] flex items-center justify-between px-6 bg-black/95 backdrop-blur-sm border-b border-gray-800">
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="flex items-center gap-2 px-4 py-2 bg-black/80 backdrop-blur-sm rounded-lg hover:bg-gray-900/90 transition-all duration-200 text-white font-medium shadow-lg border border-gray-800"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back
+          </button>
+        )}
+        
+        {title && (
+          <div className="flex-1 flex justify-center">
+            <h1 className="text-white text-lg font-semibold bg-black/80 backdrop-blur-sm px-6 py-2 rounded-lg shadow-lg border border-gray-800">
+              {title}
+            </h1>
+          </div>
+        )}
+        
+        <div className="w-24"></div>
       </div>
 
-      {/* Main Content - 80/20 Split */}
-      <div className="flex w-full h-full pt-16 px-4 pb-4">
-        {/* Video Area - 80% */}
-        <div className="w-4/5 relative bg-black rounded-l-2xl overflow-hidden shadow-2xl border border-gray-800 border-r-0">
+      {/* Main Content - 90% */}
+      <div className="h-[90%] flex">
+        {/* Left Sidebar - Description (20%) */}
+        <div className="w-[20%] bg-black/95 backdrop-blur-sm border-r border-gray-800 flex flex-col">
+          <div className="p-6 border-b border-gray-800">
+            <h3 className="text-white font-semibold text-lg mb-4">Description</h3>
+            {author && (
+              <p className="text-gray-300 text-sm mb-6">By {author}</p>
+            )}
+          </div>
+
+          {/* Scrollable Description Content */}
+          <div className="flex-1 overflow-y-auto">
+            <div className="p-6">
+              <div className="text-gray-300 text-sm leading-relaxed space-y-6">
+                {description && (
+                  <div className="mb-6">
+                    <h4 className="text-white font-semibold mb-3 text-base">About this lesson</h4>
+                    <p className="text-gray-300 leading-relaxed">{description}</p>
+                  </div>
+                )}
+                
+                {content?.notes && (
+                  <div className="mb-6">
+                    <h4 className="text-white font-semibold mb-3 text-base">Notes</h4>
+                    <div className="bg-gray-800/50 p-4 rounded-lg text-gray-300 leading-relaxed border border-gray-700/30">
+                      {content.notes}
+                    </div>
+                  </div>
+                )}
+                
+                {content?.links && content.links.length > 0 && (
+                  <div>
+                    <h4 className="text-white font-semibold mb-3 text-base">Useful Links</h4>
+                    <div className="space-y-3">
+                      {content.links.map((link, index) => (
+                        <a
+                          key={index}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-3 text-blue-400 hover:text-blue-300 transition-colors text-sm p-3 rounded-lg hover:bg-gray-800/30 border border-gray-700/30 hover:border-blue-500/50"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          {link.title}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Center - Video Player (60%) */}
+        <div className="w-[60%] relative bg-black">
           <div
             ref={containerRef}
             className="relative w-full h-full group"
@@ -529,9 +595,9 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
                 </div>
 
                 {/* Control Bar */}
-                <div className="bg-gradient-to-t from-black/90 to-transparent px-4 py-3">
+                <div className="bg-gradient-to-t from-black/90 to-transparent px-6 py-4">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-6">
                       {/* Play/Pause */}
                       <button
                         onClick={handleVideoClick}
@@ -563,14 +629,14 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
                       </button>
 
                       {/* Volume */}
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-3">
                         <button
                           onClick={toggleMute}
                           className="text-white hover:text-gray-300 transition-colors p-2 rounded-full hover:bg-white/10"
                         >
                           {muted || volume === 0 ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
                         </button>
-                        <div className="w-20 h-1 bg-gray-600/50 rounded-full relative group">
+                        <div className="w-24 h-2 bg-gray-600/50 rounded-full relative group">
                           <div 
                             className="absolute top-0 left-0 h-full bg-white rounded-full"
                             style={{ width: `${muted ? 0 : volume * 100}%` }}
@@ -588,7 +654,7 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
                       </div>
 
                       {/* Time Display */}
-                      <div className="text-white text-sm font-mono bg-black/60 backdrop-blur-sm px-3 py-1 rounded border border-gray-800">
+                      <div className="text-white text-sm font-mono bg-black/60 backdrop-blur-sm px-4 py-2 rounded-lg border border-gray-800">
                         {formatTime(currentTime)} / {formatTime(duration)}
                       </div>
                     </div>
@@ -657,67 +723,65 @@ export function VideoPlayer({ src, title, timestamps = [], onClose, onProgress, 
           </div>
         </div>
 
-        {/* Timestamps Sidebar - 20% */}
-        <div className="w-1/5 bg-black/95 backdrop-blur-sm border border-gray-800 border-l-0 rounded-r-2xl shadow-2xl">
-          <div className="h-full flex flex-col">
-            {/* Timestamps Header */}
-            <div className="p-6 border-b border-gray-800">
-              <div className="flex items-center justify-between">
-                <h3 className="text-white font-semibold flex items-center gap-3 text-lg">
-                  <Clock className="w-5 h-5" />
-                  Chapters
-                </h3>
-                <button
-                  onClick={() => setShowTimestamps(!showTimestamps)}
-                  className="text-gray-400 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10"
-                >
-                  {showTimestamps ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-                </button>
+        {/* Right Sidebar - Timestamps (20%) */}
+        <div className="w-[20%] bg-black/95 backdrop-blur-sm border-l border-gray-800 flex flex-col">
+          <div className="p-6 border-b border-gray-800">
+            <div className="flex items-center justify-between">
+              <h3 className="text-white font-semibold flex items-center gap-2 text-lg">
+                <Clock className="w-5 h-5" />
+                Chapters
+              </h3>
+              <button
+                onClick={() => setShowTimestamps(!showTimestamps)}
+                className="text-gray-400 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10"
+              >
+                {showTimestamps ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+              </button>
+            </div>
+          </div>
+
+          {/* Scrollable Timestamps List */}
+          {showTimestamps && (
+            <div className="flex-1 overflow-y-auto">
+              <div className="p-6 space-y-3">
+                {timestamps.map((timestamp, index) => {
+                  const isActive = getCurrentTimestamp()?.time === timestamp.time
+                  const isPassed = currentTime > timestamp.time
+                  
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => handleTimestampClick(timestamp)}
+                      className={`w-full text-left p-4 rounded-xl transition-all duration-200 backdrop-blur-sm ${
+                        isActive
+                          ? 'bg-blue-600/80 text-white shadow-lg border border-blue-500/50'
+                          : isPassed
+                          ? 'bg-white/5 text-gray-300 hover:bg-white/10 border border-gray-700/50'
+                          : 'text-gray-400 hover:bg-white/5 hover:text-white border border-gray-800/50'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className="text-sm font-semibold truncate mb-1">
+                            {timestamp.title}
+                          </div>
+                          <div className="text-xs opacity-75">
+                            {formatTime(timestamp.time)}
+                          </div>
+                        </div>
+                        {isActive && (
+                          <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
+                        )}
+                      </div>
+                    </button>
+                  )
+                })}
               </div>
             </div>
-
-            {/* Timestamps List */}
-            {showTimestamps && (
-              <div className="flex-1 overflow-y-auto">
-                <div className="p-4 space-y-2">
-                  {timestamps.map((timestamp, index) => {
-                    const isActive = getCurrentTimestamp()?.time === timestamp.time
-                    const isPassed = currentTime > timestamp.time
-                    
-                    return (
-                      <button
-                        key={index}
-                        onClick={() => handleTimestampClick(timestamp)}
-                        className={`w-full text-left p-4 rounded-xl transition-all duration-200 backdrop-blur-sm ${
-                          isActive
-                            ? 'bg-blue-600/80 text-white shadow-lg border border-blue-500/50'
-                            : isPassed
-                            ? 'bg-white/5 text-gray-300 hover:bg-white/10 border border-gray-700/50'
-                            : 'text-gray-400 hover:bg-white/5 hover:text-white border border-gray-800/50'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex-1">
-                            <div className="text-sm font-medium truncate">
-                              {timestamp.title}
-                            </div>
-                            <div className="text-xs opacity-75 mt-1">
-                              {formatTime(timestamp.time)}
-                            </div>
-                          </div>
-                          {isActive && (
-                            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                          )}
-                        </div>
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
-            )}
-          </div>
+          )}
         </div>
       </div>
+
 
       {/* Custom Styles */}
       <style>{`

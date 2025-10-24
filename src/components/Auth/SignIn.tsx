@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSignIn } from '@clerk/clerk-react';
-import { Eye, EyeOff, X, Mail, Lock } from 'lucide-react';
+import { Eye, EyeOff, X, Mail, Lock, AlertCircle } from 'lucide-react';
 
 interface SignInProps {
   isOpen: boolean;
@@ -15,6 +15,7 @@ export function SignIn({ isOpen, onClose, onSwitchToSignUp }: SignInProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
@@ -24,6 +25,7 @@ export function SignIn({ isOpen, onClose, onSwitchToSignUp }: SignInProps) {
 
     setIsLoading(true);
     setError(null);
+    setSuccess(null);
 
     try {
       const result = await signIn.create({
@@ -31,19 +33,66 @@ export function SignIn({ isOpen, onClose, onSwitchToSignUp }: SignInProps) {
         password,
       });
 
+      console.log('Sign in result:', result);
+
       if (result.status === 'complete') {
         await setActive({ session: result.createdSessionId });
-        onClose();
+        setSuccess('Successfully signed in!');
         // Reset form
         setEmailAddress('');
         setPassword('');
+        // Close modal after a brief delay
+        setTimeout(() => {
+          onClose();
+        }, 1000);
+      } else if (result.status === 'needs_first_factor') {
+        // Handle two-factor authentication if needed
+        console.log('Two-factor authentication required:', result);
+        
+        // For now, let's skip verification and show a helpful message
+        setError('This account requires additional verification. Please contact support or try signing in with a different account.');
+        
+        // Optional: Try to handle verification if available
+        try {
+          const availableFactors = result.supportedFirstFactors || [];
+          if (availableFactors.length > 0) {
+            const factor = availableFactors[0];
+            const emailAddressId = (factor as { emailAddressId?: string }).emailAddressId;
+            if (emailAddressId) {
+              await signIn.prepareFirstFactor({
+                strategy: factor.strategy as 'email_code' | 'phone_code',
+                emailAddressId,
+              });
+            }
+            setError('Two-factor authentication required. Please check your email or phone for verification code.');
+          }
+        } catch {
+          console.log('Verification not available, continuing without it');
+          // Don't show additional error, keep the original message
+        }
+      } else if (result.status === 'needs_second_factor') {
+        // Handle second factor
+        setError('Additional verification required. Please complete the verification process.');
       } else {
         console.error('Sign in incomplete:', result);
         setError('Sign in incomplete. Please try again.');
       }
     } catch (err: unknown) {
+      console.error('Sign in error:', err);
       const errorMessage = (err as { errors?: Array<{ message: string }> })?.errors?.[0]?.message || 'An error occurred during sign in';
-      setError(errorMessage);
+      
+      // Provide more user-friendly error messages
+      if (errorMessage.includes('password')) {
+        setError('Invalid email or password. Please check your credentials.');
+      } else if (errorMessage.includes('email')) {
+        setError('Please enter a valid email address.');
+      } else if (errorMessage.includes('rate limit')) {
+        setError('Too many attempts. Please wait a moment before trying again.');
+      } else if (errorMessage.includes('verification strategy')) {
+        setError('Account verification is not properly configured. Please contact support or try signing in with a different method.');
+      } else {
+        setError(errorMessage);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -52,21 +101,54 @@ export function SignIn({ isOpen, onClose, onSwitchToSignUp }: SignInProps) {
   const handleSocialSignIn = async (strategy: 'oauth_google' | 'oauth_apple' | 'oauth_microsoft') => {
     if (!isLoaded) return;
 
+    setIsLoading(true);
+    setError(null);
+
     try {
       await signIn.authenticateWithRedirect({
         strategy,
-        redirectUrl: '/',
-        redirectUrlComplete: '/',
+        redirectUrl: '/dashboard',
+        redirectUrlComplete: '/dashboard',
       });
     } catch (err: unknown) {
+      console.error('Social sign in error:', err);
       const errorMessage = (err as { errors?: Array<{ message: string }> })?.errors?.[0]?.message || 'Social sign in failed';
       setError(errorMessage);
+      setIsLoading(false);
     }
   };
 
-  const handleForgotPassword = () => {
-    // TODO: Implement forgot password flow
-    console.log('Forgot password clicked');
+  const handleForgotPassword = async () => {
+    if (!isLoaded || !emailAddress) {
+      setError('Please enter your email address first.');
+      return;
+    }
+
+    try {
+      // Try a simple password reset approach
+      const signInAttempt = await signIn.create({
+        identifier: emailAddress,
+      });
+      
+      console.log('Sign in attempt for password reset:', signInAttempt);
+      
+      // Try to prepare password reset without specifying strategy
+      try {
+        await signIn.prepareFirstFactor({
+          strategy: 'reset_password_email_code',
+          emailAddressId: emailAddress,
+        } as { strategy: 'reset_password_email_code'; emailAddressId: string });
+        setSuccess('Password reset email sent! Check your inbox.');
+      } catch (resetError) {
+        console.error('Password reset failed:', resetError);
+        // If reset fails, show a helpful message
+        setError('Password reset is not available. Please contact support or try signing in with your current password.');
+      }
+    } catch (err: unknown) {
+      console.error('Password reset error:', err);
+      const errorMessage = (err as { errors?: Array<{ message: string }> })?.errors?.[0]?.message || 'Failed to send reset email';
+      setError(errorMessage);
+    }
   };
 
   return (
@@ -90,8 +172,18 @@ export function SignIn({ isOpen, onClose, onSwitchToSignUp }: SignInProps) {
         </div>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm" role="alert">
+          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm flex items-center gap-2" role="alert">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
             {error}
+          </div>
+        )}
+
+        {success && (
+          <div className="mb-4 p-3 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm flex items-center gap-2" role="alert">
+            <div className="w-4 h-4 flex-shrink-0 rounded-full bg-green-500 flex items-center justify-center">
+              <div className="w-2 h-2 bg-white rounded-full"></div>
+            </div>
+            {success}
           </div>
         )}
 
@@ -131,6 +223,7 @@ export function SignIn({ isOpen, onClose, onSwitchToSignUp }: SignInProps) {
                 required
                 autoComplete="current-password"
                 disabled={isLoading}
+                minLength={8}
               />
               <button
                 type="button"
@@ -185,7 +278,7 @@ export function SignIn({ isOpen, onClose, onSwitchToSignUp }: SignInProps) {
             <button
               type="button"
               onClick={() => handleSocialSignIn('oauth_google')}
-              className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white transition-all duration-200 text-sm"
+              className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white transition-all duration-200 text-sm disabled:opacity-50"
               disabled={isLoading || !isLoaded}
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -200,7 +293,7 @@ export function SignIn({ isOpen, onClose, onSwitchToSignUp }: SignInProps) {
             <button
               type="button"
               onClick={() => handleSocialSignIn('oauth_apple')}
-              className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white transition-all duration-200 text-sm"
+              className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white transition-all duration-200 text-sm disabled:opacity-50"
               disabled={isLoading || !isLoaded}
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -212,7 +305,7 @@ export function SignIn({ isOpen, onClose, onSwitchToSignUp }: SignInProps) {
             <button
               type="button"
               onClick={() => handleSocialSignIn('oauth_microsoft')}
-              className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white transition-all duration-200 text-sm"
+              className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white transition-all duration-200 text-sm disabled:opacity-50"
               disabled={isLoading || !isLoaded}
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">

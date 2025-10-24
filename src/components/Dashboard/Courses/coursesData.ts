@@ -15,6 +15,30 @@ export interface Course {
   discordLink?: string
 }
 
+export interface CourseContent {
+  id: string
+  title: string
+  thumbnail: string
+  duration: string
+  completed: boolean
+  contentType: 'video' | 'pdf'
+  videoUrl?: string
+  pdfUrl?: string
+  timestamps?: Array<{
+    time: number
+    title: string
+  }>
+  description?: string
+  author?: string
+  content?: {
+    notes?: string
+    links?: Array<{
+      title: string
+      url: string
+    }>
+  }
+}
+
 export interface CourseDetail {
   id: string
   title: string
@@ -23,13 +47,7 @@ export interface CourseDetail {
   modules: Array<{
     id: string
     title: string
-    lessons: Array<{
-      id: string
-      title: string
-      thumbnail: string
-      duration: string
-      completed: boolean
-    }>
+    lessons: CourseContent[]
   }>
   whatYouWillLearn: string[]
   requirements: string[]

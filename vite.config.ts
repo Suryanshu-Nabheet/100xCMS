@@ -7,8 +7,25 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  // Remove hardcoded environment variables - they should come from .env file
+  server: {
+    port: 3000,
+    host: true,
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    minify: 'terser',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          clerk: ['@clerk/clerk-react'],
+        },
+      },
+    },
+  },
   define: {
-    'import.meta.env.VITE_CLERK_PUBLISHABLE_KEY': JSON.stringify('pk_test_aW1tZW5zZS1ncmFja2xlLTI0LmNsZXJrLmFjY291bnRzLmRldiQ'),
-    'import.meta.env.VITE_CLERK_SECRET_KEY': JSON.stringify('sk_test_Da5TLNMHCM7mMFoawvfYuiL5KoEUzeCN8P7xOIohhn'),
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
   },
 });

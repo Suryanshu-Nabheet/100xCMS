@@ -11,18 +11,18 @@ interface AdminUser {
   lastLogin?: string
 }
 
-// Default admin credentials
+// Default admin credentials - SECURITY WARNING: Change these in production!
 const DEFAULT_ADMIN: AdminUser = {
   id: 'admin-1',
   name: 'Suryanshu Nabheet',
   email: 'suryanshunab@gmail.com',
-  password: 'suryanshu@30052010', // In production, this should be hashed
+  password: 'suryanshu@30052010', // ⚠️ SECURITY RISK: Hardcoded password - change in production!
   role: 'super-admin',
   createdAt: new Date().toISOString()
 }
 
-const ADMIN_STORAGE_KEY = 'cms_admin_users'
-const ADMIN_SESSION_KEY = 'cms_admin_session'
+const ADMIN_STORAGE_KEY = 'classx_cms_admin_users'
+const ADMIN_SESSION_KEY = 'classx_cms_admin_session'
 
 export function useAdminAuth() {
   const [isAdmin, setIsAdmin] = useState(false)
@@ -115,7 +115,7 @@ export function useAdminAuth() {
       id: `admin-${Date.now()}`,
       name,
       email,
-      password, // In production, this should be hashed
+      password, // ⚠️ SECURITY RISK: Password should be hashed in production!
       role: 'admin',
       createdAt: new Date().toISOString()
     }
