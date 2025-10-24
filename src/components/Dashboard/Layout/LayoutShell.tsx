@@ -1,9 +1,11 @@
 "use client"
-import { useState, type ReactNode } from 'react'
+import { useState, useEffect, useRef, type ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ClerkAccountHandler } from './Account'
 import { useAdminAuth } from '../../Admin'
 import { useUser } from '@clerk/clerk-react'
+import { courseDetails } from '../Courses/coursesData'
+import { Search, X, Play, FileText, Clock } from 'lucide-react'
 
 
 // Icons
@@ -41,12 +43,6 @@ const IconMenu = ({ className }: { className?: string }) => (
     <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
   </svg>
 )
-const IconSearch = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-    <circle strokeLinecap="round" strokeLinejoin="round" cx="11" cy="11" r="8" />
-    <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-4.35-4.35" />
-  </svg>
-)
 const IconBell = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M14.828 14.828a4 4 0 0 1-5.656 0M9 10a3 3 0 1 1 6 0M15 17h5l-1.405-1.405A2.032 2.032 0 0 1 18 14.158V11a6.002 6.002 0 0 0-4-5.659V5a2 2 0 1 0-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 1 1-6 0v-1m6 0H9" />
@@ -61,12 +57,118 @@ const IconShield = ({ className }: { className?: string }) => (
 // Utils
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ')
 
+// Search Types
+interface SearchResult {
+  id: string
+  type: 'course' | 'module' | 'lesson'
+  title: string
+  description?: string
+  courseId: string
+  courseTitle: string
+  moduleId?: string
+  moduleTitle?: string
+  contentType?: 'video' | 'pdf'
+  duration?: string
+  author?: string
+  thumbnail?: string
+  url?: string
+  timestamps?: Array<{ time: number; title: string }>
+}
+
 // Types
 interface MenuItem {
   id: string
   label: string
   icon: ReactNode
   roles?: Array<'student' | 'instructor' | 'admin'>
+}
+
+// Search Functions
+const searchContent = (query: string): SearchResult[] => {
+  if (!query.trim()) return []
+  
+  const results: SearchResult[] = []
+  const searchTerm = query.toLowerCase().trim()
+  
+  // Search through all courses
+  Object.entries(courseDetails).forEach(([, course]) => {
+    // Search course title
+    if (course.title.toLowerCase().includes(searchTerm)) {
+      results.push({
+        id: course.id,
+        type: 'course',
+        title: course.title,
+        courseId: course.id,
+        courseTitle: course.title,
+        thumbnail: course.banner
+      })
+    }
+    
+    // Search through modules
+    course.modules?.forEach(module => {
+      // Search module title
+      if (module.title.toLowerCase().includes(searchTerm)) {
+        results.push({
+          id: module.id,
+          type: 'module',
+          title: module.title,
+          courseId: course.id,
+          courseTitle: course.title,
+          moduleId: module.id,
+          moduleTitle: module.title,
+          thumbnail: '/public/Content-Cover.png'
+        })
+      }
+      
+      // Search through lessons
+      module.lessons?.forEach(lesson => {
+        const lessonMatches = 
+          lesson.title.toLowerCase().includes(searchTerm) ||
+          lesson.description?.toLowerCase().includes(searchTerm) ||
+          lesson.author?.toLowerCase().includes(searchTerm) ||
+          lesson.content?.notes?.toLowerCase().includes(searchTerm) ||
+          lesson.content?.links?.some(link => 
+            link.title.toLowerCase().includes(searchTerm) || 
+            link.url.toLowerCase().includes(searchTerm)
+          ) ||
+          lesson.timestamps?.some(timestamp => 
+            timestamp.title.toLowerCase().includes(searchTerm)
+          )
+        
+        if (lessonMatches) {
+          results.push({
+            id: lesson.id,
+            type: 'lesson',
+            title: lesson.title,
+            description: lesson.description,
+            courseId: course.id,
+            courseTitle: course.title,
+            moduleId: module.id,
+            moduleTitle: module.title,
+            contentType: lesson.contentType,
+            duration: lesson.duration,
+            author: lesson.author,
+            thumbnail: lesson.thumbnail,
+            url: lesson.contentType === 'video' ? lesson.videoUrl : lesson.pdfUrl,
+            timestamps: lesson.timestamps
+          })
+        }
+      })
+    })
+  })
+  
+  // Sort results by relevance (exact matches first, then partial matches)
+  return results.sort((a, b) => {
+    const aExact = a.title.toLowerCase() === searchTerm
+    const bExact = b.title.toLowerCase() === searchTerm
+    
+    if (aExact && !bExact) return -1
+    if (!aExact && bExact) return 1
+    
+    // Then by type priority: course > module > lesson
+    const typePriority = { course: 0, module: 1, lesson: 2 }
+    return typePriority[a.type] - typePriority[b.type]
+  })
 }
 
 const getMenuItems = (isAdmin: boolean): MenuItem[] => {
@@ -89,12 +191,20 @@ const getMenuItems = (isAdmin: boolean): MenuItem[] => {
 
 interface LayoutShellProps {
   activeItem: string
-  onItemClick: (view: string) => void
+  onItemClick: (view: string, courseId?: string) => void
   children: ReactNode
+  onNavigateToCourse?: (courseId: string, moduleId?: string, lessonId?: string) => void
 }
 
-export default function LayoutShell({ activeItem, onItemClick, children }: LayoutShellProps) {
+export default function LayoutShell({ activeItem, onItemClick, children, onNavigateToCourse }: LayoutShellProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([])
+  const [showSearchResults, setShowSearchResults] = useState(false)
+  const [selectedResultIndex, setSelectedResultIndex] = useState(-1)
+  const searchInputRef = useRef<HTMLInputElement>(null)
+  const searchResultsRef = useRef<HTMLDivElement>(null)
+  
   const { user } = useUser()
   const { isAdminEmail } = useAdminAuth()
   
@@ -105,6 +215,131 @@ export default function LayoutShell({ activeItem, onItemClick, children }: Layou
   const role = isAdminByEmail ? 'admin' : 'student'
   const menuItems = getMenuItems(isAdminByEmail)
   const visibleMenu = menuItems.filter(m => !m.roles || m.roles.includes(role as 'student' | 'instructor' | 'admin') || role === 'admin')
+
+  // Search functionality
+  useEffect(() => {
+    if (searchQuery.trim()) {
+      const results = searchContent(searchQuery)
+      setSearchResults(results)
+      setShowSearchResults(true)
+      setSelectedResultIndex(-1)
+    } else {
+      setSearchResults([])
+      setShowSearchResults(false)
+      setSelectedResultIndex(-1)
+    }
+  }, [searchQuery])
+
+  // Handle search result click
+  const handleSearchResultClick = (result: SearchResult) => {
+    // Clear search first
+    setSearchQuery('')
+    setShowSearchResults(false)
+    setSelectedResultIndex(-1)
+    
+    // Use the new navigation system if available
+    if (onNavigateToCourse) {
+      // Always navigate to ensure clean state
+      if (result.type === 'course') {
+        onNavigateToCourse(result.courseId)
+      } else if (result.type === 'module') {
+        onNavigateToCourse(result.courseId, result.moduleId)
+      } else if (result.type === 'lesson') {
+        onNavigateToCourse(result.courseId, result.moduleId, result.id)
+      }
+      return
+    }
+    
+    // Fallback to DOM-based navigation - navigate to course detail first
+    onItemClick('course-detail', result.courseId)
+    
+    setTimeout(() => {
+      if (result.type === 'course') {
+        // Just navigate to the course detail page
+        const courseElement = document.querySelector(`[data-course-id="${result.courseId}"]`)
+        if (courseElement) {
+          courseElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+      } else if (result.type === 'module') {
+        // Navigate to specific course and module
+        const courseElement = document.querySelector(`[data-course-id="${result.courseId}"]`)
+        if (courseElement) {
+          courseElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          // Trigger module click
+          setTimeout(() => {
+            const moduleElement = courseElement.querySelector(`[data-module-id="${result.moduleId}"]`)
+            if (moduleElement) {
+              (moduleElement as HTMLElement).click()
+            }
+          }, 300)
+        }
+      } else if (result.type === 'lesson') {
+        // Navigate to specific course, module, and lesson
+        const courseElement = document.querySelector(`[data-course-id="${result.courseId}"]`)
+        if (courseElement) {
+          courseElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          // Trigger module click first
+          setTimeout(() => {
+            const moduleElement = courseElement.querySelector(`[data-module-id="${result.moduleId}"]`)
+            if (moduleElement) {
+              (moduleElement as HTMLElement).click()
+              // Then trigger lesson click
+              setTimeout(() => {
+                const lessonElement = document.querySelector(`[data-lesson-id="${result.id}"]`)
+                if (lessonElement) {
+                  (lessonElement as HTMLElement).click()
+                }
+              }, 500)
+            }
+          }, 300)
+        }
+      }
+    }, 500) // Increased timeout to allow course detail to load
+  }
+
+  // Keyboard navigation for search results
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!showSearchResults || searchResults.length === 0) return
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault()
+        setSelectedResultIndex(prev => 
+          prev < searchResults.length - 1 ? prev + 1 : 0
+        )
+        break
+      case 'ArrowUp':
+        e.preventDefault()
+        setSelectedResultIndex(prev => 
+          prev > 0 ? prev - 1 : searchResults.length - 1
+        )
+        break
+      case 'Enter':
+        e.preventDefault()
+        if (selectedResultIndex >= 0 && selectedResultIndex < searchResults.length) {
+          handleSearchResultClick(searchResults[selectedResultIndex])
+        }
+        break
+      case 'Escape':
+        setShowSearchResults(false)
+        setSelectedResultIndex(-1)
+        searchInputRef.current?.blur()
+        break
+    }
+  }
+
+  // Close search results when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchResultsRef.current && !searchResultsRef.current.contains(event.target as Node)) {
+        setShowSearchResults(false)
+        setSelectedResultIndex(-1)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
 
   const headerHeight = 64 // 16 * 4
@@ -223,13 +458,94 @@ export default function LayoutShell({ activeItem, onItemClick, children }: Layou
               {/* Center: search */}
               <div className="flex flex-1 justify-center">
                 <div className="hidden md:flex max-w-md w-full">
-                  <div className="relative w-full">
-                    <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60 w-4 h-4" />
+                  <div className="relative w-full" ref={searchResultsRef}>
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60 w-4 h-4" />
                     <input 
+                      ref={searchInputRef}
                       type="text" 
-                      placeholder="Search courses, lessons..." 
-                      className="w-full pl-10 pr-4 py-2 bg-white/5 border border-blue-500/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50 transition-all duration-300 text-sm backdrop-blur-sm" 
+                      placeholder="Search courses, modules, lessons..." 
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      onFocus={() => searchQuery.trim() && setShowSearchResults(true)}
+                      className="w-full pl-10 pr-10 py-2 bg-white/5 border border-blue-500/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50 transition-all duration-300 text-sm backdrop-blur-sm" 
                     />
+                    {searchQuery && (
+                      <button
+                        onClick={() => {
+                          setSearchQuery('')
+                          setShowSearchResults(false)
+                          setSelectedResultIndex(-1)
+                          searchInputRef.current?.focus()
+                        }}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    )}
+                    
+                    {/* Search Results Dropdown */}
+                    <AnimatePresence>
+                      {showSearchResults && searchResults.length > 0 && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute top-full left-0 right-0 mt-2 bg-black/95 backdrop-blur-xl border border-blue-500/20 rounded-lg shadow-2xl z-50 max-h-96 overflow-y-auto"
+                        >
+                          <div className="p-2">
+                            <div className="text-xs text-white/60 mb-2 px-2">
+                              {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} found
+                            </div>
+                            {searchResults.map((result, index) => (
+                              <button
+                                key={`${result.type}-${result.id}`}
+                                onClick={() => handleSearchResultClick(result)}
+                                className={`w-full text-left p-3 rounded-lg transition-all duration-200 ${
+                                  index === selectedResultIndex
+                                    ? 'bg-blue-600/30 text-white border border-blue-500/50'
+                                    : 'text-white/80 hover:bg-white/10 hover:text-white border border-transparent'
+                                }`}
+                              >
+                                <div className="flex items-start gap-3">
+                                  <div className="flex-shrink-0 mt-0.5">
+                                    {result.type === 'course' && <IconBook className="w-4 h-4 text-blue-400" />}
+                                    {result.type === 'module' && <IconBookOpen className="w-4 h-4 text-green-400" />}
+                                    {result.type === 'lesson' && (
+                                      result.contentType === 'video' ? 
+                                        <Play className="w-4 h-4 text-red-400" /> : 
+                                        <FileText className="w-4 h-4 text-blue-400" />
+                                    )}
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <div className="font-medium text-sm truncate">
+                                      {result.title}
+                                    </div>
+                                    <div className="text-xs text-white/60 mt-1">
+                                      {result.type === 'course' && 'Course'}
+                                      {result.type === 'module' && `${result.courseTitle} • Module`}
+                                      {result.type === 'lesson' && `${result.courseTitle} • ${result.moduleTitle}`}
+                                    </div>
+                                    {result.description && (
+                                      <div className="text-xs text-white/50 mt-1 line-clamp-2">
+                                        {result.description}
+                                      </div>
+                                    )}
+                                    {result.duration && (
+                                      <div className="flex items-center gap-1 mt-1">
+                                        <Clock className="w-3 h-3 text-white/40" />
+                                        <span className="text-xs text-white/40">{result.duration}</span>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
               </div>

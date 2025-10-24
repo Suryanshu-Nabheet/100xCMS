@@ -330,6 +330,7 @@ export default function LandingPage() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('home');
+  const [scrollPositions, setScrollPositions] = useState<Record<string, number>>({});
 
   // Handle URL changes for routing
   useEffect(() => {
@@ -370,6 +371,30 @@ export default function LandingPage() {
       window.removeEventListener('popstate', handleRouteChange);
     };
   }, []);
+
+  // Scroll position tracking
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY
+      setScrollPositions(prev => ({
+        ...prev,
+        [currentPage]: scrollY
+      }))
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [currentPage])
+
+  // Restore scroll position when page changes
+  useEffect(() => {
+    const savedPosition = scrollPositions[currentPage]
+    if (savedPosition !== undefined) {
+      window.scrollTo(0, savedPosition)
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }, [currentPage, scrollPositions])
 
   // Handle navigation
   const handleNavigation = (path: string) => {

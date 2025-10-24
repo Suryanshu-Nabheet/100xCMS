@@ -55,7 +55,7 @@ export function DevopsCohortUI({ onBack }: DevopsCohortUIProps) {
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-black" data-course-id="devops-cohort">
       {/* Header */}
       <div className="bg-black/50 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-8">
@@ -87,9 +87,7 @@ export function DevopsCohortUI({ onBack }: DevopsCohortUIProps) {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {devopsCohortData.modules.map((module) => (
-                <div
-                  key={module.id}
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-200 group cursor-pointer"
+                <div key={module.id} data-module-id={module.id} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-200 group cursor-pointer"
                   onClick={() => handleModuleClick(module)}
                 >
                   {/* Module Thumbnail */}
@@ -133,9 +131,7 @@ export function DevopsCohortUI({ onBack }: DevopsCohortUIProps) {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {selectedModule.lessons.map((lesson) => (
-                <div
-                  key={lesson.id}
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-200 group cursor-pointer"
+                <div key={lesson.id} data-lesson-id={lesson.id} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-200 group cursor-pointer"
                   onClick={() => handleContentClick(lesson)}
                 >
                   {/* Lesson Thumbnail */}

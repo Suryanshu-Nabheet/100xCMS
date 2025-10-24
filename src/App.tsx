@@ -28,6 +28,7 @@ function AppContent() {
   const [activeView, setActiveView] = useState('dashboard')
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [scrollPositions, setScrollPositions] = useState<Record<string, number>>({})
   const { user } = useUser()
   
   // Clear conflicting storage on component mount
@@ -38,6 +39,30 @@ function AppContent() {
       console.error('Error clearing storage:', err);
     }
   }, []);
+
+  // Scroll position tracking
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY
+      setScrollPositions(prev => ({
+        ...prev,
+        [activeView]: scrollY
+      }))
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [activeView])
+
+  // Restore scroll position when view changes
+  useEffect(() => {
+    const savedPosition = scrollPositions[activeView]
+    if (savedPosition !== undefined) {
+      window.scrollTo(0, savedPosition)
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }, [activeView, scrollPositions])
   
   // Check if the current user's email is the admin email
   const userEmail = user?.primaryEmailAddress?.emailAddress
@@ -59,6 +84,49 @@ function AppContent() {
     if (courseId) {
       setSelectedCourseId(courseId)
     }
+  }
+
+  const handleNavigateToCourse = (courseId: string, moduleId?: string, lessonId?: string) => {
+    // Always reset the course state first to ensure clean navigation
+    setSelectedCourseId(null)
+    
+    // Small delay to ensure state reset
+    setTimeout(() => {
+      // Navigate directly to course detail page
+      setActiveView('course-detail')
+      setSelectedCourseId(courseId)
+      
+      // If we need to navigate to a specific module or lesson, we'll handle it after the course loads
+      if (moduleId || lessonId) {
+        setTimeout(() => {
+          // Find the course element and trigger the appropriate clicks
+          const courseElement = document.querySelector(`[data-course-id="${courseId}"]`)
+          if (courseElement) {
+            courseElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            
+            if (moduleId) {
+              // Click on the module
+              setTimeout(() => {
+                const moduleElement = courseElement.querySelector(`[data-module-id="${moduleId}"]`)
+                if (moduleElement) {
+                  (moduleElement as HTMLElement).click()
+                  
+                  if (lessonId) {
+                    // Click on the lesson after module is opened
+                    setTimeout(() => {
+                      const lessonElement = document.querySelector(`[data-lesson-id="${lessonId}"]`)
+                      if (lessonElement) {
+                        (lessonElement as HTMLElement).click()
+                      }
+                    }, 500)
+                  }
+                }
+              }, 300)
+            }
+          }
+        }, 500) // Increased timeout to allow course detail to load
+      }
+    }, 50) // Small delay to ensure state reset
   }
 
   const renderContent = () => {
@@ -123,11 +191,19 @@ function AppContent() {
       
       <SignedIn>
         {isAdminByEmail ? (
-          <LayoutShell activeItem={activeView} onItemClick={handleNavigation}>
+          <LayoutShell 
+            activeItem={activeView} 
+            onItemClick={handleNavigation}
+            onNavigateToCourse={handleNavigateToCourse}
+          >
             {renderContent()}
           </LayoutShell>
         ) : (
-          <LayoutShell activeItem={activeView} onItemClick={handleNavigation}>
+          <LayoutShell 
+            activeItem={activeView} 
+            onItemClick={handleNavigation}
+            onNavigateToCourse={handleNavigateToCourse}
+          >
             {renderContent()}
           </LayoutShell>
         )}
