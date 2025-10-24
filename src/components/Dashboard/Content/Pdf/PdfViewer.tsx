@@ -307,12 +307,13 @@ export function PdfViewer({ src, title, onClose }: PdfViewerProps) {
 
       {/* Keyboard Shortcuts Help */}
       {showKeyboardHelp && (
-        <div className="absolute top-4 right-4 bg-black/90 backdrop-blur-sm rounded-lg p-4 text-white text-sm shadow-2xl border border-gray-700 z-50">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="font-semibold text-white">Keyboard Shortcuts</h3>
+        <div className="absolute top-4 right-4 bg-black/95 backdrop-blur-sm rounded-xl p-5 text-white text-sm shadow-2xl border border-gray-600 z-50 min-w-[280px]">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-white text-base">Keyboard Shortcuts</h3>
             <button
               onClick={() => setShowKeyboardHelp(false)}
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-gray-300 hover:text-white transition-colors p-2 rounded-lg hover:bg-gray-700/50 text-lg font-bold"
+              title="Close"
             >
               ×
             </button>
