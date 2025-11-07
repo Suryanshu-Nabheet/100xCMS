@@ -288,7 +288,7 @@ export function SignUp({ isOpen, onClose, onSwitchToSignIn }: SignUpProps) {
         <div className="text-center mb-4">
           <h2 className="text-xl font-bold text-white mb-1">Create Account</h2>
           <p className="text-white/70 text-xs">
-            Join ClassX and start your learning journey
+            Join 100xDevs and start your learning journey
           </p>
         </div>
 

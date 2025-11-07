@@ -28,7 +28,7 @@ This software may be used for commercial purposes. However, if you use this soft
 ### Attribution
 If you use this software, please include:
 - A link to the original repository
-- Attribution to "Suryanshu Nabheet" and "ClassX"
+- Attribution to "Suryanshu Nabheet" and "100xDevs"
 
 ### No Warranty
 This software is provided "as is" without warranty of any kind. The authors are not responsible for any damages that may arise from the use of this software.
@@ -36,7 +36,7 @@ This software is provided "as is" without warranty of any kind. The authors are 
 ### Support
 For support and questions, please contact:
 - Email: suryanshunab@gmail.com
-- GitHub Issues: [Create an issue](https://github.com/Suryanshu-Nabheet/ClassX/issues)
+- GitHub Issues: [Create an issue](https://github.com/Suryanshu-Nabheet/100xDevs/issues)
 
 ### Contributing
 We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for more information.

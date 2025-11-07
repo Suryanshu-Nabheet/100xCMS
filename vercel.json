@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "classx",
+  "name": "100xDevs",
   "builds": [
     {
       "src": "package.json",
@@ -68,7 +68,7 @@
     },
     {
       "source": "/github",
-      "destination": "https://github.com/Suryanshu-Nabheet/ClassX",
+      "destination": "https://github.com/Suryanshu-Nabheet/100xDevs",
       "permanent": false
     }
   ],

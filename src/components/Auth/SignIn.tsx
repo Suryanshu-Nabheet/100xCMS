@@ -167,7 +167,7 @@ export function SignIn({ isOpen, onClose, onSwitchToSignUp }: SignInProps) {
         <div className="text-center mb-4">
           <h2 className="text-xl font-bold text-white mb-1">Welcome Back</h2>
           <p className="text-white/70 text-xs">
-            Sign in to your ClassX account
+            Sign in to your 100xDevs account
           </p>
         </div>
 

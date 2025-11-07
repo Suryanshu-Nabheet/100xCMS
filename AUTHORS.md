@@ -1,6 +1,6 @@
 # Authors
 
-This file lists the contributors to ClassX.
+This file lists the contributors to 100xDevs.
 
 ## Core Team
 
@@ -71,9 +71,9 @@ See our [Contributing Guidelines](CONTRIBUTING.md) for more information.
 If you'd like to contribute or have questions:
 
 - 📧 Email: suryanshunab@gmail.com
-- 💬 Discord: [Join our community](https://discord.gg/classx)
-- 🐛 GitHub Issues: [Create an issue](https://github.com/Suryanshu-Nabheet/ClassX/issues)
-- 📖 Documentation: [GitHub Repository](https://github.com/Suryanshu-Nabheet/ClassX)
+- 💬 Discord: [Join our community](https://discord.gg/100xDevs)
+- 🐛 GitHub Issues: [Create an issue](https://github.com/Suryanshu-Nabheet/100xDevs/issues)
+- 📖 Documentation: [GitHub Repository](https://github.com/Suryanshu-Nabheet/100xDevs)
 
 ## Code of Conduct
 
@@ -81,8 +81,8 @@ All contributors are expected to follow our [Code of Conduct](CODE_OF_CONDUCT.md
 
 ## License
 
-By contributing to ClassX, you agree that your contributions will be licensed under the [MIT License](LICENSE.md).
+By contributing to 100xDevs, you agree that your contributions will be licensed under the [MIT License](LICENSE.md).
 
 ---
 
-**Thank you to all contributors who help make ClassX better! 🙏**
+**Thank you to all contributors who help make 100xDevs better! 🙏**

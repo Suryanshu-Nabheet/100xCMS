@@ -3,7 +3,7 @@ import {
   Play, Pause, Volume2, VolumeX, Maximize, Minimize, 
   Settings, SkipBack, SkipForward, ArrowLeft, Clock,
   ChevronUp, ChevronDown, Captions, PictureInPicture,
-  ExternalLink, BookOpen, ChevronRight
+  ExternalLink
 } from 'lucide-react'
 
 interface Timestamp {
@@ -60,8 +60,8 @@ export function VideoPlayer({ src, title, timestamps = [], description, author, 
   const [videoSources, setVideoSources] = useState<string[]>([])
   const [currentSourceIndex, setCurrentSourceIndex] = useState(0)
   
-  // Content viewer state
-  const [showDescription, setShowDescription] = useState(false)
+  // Content viewer state (reserved for future use)
+  // const [showDescription, setShowDescription] = useState(false)
 
   // Set up fallback video sources
   useEffect(() => {

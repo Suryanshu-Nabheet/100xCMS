@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to ClassX will be documented in this file.
+All notable changes to 100xDevs will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-01-01
 
 ### Added
-- Initial release of ClassX
+- Initial release of 100xDevs
 - Landing page with hero section
 - Image slider with technology courses
 - Technical skills showcase
@@ -128,4 +128,4 @@ We use [Semantic Versioning](https://semver.org/) for version numbering:
 
 ---
 
-**For more information, see our [GitHub repository](https://github.com/Suryanshu-Nabheet/ClassX).**
+**For more information, see our [GitHub repository](https://github.com/Suryanshu-Nabheet/100xDevs).**

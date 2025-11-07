@@ -1,4 +1,4 @@
-import { ArrowLeft, Shield, Eye, Lock, Database, Users, Calendar, CheckCircle, Globe, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, Shield, Eye, Lock, Database, Users, Calendar } from 'lucide-react';
 
 const PrivacyPolicy = () => {
   return (

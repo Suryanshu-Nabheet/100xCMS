@@ -1,4 +1,4 @@
-import { ArrowLeft, RefreshCw, CreditCard, Clock, CheckCircle, XCircle, AlertCircle, Gift, Heart, BookOpen } from 'lucide-react';
+import { ArrowLeft, RefreshCw, CreditCard, Clock, Gift, Heart, BookOpen } from 'lucide-react';
 
 const RefundPolicy = () => {
   return (
@@ -25,7 +25,7 @@ const RefundPolicy = () => {
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Refund Policy</h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Our policy regarding refunds and cancellations for ClassX services
+            Our policy regarding refunds and cancellations for 100xDevs services
           </p>
           <div className="flex items-center justify-center space-x-2 mt-4">
             <Clock className="w-4 h-4 text-gray-400" />
@@ -40,7 +40,7 @@ const RefundPolicy = () => {
             <div>
               <h3 className="text-lg font-semibold text-white mb-2">Free Learning Platform</h3>
               <p className="text-gray-400">
-                ClassX is a <span className="text-green-400 font-medium">completely free platform</span> designed for educational purposes. 
+                100xDevs is a <span className="text-green-400 font-medium">completely free platform</span> designed for educational purposes. 
                 All courses, content, and features are provided at no cost to help students learn and grow their programming skills.
               </p>
             </div>
@@ -84,7 +84,7 @@ const RefundPolicy = () => {
                 1. General Refund Policy
               </h2>
               <p className="text-gray-400 leading-relaxed mb-4">
-                Since ClassX is currently a free platform, no refunds are applicable for the core learning services. However, this policy outlines our approach for any future paid services or premium features.
+                Since 100xDevs is currently a free platform, no refunds are applicable for the core learning services. However, this policy outlines our approach for any future paid services or premium features.
               </p>
               <p className="text-gray-400 leading-relaxed">
                 We are committed to providing high-quality educational content and excellent user experience. If you encounter any issues with our platform, please contact our support team.

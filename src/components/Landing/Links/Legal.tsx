@@ -4,7 +4,7 @@ const Legal = () => {
   const legalDocs = [
     {
       title: "Terms & Conditions",
-      description: "Terms of service and usage guidelines for the ClassX platform",
+      description: "Terms of service and usage guidelines for the 100xDevs platform",
       icon: FileText,
       color: "blue",
       lastUpdated: "January 2025"
@@ -82,7 +82,7 @@ const Legal = () => {
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Legal</h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Legal documents, policies, and compliance information for ClassX
+            Legal documents, policies, and compliance information for 100xDevs
           </p>
         </div>
 
@@ -132,7 +132,7 @@ const Legal = () => {
                   </div>
                   <div>
                     <div className="text-white font-medium">Open Source</div>
-                    <div className="text-gray-400 text-sm">ClassX is built on open source principles</div>
+                    <div className="text-gray-400 text-sm">100xDevs is built on open source principles</div>
                   </div>
                 </div>
                 

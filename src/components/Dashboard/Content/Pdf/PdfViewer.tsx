@@ -31,7 +31,7 @@ export function PdfViewer({ src, title, onClose }: PdfViewerProps) {
   const [rotation, setRotation] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(0)
+  const [totalPages] = useState(0)
   const [showKeyboardHelp, setShowKeyboardHelp] = useState(false)
 
   // Handle fullscreen changes
@@ -252,7 +252,13 @@ export function PdfViewer({ src, title, onClose }: PdfViewerProps) {
                   setError(null)
                   // Force reload
                   if (iframeRef.current) {
-                    iframeRef.current.src = iframeRef.current.src
+                    const currentSrc = iframeRef.current.src
+                    iframeRef.current.src = ''
+                    setTimeout(() => {
+                      if (iframeRef.current) {
+                        iframeRef.current.src = currentSrc
+                      }
+                    }, 0)
                   }
                 }}
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"

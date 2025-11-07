@@ -1,6 +1,6 @@
 <div align="center">
 
-# ClassX Platform
+# 100xDevs Platform
 
 **A Next-Generation Educational Technology Platform**
 
@@ -17,7 +17,7 @@
 ---
 ## 🎯 Overview
 
-ClassX is a comprehensive educational technology platform designed to revolutionize how students learn programming and technical skills. Built with modern web technologies and a focus on user experience, ClassX provides an immersive learning environment that combines interactive content, AI-powered assistance, and community-driven learning.
+100xDevs is a comprehensive educational technology platform designed to revolutionize how students learn programming and technical skills. Built with modern web technologies and a focus on user experience, 100xDevs provides an immersive learning environment that combines interactive content, AI-powered assistance, and community-driven learning.
 
 ### 🚀 Key Features
 
@@ -35,7 +35,7 @@ ClassX is a comprehensive educational technology platform designed to revolution
 ## 🏗️ Architecture & File Structure
 
 ```
-ClassX/
+100xDevs/
 ├── 📁 src/                          # Source code directory
 │   ├── 📁 components/              # React components
 │   │   ├── 📁 Auth/                # Authentication components
@@ -207,8 +207,8 @@ Ensure you have the following installed on your system:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Suryanshu-Nabheet/ClassX.git
-   cd ClassX
+   git clone https://github.com/Suryanshu-Nabheet/100xCMS.git
+   cd 100xCMS
    ```
 
 2. **Install dependencies**
@@ -377,8 +377,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) f
 - **📧 Email**: suryanshunab@gmail.com
 - **💼 LinkedIn**: [Suryanshu Nabheet](https://www.linkedin.com/in/suryanshu-nabheet/)
 - **🐦 X (Twitter)**: [@SuryanshuXDev](https://x.com/suryanshuxdev)
-- **📖 Documentation**: [GitHub Repository](https://github.com/Suryanshu-Nabheet/ClassX)
-- **🐛 Issues**: [GitHub Issues](https://github.com/Suryanshu-Nabheet/ClassX/issues)
+- **📖 Documentation**: [GitHub Repository](https://github.com/Suryanshu-Nabheet/100xDevs)
+- **🐛 Issues**: [GitHub Issues](https://github.com/Suryanshu-Nabheet/100xDevs/issues)
 
 ---
 

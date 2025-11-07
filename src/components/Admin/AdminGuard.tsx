@@ -1,5 +1,4 @@
 'use client'
-import { useEffect } from 'react'
 import { useAdminAuth } from './auth'
 import { AdminLoginForm } from './auth'
 

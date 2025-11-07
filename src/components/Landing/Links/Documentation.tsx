@@ -4,7 +4,7 @@ const Documentation = () => {
   const docs = [
     {
       title: "Installation Guide",
-      description: "Step-by-step instructions to get ClassX up and running on your system",
+      description: "Step-by-step instructions to get 100xDevs up and running on your system",
       icon: Download,
       category: "Getting Started",
       color: "blue"
@@ -82,7 +82,7 @@ const Documentation = () => {
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Documentation</h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Comprehensive guides and references for ClassX platform
+            Comprehensive guides and references for 100xDevs platform
           </p>
         </div>
 

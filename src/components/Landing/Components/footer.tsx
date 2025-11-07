@@ -18,7 +18,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
           <div className="flex flex-col space-y-3">
             <h3 className="text-2xl font-bold">
               <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
-                ClassX
+                100xDevs
               </span>
             </h3>
             <p className="text-sm text-white/80">
@@ -140,7 +140,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
           <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
             <div className="text-center md:text-left">
               <p className="text-white/60 text-xs">
-                &copy; 2025 ClassX. Open source project by Suryanshu Nabheet.
+                &copy; 2025 100xDevs. Open source project by Suryanshu Nabheet.
               </p>
             </div>
             <div className="flex items-center space-x-2">

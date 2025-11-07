@@ -21,8 +21,8 @@ const DEFAULT_ADMIN: AdminUser = {
   createdAt: new Date().toISOString()
 }
 
-const ADMIN_STORAGE_KEY = 'classx_cms_admin_users'
-const ADMIN_SESSION_KEY = 'classx_cms_admin_session'
+const ADMIN_STORAGE_KEY = '100xDevs_cms_admin_users'
+const ADMIN_SESSION_KEY = '100xDevs_cms_admin_session'
 
 export function useAdminAuth() {
   const [isAdmin, setIsAdmin] = useState(false)

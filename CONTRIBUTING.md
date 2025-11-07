@@ -1,6 +1,6 @@
-# Contributing to ClassX
+# Contributing to 100xDevs
 
-Thank you for your interest in contributing to ClassX! 🎉
+Thank you for your interest in contributing to 100xDevs! 🎉
 
 ## 🤝 How to Contribute
 
@@ -8,8 +8,8 @@ Thank you for your interest in contributing to ClassX! 🎉
 - Click the "Fork" button on the GitHub repository page
 - Clone your fork locally:
   ```bash
-  git clone https://github.com/Suryanshu-Nabheet/ClassX.git
-  cd classx
+  git clone https://github.com/Suryanshu-Nabheet/100xDevs.git
+  cd 100xDevs
   ```
 
 ### 2. Create a Branch
@@ -146,7 +146,7 @@ For feature requests, include:
 - 📧 Email: suryanshunab@gmail.com
 - 💼 LinkedIn: [Suryanshu Nabheet](https://www.linkedin.com/in/suryanshu-nabheet/)
 - 🐦 X (Twitter): [@SuryanshuXDev](https://x.com/suryanshuxdev)
-- 📖 Documentation: [GitHub Repository](https://github.com/Suryanshu-Nabheet/ClassX)
+- 📖 Documentation: [GitHub Repository](https://github.com/Suryanshu-Nabheet/100xDevs)
 
 ## 🙏 Recognition
 
@@ -155,4 +155,4 @@ Contributors will be:
 - Mentioned in release notes
 - Given credit in the project
 
-Thank you for contributing to ClassX! 🎉
+Thank you for contributing to 100xDevs! 🎉

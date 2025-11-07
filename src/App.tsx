@@ -5,8 +5,7 @@ import { HomePage } from './components/Dashboard/Home/HomePage'
 import { Courses } from './components/Dashboard/Courses/Courses'
 import { CourseDetail } from './components/Dashboard/Courses/CourseDetail'
 import { ProfileView } from './components/Dashboard/Profile/ProfileView'
-import { UpdatesMain } from './components/Dashboard/Updates'
-import { AdminDashboard, useAdminAuth } from './components/Admin'
+import { AdminDashboard } from './components/Admin'
 import Main from './components/Landing/main'
 
 // Get Clerk publishable key from environment variables
@@ -16,8 +15,8 @@ const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 const clearConflictingStorage = () => {
   // Only clear admin storage if we're not on admin routes
   if (!window.location.pathname.includes('/admin')) {
-    localStorage.removeItem('classx_cms_admin_users');
-    localStorage.removeItem('classx_cms_admin_session');
+    localStorage.removeItem('100xDevs_cms_admin_users');
+    localStorage.removeItem('100xDevs_cms_admin_session');
     // Also clear old keys for backward compatibility
     localStorage.removeItem('cms_admin_users');
     localStorage.removeItem('cms_admin_session');
@@ -141,8 +140,6 @@ function AppContent() {
         return <HomePage onNavigate={handleNavigation} />
       case 'courses':
         return <Courses onNavigate={handleNavigation} />
-      case 'updates':
-        return <UpdatesMain />
       case 'course-detail':
         return selectedCourseId ? (
           <CourseDetail

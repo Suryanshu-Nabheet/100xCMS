@@ -3,7 +3,7 @@ import { ArrowLeft, Github, ExternalLink, Code, Database, Globe, Smartphone, Shi
 const Projects = () => {
   const projects = [
     {
-      title: "ClassX Learning Platform",
+      title: "100xDevs Learning Platform",
       description: "A comprehensive online learning management system built with React, TypeScript, and modern web technologies.",
       tech: ["React", "TypeScript", "Tailwind CSS", "Clerk Auth"],
       category: "Web Development",

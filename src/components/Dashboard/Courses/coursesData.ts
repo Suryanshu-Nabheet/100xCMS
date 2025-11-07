@@ -1,12 +1,12 @@
-import { webDevCohortData } from './WebDevCohort/data'
-import { dsaClassesData } from './DsaClasses/data'
-import { devopsCohortData } from './DevopsCohort/data'
-import { web3CohortData } from './Web3Cohort/data'
-import { solanaFellowshipData } from './SolanaFellowship/data'
-import { adhocClassesData } from './AdhocClasses/data'
-import { ethicalHackingData } from './EthicalHacking/data'
-import { iosDevelopmentData } from './IOSDevelopment/data'
-import { androidDevelopmentData } from './AndroidDevelopment/data'
+import { fullStackOpenSourceCohort1Data } from './FullStackOpenSourceCohort1/data'
+import { completeWebDevDevOpsBlockchainData } from './CompleteWebDevDevOpsBlockchain/data'
+import { completeWebDevDevOpsData } from './CompleteWebDevDevOps/data'
+import { completeWeb3BlockchainData } from './CompleteWeb3Blockchain/data'
+import { completeWebDevData } from './CompleteWebDev/data'
+import { completeDevOpsData } from './CompleteDevOps/data'
+import { live0to100CompleteData } from './Live0to100Complete/data'
+import { live0to1Data } from './Live0to1/data'
+import { live1to100Data } from './Live1to100/data'
 
 export interface Course {
   id: string
@@ -47,36 +47,37 @@ export interface CourseDetail {
   modules: Array<{
     id: string
     title: string
+    description?: string
     lessons: CourseContent[]
   }>
-  whatYouWillLearn: string[]
-  requirements: string[]
+  whatYouWillLearn?: string[]
+  requirements?: string[]
 }
 
 // Export all courses for the main page
 export const allCourses: Course[] = [
-  webDevCohortData,
-  dsaClassesData,
-  devopsCohortData,
-  web3CohortData,
-  solanaFellowshipData,
-  adhocClassesData,
-  ethicalHackingData,
-  iosDevelopmentData,
-  androidDevelopmentData
+  completeWebDevDevOpsBlockchainData,
+  completeWebDevDevOpsData,
+  completeWeb3BlockchainData,
+  completeWebDevData,
+  completeDevOpsData,
+  live0to100CompleteData,
+  live0to1Data,
+  live1to100Data,
+  fullStackOpenSourceCohort1Data
 ]
 
 // Export detailed course data
 export const courseDetails: Record<string, CourseDetail> = {
-  'web-dev-cohort': webDevCohortData,
-  'dsa-classes': dsaClassesData,
-  'devops-cohort': devopsCohortData,
-  'web3-cohort': web3CohortData,
-  'solana-fellowship': solanaFellowshipData,
-  'adhoc-classes': adhocClassesData,
-  'ethical-hacking': ethicalHackingData,
-  'ios-development': iosDevelopmentData,
-  'android-development': androidDevelopmentData
+  'complete-web-dev-devops-blockchain': completeWebDevDevOpsBlockchainData,
+  'complete-web-dev-devops': completeWebDevDevOpsData,
+  'complete-web3-blockchain': completeWeb3BlockchainData,
+  'complete-web-dev': completeWebDevData,
+  'complete-devops': completeDevOpsData,
+  'live-0-100-complete': live0to100CompleteData,
+  'live-0-1': live0to1Data,
+  'live-1-100': live1to100Data,
+  'full-stack-open-source-cohort-1': fullStackOpenSourceCohort1Data
 }
 
 // Helper function to get course detail

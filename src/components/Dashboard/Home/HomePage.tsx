@@ -493,7 +493,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
           className="px-4 relative z-10"
         >
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 tracking-tight relative">
-            <span className="text-white font-black">Class</span><span className="text-blue-400 font-black">X</span>
+            <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent font-black">100xDevs</span>
           </h1>
           
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-12 tracking-tight relative">
@@ -505,7 +505,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             transition={{ delay: 0.8, duration: 0.6 }}
             className="text-lg sm:text-xl md:text-2xl text-white max-w-3xl mx-auto mb-12 leading-relaxed relative z-10"
           >
-            <span className="text-white">Join ClassX and transform your career with</span> <span className="text-white font-semibold">cutting-edge courses, expert instructors, and a vibrant community.</span>
+            <span className="text-white">Join 100xDevs and transform your career with</span> <span className="text-white font-semibold">cutting-edge courses, expert instructors, and a vibrant community.</span>
           </motion.p>
 
           <motion.div
@@ -538,9 +538,9 @@ export function HomePage({ onNavigate }: HomePageProps) {
           className="relative z-10"
         >
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Why Choose ClassX?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Why Choose 100xDevs?</h2>
             <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-              Discover the features that make ClassX the perfect platform for your learning journey
+              Discover the features that make 100xDevs the perfect platform for your learning journey
             </p>
           </div>
           

@@ -93,7 +93,7 @@ const Navigation = React.memo(() => {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="text-lg sm:text-xl md:!text-2xl !font-bold">
-                  <span className="text-white">Class</span><span className="text-blue-400">X</span>
+                  <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">100xDevs</span>
                 </div>
               </div>
             </div>
@@ -102,14 +102,14 @@ const Navigation = React.memo(() => {
               <div className="ml-6 lg:ml-10 flex items-baseline space-x-4 lg:space-x-6">
                 <button 
                   onClick={() => setIsSignInOpen(true)}
-                  className="text-white/90 hover:text-white transition-all duration-300 px-6 lg:px-8 py-3 text-base font-semibold border border-white/30 rounded-xl hover:bg-white/15 hover:border-white/50 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105"
+                  className="text-white/90 hover:text-white transition-all duration-300 px-6 lg:px-8 py-3 text-base font-semibold border border-white/30 rounded-xl hover:bg-white/15 hover:border-white/50 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105 min-w-[120px]"
                   aria-label="Open sign in modal"
                 >
                   Sign In
                 </button>
                 <button 
                   onClick={() => setIsSignUpOpen(true)}
-                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 lg:px-8 py-3 text-base font-semibold transition-all duration-300 transform hover:scale-105 rounded-xl shadow-lg hover:shadow-xl border border-blue-500/30 hover:border-blue-400/50"
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 lg:px-8 py-3 text-base font-semibold transition-all duration-300 transform hover:scale-105 rounded-xl shadow-lg hover:shadow-xl border border-blue-500/30 hover:border-blue-400/50 min-w-[120px]"
                   aria-label="Open sign up modal"
                 >
                   Sign Up
@@ -119,7 +119,7 @@ const Navigation = React.memo(() => {
             
             <div className="md:hidden">
               <button 
-                className="text-white/80 hover:text-white p-1.5 bg-transparent border-none"
+                className="text-white/80 hover:text-white p-2 bg-transparent border-none rounded-lg hover:bg-white/10 transition-all duration-200"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label={mobileMenuOpen ? "Close mobile menu" : "Open mobile menu"}
                 aria-expanded={mobileMenuOpen}
@@ -138,7 +138,7 @@ const Navigation = React.memo(() => {
                     setIsSignInOpen(true);
                     setMobileMenuOpen(false);
                   }}
-                  className="text-white/90 hover:text-white transition-all duration-300 px-4 py-3 text-base font-semibold cursor-pointer rounded-xl hover:bg-white/15 border border-white/30 hover:border-white/50 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105 w-full"
+                  className="text-white/90 hover:text-white transition-all duration-300 px-6 py-3 text-base font-semibold cursor-pointer rounded-xl hover:bg-white/15 border border-white/30 hover:border-white/50 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105 w-full min-h-[48px]"
                   aria-label="Open sign in modal"
                 >
                   Sign In
@@ -148,7 +148,7 @@ const Navigation = React.memo(() => {
                     setIsSignUpOpen(true);
                     setMobileMenuOpen(false);
                   }}
-                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-3 text-base font-semibold transition-all duration-300 rounded-xl w-full shadow-lg hover:shadow-xl border border-blue-500/30 hover:border-blue-400/50 transform hover:scale-105"
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-3 text-base font-semibold transition-all duration-300 rounded-xl w-full shadow-lg hover:shadow-xl border border-blue-500/30 hover:border-blue-400/50 transform hover:scale-105 min-h-[48px]"
                   aria-label="Open sign up modal"
                 >
                   Sign Up
@@ -530,10 +530,10 @@ export default function LandingPage() {
               >
                 <h1 className="max-w-2xl py-2 pt-36 text-center text-5xl font-extrabold tracking-tighter md:text-6xl xl:text-7xl">
                   <span className="w-fit bg-gradient-to-b from-blue-400 to-blue-700 bg-clip-text pr-1.5 text-center text-transparent md:mb-4">
-                    ClassX,
+                    100xDevs,
                   </span>{' '}
                   <span className="bg-gradient-to-b from-white/90 to-white/60 bg-clip-text py-1 text-transparent">
-                    because learning ain&apos;t enough!
+                    because 10x ain&apos;t enough!
                   </span>
                 </h1>
 
@@ -557,8 +557,8 @@ export default function LandingPage() {
               >
                 <button 
                   onClick={() => setIsSignUpOpen(true)}
-                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 text-lg font-medium transition-all duration-200 transform hover:scale-105 rounded-xl shadow-lg hover:shadow-xl"
-                  aria-label="Get started with ClassX"
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 text-lg font-semibold transition-all duration-200 transform hover:scale-105 rounded-xl shadow-lg hover:shadow-xl min-h-[48px]"
+                  aria-label="Get started with 100xDevs"
                 >
                   Get Started
                 </button>

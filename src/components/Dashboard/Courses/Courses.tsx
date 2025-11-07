@@ -7,26 +7,25 @@ interface CoursesProps {
 
 export function Courses({ onNavigate }: CoursesProps) {
   return (
-    <div className="min-h-screen bg-black p-6">
+    <div className="min-h-screen bg-black py-8 px-4 sm:px-6 lg:px-8">
       {/* Header */}
-      <div className="max-w-7xl mx-auto mb-8">
+      <div className="w-full mb-8 max-w-7xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             <span className="text-blue-400">Courses</span>
           </h1>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">
             Discover amazing courses and start your learning journey today
           </p>
         </div>
 
         {/* Courses Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
           {allCourses.map((course) => (
             <CourseCard
               key={course.id}
               course={course}
               onView={(courseId) => onNavigate?.('course-detail', courseId)}
-              onJoinDiscord={(discordLink) => window.open(discordLink, '_blank')}
             />
           ))}
         </div>

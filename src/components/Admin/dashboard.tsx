@@ -14,7 +14,7 @@ export function AdminDashboard() {
   const [newAdminData, setNewAdminData] = useState({ name: '', email: '', password: '' })
   const [courses] = useState(allCourses)
   
-  const { adminUser, adminUsers, addAdmin, removeAdmin } = useAdminAuth()
+  const { adminUser, adminUsers, addAdmin } = useAdminAuth()
   const { user } = useUser()
 
   const stats = {
