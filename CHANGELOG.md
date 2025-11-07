@@ -128,4 +128,4 @@ We use [Semantic Versioning](https://semver.org/) for version numbering:
 
 ---
 
-**For more information, see our [GitHub repository](https://github.com/Suryanshu-Nabheet/100xDevs).**
+**For more information, see our [GitHub repository](https://github.com/Suryanshu-Nabheet/100xCMS).**

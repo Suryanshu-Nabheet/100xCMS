@@ -36,7 +36,7 @@ This software is provided "as is" without warranty of any kind. The authors are 
 ### Support
 For support and questions, please contact:
 - Email: suryanshunab@gmail.com
-- GitHub Issues: [Create an issue](https://github.com/Suryanshu-Nabheet/100xDevs/issues)
+- GitHub Issues: [Create an issue](https://github.com/Suryanshu-Nabheet/100xCMS/issues)
 
 ### Contributing
 We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for more information.

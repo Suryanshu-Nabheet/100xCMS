@@ -35,7 +35,7 @@
 ## 🏗️ Architecture & File Structure
 
 ```
-100xDevs/
+100xCMS/
 ├── 📁 src/                          # Source code directory
 │   ├── 📁 components/              # React components
 │   │   ├── 📁 Auth/                # Authentication components
@@ -53,32 +53,53 @@
 │   │   │
 │   │   ├── 📁 Dashboard/           # Main application dashboard
 │   │   │   ├── 📁 Courses/         # Course management
-│   │   │   │   ├── 📁 AdhocClasses/
-│   │   │   │   │   ├── AdhocClassesUI.tsx
+│   │   │   │   ├── 📁 CompleteWebDevDevOpsBlockchain/
+│   │   │   │   │   ├── CompleteWebDevDevOpsBlockchainUI.tsx
 │   │   │   │   │   ├── data.ts
 │   │   │   │   │   └── index.ts
-│   │   │   │   ├── 📁 DevopsCohort/
-│   │   │   │   │   ├── DevopsCohortUI.tsx
+│   │   │   │   ├── 📁 CompleteWebDevDevOps/
+│   │   │   │   │   ├── CompleteWebDevDevOpsUI.tsx
 │   │   │   │   │   ├── data.ts
 │   │   │   │   │   └── index.ts
-│   │   │   │   ├── 📁 DsaClasses/
-│   │   │   │   │   ├── DsaClassesUI.tsx
+│   │   │   │   ├── 📁 CompleteWeb3Blockchain/
+│   │   │   │   │   ├── CompleteWeb3BlockchainUI.tsx
 │   │   │   │   │   ├── data.ts
 │   │   │   │   │   └── index.ts
-│   │   │   │   ├── 📁 SolanaFellowship/
-│   │   │   │   │   ├── SolanaFellowshipUI.tsx
+│   │   │   │   ├── 📁 CompleteWebDev/
+│   │   │   │   │   ├── CompleteWebDevUI.tsx
 │   │   │   │   │   ├── data.ts
 │   │   │   │   │   └── index.ts
-│   │   │   │   ├── 📁 Web3Cohort/
-│   │   │   │   │   ├── Web3CohortUI.tsx
+│   │   │   │   ├── 📁 CompleteDevOps/
+│   │   │   │   │   ├── CompleteDevOpsUI.tsx
 │   │   │   │   │   ├── data.ts
 │   │   │   │   │   └── index.ts
-│   │   │   │   ├── 📁 WebDevCohort/
-│   │   │   │   │   ├── WebDevCohortUI.tsx
+│   │   │   │   ├── 📁 Live0to100Complete/
+│   │   │   │   │   ├── Live0to100CompleteUI.tsx
 │   │   │   │   │   ├── data.ts
 │   │   │   │   │   └── index.ts
+│   │   │   │   ├── 📁 Live0to1/
+│   │   │   │   │   ├── Live0to1UI.tsx
+│   │   │   │   │   ├── data.ts
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── 📁 Live1to100/
+│   │   │   │   │   ├── Live1to100UI.tsx
+│   │   │   │   │   ├── data.ts
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── 📁 FullStackOpenSourceCohort1/
+│   │   │   │   │   ├── FullStackOpenSourceCohort1UI.tsx
+│   │   │   │   │   ├── data.ts
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── CourseCard.tsx    # Course card component
 │   │   │   │   ├── CourseDetail.tsx # Course detail page
+│   │   │   │   ├── Courses.tsx       # Courses listing page
 │   │   │   │   └── coursesData.ts   # Course data aggregation
+│   │   │   │
+│   │   │   ├── 📁 Content/          # Content components
+│   │   │   │   ├── 📁 Video/        # Video player
+│   │   │   │   │   └── VideoPlayer.tsx
+│   │   │   │   ├── 📁 Pdf/          # PDF viewer
+│   │   │   │   │   └── PdfViewer.tsx
+│   │   │   │   └── 📁 [Course Folders]/ # Course-specific content
 │   │   │   │
 │   │   │   ├── 📁 Home/            # Dashboard home
 │   │   │   │   └── HomePage.tsx
@@ -90,32 +111,22 @@
 │   │   │   │   │   └── index.ts
 │   │   │   │   └── LayoutShell.tsx # Main layout shell
 │   │   │   │
-│   │   │   ├── 📁 Profile/         # User profile
-│   │   │   │   └── ProfileView.tsx
-│   │   │   │
-│   │   │   ├── 📁 Updates/         # Updates system
-│   │   │   │   ├── 📁 components/  # Update components
-│   │   │   │   │   └── code-block.tsx
-│   │   │   │   ├── 📁 posts/       # Update posts
-│   │   │   │   ├── index.ts        # Updates exports
-│   │   │   │   ├── main.tsx        # Updates main component
-│   │   │   │   └── post.tsx        # Individual post component
-│   │   │   │
-│   │   │   └── 📁 Video/          # Video player
-│   │   │       └── VideoPlayer.tsx # Advanced video player
+│   │   │   └── 📁 Profile/         # User profile
+│   │   │       └── ProfileView.tsx
 │   │   │
 │   │   └── 📁 Landing/            # Landing page components
 │   │       ├── 📁 Components/     # Reusable UI components
 │   │       │   ├── footer-cta.tsx # Call-to-action footer
 │   │       │   ├── footer.tsx     # Main footer component
 │   │       │   └── index.ts       # Component exports
+│   │       ├── 📁 Links/          # Legal and info pages
+│   │       │   ├── PrivacyPolicy.tsx
+│   │       │   ├── RefundPolicy.tsx
+│   │       │   ├── TermsConditions.tsx
+│   │       │   └── ...
 │   │       ├── landing-page.tsx   # Main landing page
 │   │       ├── main.tsx           # Landing page entry point
 │   │       └── index.ts           # Landing module exports
-│   │
-│   ├── 📁 data/                   # Data management
-│   │   └── 📁 courses/           # Course data
-│   │       └── index.ts          # Course data exports
 │   │
 │   ├── 📁 lib/                    # Utility libraries
 │   │   └── utils.ts               # Common utility functions
@@ -138,7 +149,7 @@
 │
 ├── 📁 Public/                    # Static assets
 │   ├── Mockup.png                 # Project mockup
-│   └── Suryanshu Nabheet.jpg     # Profile image
+│   └── [Course thumbnails and assets]
 │
 ├── 📄 Configuration Files
 ├── components.json                # UI component configuration
@@ -152,7 +163,6 @@
 ├── tsconfig.node.json             # Node-specific TypeScript config
 ├── vercel.json                   # Vercel deployment configuration
 ├── vite.config.ts                # Vite build configuration
-├── env.example                   # Environment variables template
 │
 ├── 📄 Documentation
 ├── README.md                     # This file
@@ -377,8 +387,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) f
 - **📧 Email**: suryanshunab@gmail.com
 - **💼 LinkedIn**: [Suryanshu Nabheet](https://www.linkedin.com/in/suryanshu-nabheet/)
 - **🐦 X (Twitter)**: [@SuryanshuXDev](https://x.com/suryanshuxdev)
-- **📖 Documentation**: [GitHub Repository](https://github.com/Suryanshu-Nabheet/100xDevs)
-- **🐛 Issues**: [GitHub Issues](https://github.com/Suryanshu-Nabheet/100xDevs/issues)
+- **📖 Documentation**: [GitHub Repository](https://github.com/Suryanshu-Nabheet/100xCMS)
+- **🐛 Issues**: [GitHub Issues](https://github.com/Suryanshu-Nabheet/100xCMS/issues)
 
 ---
 

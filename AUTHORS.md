@@ -72,8 +72,8 @@ If you'd like to contribute or have questions:
 
 - 📧 Email: suryanshunab@gmail.com
 - 💬 Discord: [Join our community](https://discord.gg/100xDevs)
-- 🐛 GitHub Issues: [Create an issue](https://github.com/Suryanshu-Nabheet/100xDevs/issues)
-- 📖 Documentation: [GitHub Repository](https://github.com/Suryanshu-Nabheet/100xDevs)
+- 🐛 GitHub Issues: [Create an issue](https://github.com/Suryanshu-Nabheet/100xCMS/issues)
+- 📖 Documentation: [GitHub Repository](https://github.com/Suryanshu-Nabheet/100xCMS)
 
 ## Code of Conduct
 

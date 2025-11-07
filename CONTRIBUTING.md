@@ -8,8 +8,8 @@ Thank you for your interest in contributing to 100xDevs! 🎉
 - Click the "Fork" button on the GitHub repository page
 - Clone your fork locally:
   ```bash
-  git clone https://github.com/Suryanshu-Nabheet/100xDevs.git
-  cd 100xDevs
+  git clone https://github.com/Suryanshu-Nabheet/100xCMS.git
+  cd 100xCMS
   ```
 
 ### 2. Create a Branch
@@ -146,7 +146,7 @@ For feature requests, include:
 - 📧 Email: suryanshunab@gmail.com
 - 💼 LinkedIn: [Suryanshu Nabheet](https://www.linkedin.com/in/suryanshu-nabheet/)
 - 🐦 X (Twitter): [@SuryanshuXDev](https://x.com/suryanshuxdev)
-- 📖 Documentation: [GitHub Repository](https://github.com/Suryanshu-Nabheet/100xDevs)
+- 📖 Documentation: [GitHub Repository](https://github.com/Suryanshu-Nabheet/100xCMS)
 
 ## 🙏 Recognition
 
